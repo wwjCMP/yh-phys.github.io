@@ -4,9 +4,8 @@
 
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="QE和EPW软件的编译, 电-声子相互作用, 拓扑半金属, 第一性原理计算, 双钙钛矿氧化物">
-    <meta name="description" content="编译环境：Ubuntu18.04.2Intel编译器：parallel_studio_xe_2019_update4
-Intel编译器的安装与配置Intel编译器的申请&amp;emsp;&amp;emsp;使用学校邮箱在Intel官网可免费申请Intel">
+    <meta name="keywords" content="构建根号界面晶体模型, 电-声子相互作用, 拓扑半金属, 第一性原理计算, 双钙钛矿氧化物">
+    <meta name="description" content="构建根号界面晶体模型 | Physics">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -14,7 +13,7 @@ Intel编译器的安装与配置Intel编译器的申请&amp;emsp;&amp;emsp;使�
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>QE和EPW软件的编译 | Physics</title>
+    <title>构建根号界面晶体模型 | Physics</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -304,13 +303,13 @@ Intel编译器的安装与配置Intel编译器的申请&amp;emsp;&amp;emsp;使�
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/image/Quantum_espresso_logo.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/1.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        QE和EPW软件的编译
+                        构建根号界面晶体模型
                     </div>
                 </div>
             </div>
@@ -421,12 +420,12 @@ Intel编译器的安装与配置Intel编译器的申请&amp;emsp;&amp;emsp;使�
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/quantum-ESPRESSO/" target="_blank">
-                                <span class="chip bg-color">quantum ESPRESSO</span>
+                            <a href="/tags/Materials-Studio/" target="_blank">
+                                <span class="chip bg-color">Materials Studio</span>
                             </a>
                         
-                            <a href="/tags/EPW/" target="_blank">
-                                <span class="chip bg-color">EPW</span>
+                            <a href="/tags/根号表面/" target="_blank">
+                                <span class="chip bg-color">根号表面</span>
                             </a>
                         
                     </div>
@@ -437,12 +436,8 @@ Intel编译器的安装与配置Intel编译器的申请&amp;emsp;&amp;emsp;使�
                     <div class="post-cate">
                         <i class="fa fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/Quantum-ESPRESSO/" class="post-category" target="_blank">
-                                Quantum ESPRESSO
-                            </a>
-                        
-                            <a href="/categories/Quantum-ESPRESSO/EPW/" class="post-category" target="_blank">
-                                EPW
+                            <a href="/categories/Materials-Studio/" class="post-category" target="_blank">
+                                Materials Studio
                             </a>
                         
                     </div>
@@ -460,14 +455,14 @@ Intel编译器的安装与配置Intel编译器的申请&amp;emsp;&amp;emsp;使�
                     
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        1.2k
+                        0
                     </div>
                     
 
                     
                     <div class="info-break-policy">
                         <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                        5 分
+                        1 分
                     </div>
                     
                 
@@ -483,125 +478,7 @@ Intel编译器的安装与配置Intel编译器的申请&amp;emsp;&amp;emsp;使�
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>编译环境：Ubuntu18.04.2<br>Intel编译器：parallel_studio_xe_2019_update4</p>
-<h2 id="Intel编译器的安装与配置"><a href="#Intel编译器的安装与配置" class="headerlink" title="Intel编译器的安装与配置"></a>Intel编译器的安装与配置</h2><h3 id="Intel编译器的申请"><a href="#Intel编译器的申请" class="headerlink" title="Intel编译器的申请"></a>Intel编译器的申请</h3><p>&emsp;&emsp;使用学校邮箱在<a href="https://software.intel.com/en-us/qualify-for-free-software/student#" target="_blank" rel="noopener">Intel官网</a>可免费申请Intel编译器，使用时间为一年，到期后可重复申请，然后将新申请的license复制到安装路径文件夹license中即可。</p>
-<pre class="line-numbers language-bash"><code class="language-bash">/opt/intel/license<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<h3 id="配置环境变量"><a href="#配置环境变量" class="headerlink" title="配置环境变量"></a>配置环境变量</h3><pre class="line-numbers language-bash"><code class="language-bash"><span class="token function">source</span> /opt/intel/bin/compilervars.sh intel64
-<span class="token function">source</span> /opt/intel/mkl/bin/mklvars.sh intel64<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<p>注意：普通用户配置环境变量需要依据自己的安装路径修改</p>
-<h2 id="二、QE的下载编译"><a href="#二、QE的下载编译" class="headerlink" title="二、QE的下载编译"></a>二、QE的下载编译</h2><h3 id="QE下载"><a href="#QE下载" class="headerlink" title="QE下载"></a>QE下载</h3><p>&emsp;&emsp;在<a href="https://github.com/QEF/q-e/releases" target="_blank" rel="noopener">QE官网</a>下载最新版q-e-qe-6.4.1.tar以及补丁文件backports-6.4.1.diff。</p>
-<h3 id="赝势库的下载"><a href="#赝势库的下载" class="headerlink" title="赝势库的下载"></a>赝势库的下载</h3><p>&emsp;&emsp;一般情况下，为了计算结果的可靠性，在编译完软件时需要测试自带的算例，此时需要联网下载赝势库。考虑到大部分集群无法联网，需要借助于安装了Linux系统的主机下载赝势库。进入test-suite子目录，修改check_pseudo.sh文件，取消部分echo命令前的注释#号，以便及时查看下载进度，修改后的check_pseudo.sh文件如下：</p>
-<pre class="line-numbers language-bash"><code class="language-bash"><span class="token shebang important">#!/bin/bash</span>
-<span class="token comment" spellcheck="true">#</span>
-<span class="token comment" spellcheck="true"># Copyright (C) 2001-2016 Quantum ESPRESSO group</span>
-<span class="token comment" spellcheck="true">#</span>
-<span class="token comment" spellcheck="true"># This program is free software; you can redistribute it and/or</span>
-<span class="token comment" spellcheck="true"># modify it under the terms of the GNU General Public License</span>
-<span class="token comment" spellcheck="true"># as published by the Free Software Foundation; either version 2</span>
-<span class="token comment" spellcheck="true"># of the License. See the file `License' in the root directory</span>
-<span class="token comment" spellcheck="true"># of the present distribution.</span>
-
-<span class="token function">source</span> <span class="token variable">${ESPRESSO_ROOT}</span>/test-suite/ENVIRONMENT
-
-<span class="token keyword">if</span> <span class="token function">test</span> <span class="token string">"<span class="token variable"><span class="token variable">`</span><span class="token function">which</span> curl<span class="token variable">`</span></span>"</span> <span class="token operator">=</span> <span class="token string">""</span> <span class="token punctuation">;</span> <span class="token keyword">then</span>
-   <span class="token keyword">if</span> <span class="token function">test</span> <span class="token string">"<span class="token variable"><span class="token variable">`</span><span class="token function">which</span> <span class="token function">wget</span><span class="token variable">`</span></span>"</span> <span class="token operator">=</span> <span class="token string">""</span> <span class="token punctuation">;</span> <span class="token keyword">then</span>
-      <span class="token keyword">echo</span> <span class="token string">"### wget or curl not found: will not be able to download missing PP ###"</span>
-   <span class="token keyword">else</span>
-      DOWNLOADER<span class="token operator">=</span><span class="token string">"wget -O"</span>
-       <span class="token keyword">echo</span> <span class="token string">"wget found"</span>
-   <span class="token keyword">fi</span>
-<span class="token keyword">else</span>
-   DOWNLOADER<span class="token operator">=</span><span class="token string">"curl -o"</span>
-    <span class="token keyword">echo</span> <span class="token string">"curl found"</span>
-<span class="token keyword">fi</span>
-
-inputs<span class="token operator">=</span>`find <span class="token variable">$1*</span> -type f -name <span class="token string">"*.in"</span> -not -name <span class="token string">"test.*"</span> -not -name <span class="token string">"benchmark.*"</span><span class="token variable"><span class="token variable">`</span>
-pp_files<span class="token operator">=</span><span class="token variable">`</span></span><span class="token keyword">for</span> x <span class="token keyword">in</span> <span class="token variable">${inputs}</span><span class="token punctuation">;</span> <span class="token keyword">do</span> <span class="token function">grep</span> UPF <span class="token variable">${x}</span> <span class="token operator">|</span> <span class="token function">awk</span> <span class="token string">'{print <span class="token variable">$3</span>}'</span><span class="token punctuation">;</span> done`
-
-<span class="token keyword">for</span> pp_file <span class="token keyword">in</span> <span class="token variable">${pp_files}</span> <span class="token punctuation">;</span> <span class="token keyword">do</span>
-<span class="token keyword">if</span> <span class="token operator">!</span> <span class="token function">test</span> -f <span class="token variable">${ESPRESSO_PSEUDO}</span>/<span class="token variable">${pp_file}</span> <span class="token punctuation">;</span> <span class="token keyword">then</span>
-    <span class="token keyword">echo</span> -n <span class="token string">"Downloading <span class="token variable">${pp_file}</span> to <span class="token variable">${ESPRESSO_PSEUDO}</span> ... "</span>
-    <span class="token variable">${DOWNLOADER}</span> <span class="token variable">${ESPRESSO_PSEUDO}</span>/<span class="token variable">${pp_file}</span> <span class="token variable">${NETWORK_PSEUDO}</span>/<span class="token variable">${pp_file}</span> 2<span class="token operator">></span> /dev/null
-    <span class="token keyword">if</span> <span class="token function">test</span> <span class="token variable">$?</span> <span class="token operator">!=</span> 0 <span class="token punctuation">;</span> <span class="token keyword">then</span>
-        <span class="token keyword">echo</span> <span class="token string">"Download of"</span> <span class="token variable">${pp_file}</span> <span class="token string">"FAILED, do it manually -- Testing aborted!"</span>
-        <span class="token keyword">exit</span> -1
-    <span class="token keyword">else</span>
-        <span class="token keyword">echo</span> <span class="token string">"done."</span>
-    <span class="token keyword">fi</span>
-<span class="token keyword">else</span>
-    <span class="token keyword">echo</span> <span class="token string">"No need to download <span class="token variable">${pp_file}</span>."</span>
-<span class="token keyword">fi</span>
-<span class="token keyword">done</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>重新打包后上传服务器开始编译。</p>
-<h3 id="编译具体步骤"><a href="#编译具体步骤" class="headerlink" title="编译具体步骤"></a>编译具体步骤</h3><ol>
-<li>将补丁文件backports-6.4.1.diff拷贝到QE主目录，进入QE主目录并执行如下命令为QE打补丁：<pre class="line-numbers language-bash"><code class="language-bash">patch -p1 --merge <span class="token operator">&lt;</span> backports-6.4.1.diff<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-</li>
-<li>利用QE的configure实现对编译器和数学库的自动配置，执行命令：</li>
-</ol>
-<pre class="line-numbers language-bash"><code class="language-bash">./configure MPIF90<span class="token operator">=</span>mpiifort CC<span class="token operator">=</span>mpiicc F90<span class="token operator">=</span>ifort F77<span class="token operator">=</span>mpiifort -enable-parallel<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<ol start="3">
-<li>修改make.inc文件<pre class="line-numbers language-bash"><code class="language-bash">106 FFLAGS         <span class="token operator">=</span> -O3 -assume byterecl -g -traceback<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<pre class="line-numbers language-bash"><code class="language-bash">132 BLAS_LIBS      <span class="token operator">=</span>   -L<span class="token variable">${MKLROOT}</span>/lib/intel64 -lmkl_scalapack_lp64 -lmkl_intel_lp64 -lmkl_sequential -lmkl_core -lmkl_blacs_intelmpi_lp64 -lpthread -lm -ldl<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<pre class="line-numbers language-bash"><code class="language-bash">141 LAPACK_LIBS    <span class="token operator">=</span> -L<span class="token variable">${MKLROOT}</span>/lib/intel64 -lmkl_scalapack_lp64 -lmkl_intel_lp64 -lmkl_sequential -lmkl_core -lmkl_blacs_intelmpi_lp64 -lpthread -lm -ldl<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<pre class="line-numbers language-bash"><code class="language-bash">144 SCALAPACK_LIBS <span class="token operator">=</span> -L<span class="token variable">${MKLROOT}</span>/lib/intel64 -lmkl_scalapack_lp64 -lmkl_intel_lp64 -lmkl_sequential -lmkl_core -lmkl_blacs_intelmpi_lp64 -lpthread -lm -ldl<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<pre class="line-numbers language-bash"><code class="language-bash">149 FFT_LIBS       <span class="token operator">=</span> -L<span class="token variable">${MKLROOT}</span>/lib/intel64 -lmkl_scalapack_lp64 -lmkl_intel_lp64 -lmkl_sequential -lmkl_core -lmkl_blacs_intelmpi_lp64 -lpthread -lm -ldl<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<pre class="line-numbers language-bash"><code class="language-bash">159 MPI_LIBS       <span class="token operator">=</span> -L/opt/intel/impi/2019.4.243/intel64/lib -lmpi<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-</li>
-<li>编译</li>
-</ol>
-<pre class="line-numbers language-bash"><code class="language-bash"><span class="token function">make</span> -j n all <span class="token comment" spellcheck="true">#n为并行编译时调用的核数</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>注意：并行编译时有时会遇到无法排除的错误，如果出现未知错误，建议使用单个核编译<br>5. 测试</p>
-<pre class="line-numbers language-bash"><code class="language-bash">To run Quantum ESPRESSO test-suite, <span class="token function">type</span> at the shell prompt:
-
-  <span class="token function">make</span> target
-
-where <span class="token operator">&lt;</span>target<span class="token operator">></span> identifies an action
- run-tests                   <span class="token keyword">:</span> run-tests-serial <span class="token punctuation">(</span>default<span class="token punctuation">)</span>
- run-tests-serial            <span class="token keyword">:</span> run all tests <span class="token keyword">in</span> SERIAL
- run-tests-XX-serial         <span class="token keyword">:</span> run tests <span class="token keyword">for</span> XX<span class="token operator">=</span><span class="token punctuation">{</span>pw,cp<span class="token punctuation">}</span> only, as above
- run-tests-parallel          <span class="token keyword">:</span> run all tests <span class="token keyword">in</span> PARALLEL <span class="token punctuation">(</span>4 MPI<span class="token punctuation">)</span>
- run-tests-XX-parallel       <span class="token keyword">:</span> run tests <span class="token keyword">for</span> XX<span class="token operator">=</span><span class="token punctuation">{</span>pw,cp<span class="token punctuation">}</span> only, as above
- run-custom-test testdir<span class="token operator">=</span>DIR <span class="token keyword">:</span> run <span class="token function">test</span> <span class="token keyword">in</span> DIR only <span class="token punctuation">(</span>serial<span class="token punctuation">)</span>
- run-custom-test-parallel testdir<span class="token operator">=</span>DIR <span class="token keyword">:</span> run <span class="token function">test</span> <span class="token keyword">in</span> DIR only <span class="token punctuation">(</span>parallel 4 MPI<span class="token punctuation">)</span>
- compare                     <span class="token keyword">:</span> compare last output with reference
- clean                       <span class="token keyword">:</span> clean stdout/sderr of all tests
-
-For additional advanced commands and settings please manually inspect
-ENVIRONMENT and Makefile files<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>如果测试结果为全部通过，或个别结果的数值计算出现微小误差的情况则不影响对QE的使用。</p>
-<h2 id="Electron-phonon-Wannier-（EPW-的编译"><a href="#Electron-phonon-Wannier-（EPW-的编译" class="headerlink" title="Electron-phonon Wannier （EPW)的编译"></a>Electron-phonon Wannier （EPW)的编译</h2><h3 id="EPW简介"><a href="#EPW简介" class="headerlink" title="EPW简介"></a>EPW简介</h3><p>&emsp;&emsp;EPW是Electron-phonon Wannier的缩写，主要用于计算与电声相互作用相关的物理性质，主要包括：</p>
-<ol>
-<li>The total electron-phonon coupling strenght $\lambda$</li>
-<li>The anisotropic Eliashberg spectral function $\alpha^{2}F$</li>
-<li>The transport spectral function $\alpha^{2}F_{\rm tr}$</li>
-<li>The anisotropic superconducting gap  ${\Delta}_{n\rm k}$ within the Eliashberg theory</li>
-<li>The electron and phonon self-energies arising from electron-phonon interaction</li>
-<li>The phonon linewidths and lifetimes arising from electron-phonon interaction</li>
-<li>The electron linewidths and lifetimes arising from electron-phonon interaction</li>
-<li>The temperature-dependence of the carrier lifetimes</li>
-<li>The spectral functions needed for the calculation of ARPES spectra</li>
-<li>The electron and hole mobility $\mu$</li>
-</ol>
-<p>从EPW v4.1（26 April 2016）开始，EPW并入了Quantum-ESPRESSO软件，编译和计算都是基于QE基础上进行的，目前的最新版本是EPW v5.1。</p>
-<h3 id="EPW学习资料"><a href="#EPW学习资料" class="headerlink" title="EPW学习资料"></a>EPW学习资料</h3><ol>
-<li><a href="http://epw.org.uk/Documentation/Tutorial" target="_blank" rel="noopener">Tutorial</a></li>
-<li><a href="http://epw.org.uk/Documentation/School2018" target="_blank" rel="noopener">School on Electron-Phonon Physics from First Principles</a></li>
-<li><a href="https://www.youtube.com/playlist?list=PLGntAYRT8AVmQMyurFoncyOdHljqeGU_R" target="_blank" rel="noopener">Projects: Quantum Espresso Tutorial 2019</a></li>
-<li><a href="https://www.youtube.com/channel/UCr3qjMlMoPVtgcdlJUMUJJQ" target="_blank" rel="noopener">Samuel Poncé</a></li>
-</ol>
-<h3 id="EPW编译"><a href="#EPW编译" class="headerlink" title="EPW编译"></a>EPW编译</h3><ol>
-<li>下载<a href="http://www.wannier.org/" target="_blank" rel="noopener">Wannier90 (v3.0.0)</a>，并重命名为v3.0.0.tar.gz，然后拷贝到QE下的archive文件夹下。</li>
-<li>编译<pre class="line-numbers language-bash"><code class="language-bash"><span class="token function">make</span> epw<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-</li>
-<li>测试<pre class="line-numbers language-bash"><code class="language-bash"><span class="token function">cd</span> test-suite
-<span class="token function">make</span> run-tests-epw-parallel<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-如果测试结果为全部通过，则可以使用EPW软件计算了。</li>
-</ol>
-<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><ol>
-<li><a href="http://blog.sciencenet.cn/blog-2909108-1152511.html" target="_blank" rel="noopener">QE使用经验总结：（一）编译</a></li>
-<li><a href="https://www.youtube.com/playlist?list=PLGntAYRT8AVk9EV5Fm8qRboc3RCReTqGm" target="_blank" rel="noopener">Hands-on: Quantum Espresso Tutorial 2019</a></li>
-</ol>
-
+                
             </div>
             <hr/>
 
@@ -642,19 +519,19 @@ ENVIRONMENT and Makefile files<span aria-hidden="true" class="line-numbers-rows"
             <div class="article-badge left-badge text-color">
                 <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2019/09/25/materials-studio-build/">
+                <a href="/2019/09/25/vasp-kpoints/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="构建根号界面晶体模型">
+                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="vasp_kpoints文件设置详解">
                         
-                        <span class="card-title">构建根号界面晶体模型</span>
+                        <span class="card-title">vasp_kpoints文件设置详解</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            基于Materials Studio软件建立带有根号表面的晶体模型
+                            详细介绍了kpoints文件的设置方法，并给出了经验总结
                         
                     </div>
                     <div class="publish-info">
@@ -665,8 +542,8 @@ ENVIRONMENT and Makefile files<span aria-hidden="true" class="line-numbers-rows"
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/Materials-Studio/" class="post-category" target="_blank">
-                                    Materials Studio
+                            <a href="/categories/vasp/" class="post-category" target="_blank">
+                                    vasp
                                 </a>
                             
                             
@@ -676,12 +553,12 @@ ENVIRONMENT and Makefile files<span aria-hidden="true" class="line-numbers-rows"
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Materials-Studio/" target="_blank">
-                        <span class="chip bg-color">Materials Studio</span>
+                    <a href="/tags/vasp/" target="_blank">
+                        <span class="chip bg-color">vasp</span>
                     </a>
                     
-                    <a href="/tags/根号表面/" target="_blank">
-                        <span class="chip bg-color">根号表面</span>
+                    <a href="/tags/kpoints/" target="_blank">
+                        <span class="chip bg-color">kpoints</span>
                     </a>
                     
                 </div>
@@ -692,7 +569,7 @@ ENVIRONMENT and Makefile files<span aria-hidden="true" class="line-numbers-rows"
         
         <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge right-badge text-color">
-                本篇&nbsp;<i class="fa fa-dot-circle-o"></i>
+                下一篇&nbsp;<i class="fa fa-chevron-right"></i>
             </div>
             <div class="card">
                 <a href="/2019/09/25/quantum-espresso-compile/">
@@ -729,7 +606,6 @@ ENVIRONMENT and Makefile files<span aria-hidden="true" class="line-numbers-rows"
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     

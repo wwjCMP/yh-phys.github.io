@@ -4,6 +4,85 @@
   
     
     <entry>
+      <title>phono3py软件的编译方法</title>
+      <link href="/2019/09/25/phono3py-install/"/>
+      <url>/2019/09/25/phono3py-install/</url>
+      
+        <content type="html"><![CDATA[<p>编译环境：Ubuntu18.04.3 LTS<br>phono3py版本：phono3py–1.17.0.post1<br>phonopy版本：phonopy–2.2.0<br>python版本：python–3.6.8</p><h2 id="phono3py概述"><a href="#phono3py概述" class="headerlink" title="phono3py概述"></a><a href="https://atztogo.github.io/phono3py/index.html" target="_blank" rel="noopener">phono3py</a>概述</h2><p>&emsp;&emsp;phono3py是基于超原胞方法计算声子-声子相互作用以及与其相关性质的软件包，可以计算的性质主要包括：</p><ul><li>Lattice thermal conductivity (RTA and <a href="https://atztogo.github.io/phono3py/direct-solution.html#direct-solution" target="_blank" rel="noopener">direct solution of LBTE</a>)</li><li>Phonon lifetime/linewidth</li><li>Imaginary part of self energy</li><li>Joint density of states (JDOS) and weighted-JDOS<br>&emsp;&emsp;phono3py可以与常见的第一性原理计算软件结合使用，例如：<br><a href="https://atztogo.github.io/phono3py/vasp.html#vasp-interface" target="_blank" rel="noopener">VASP</a>, <a href="https://atztogo.github.io/phono3py/pwscf.html#pwscf-interface" target="_blank" rel="noopener">QE</a>, <a href="https://atztogo.github.io/phono3py/crystal.html#crystal-interface" target="_blank" rel="noopener">CRYSTAL</a>, <a href="https://atztogo.github.io/phono3py/turbomole.html#turbomole-interface" target="_blank" rel="noopener">TURBOMOLE</a>等，具体内容可参考<a href="https://atztogo.github.io/phono3py/interfaces.html#calculator-interfaces" target="_blank" rel="noopener">官网说明</a>。<h2 id="phono3py编译方法介绍"><a href="#phono3py编译方法介绍" class="headerlink" title="phono3py编译方法介绍"></a>phono3py编译方法介绍</h2>&emsp;&emsp;对于phono3py的编译是花了许多精力在里边的，尤其是对于新手而言，可能碰到许多奇怪的错误，在<a href="https://www.google.com.hk/" target="_blank" rel="noopener">Google</a>上也没有搜到合适的解决办法，为了新手方便编译，特将编译过程写出来，以供参考。<br>&emsp;&emsp;phono3py的编译主要有3种方法：</li><li>使用conda利用如下命令自动安装：<pre class="line-numbers language-bash"><code class="language-bash">conda <span class="token function">install</span> -c atztogo phono3py<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>但是安装完成后phono3py无法使用，会报一些奇怪的错误。</li><li>使用pip利用如下命令自动安装：<pre class="line-numbers language-bash"><code class="language-bash">pip <span class="token function">install</span> phono3py --user<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>同样，安装完成后phono3py无法使用，会报一些奇怪的错误。</li><li>基于源码编译安装<h2 id="phono3py源码编译方法"><a href="#phono3py源码编译方法" class="headerlink" title="phono3py源码编译方法"></a>phono3py源码编译方法</h2>说明：由于phono3py的运行依赖于phonopy，因此经过测试后发现，phono3py–1.17.0.post1版本可以与phonopy–2.2.0或phonopy–2.1.4版本兼容，phonopy–2.1.4以前的版本没有测试。但是与phonopy–2.3.0以及phonopy–2.3.0.post5版本不兼容，会报错。</li><li>安装编译环境：<pre class="line-numbers language-bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> python3-numpy<span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> python3-scipy<span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> python3-h5py<span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> python3-scipy<span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> python3-matplotlib<span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> python3-yaml<span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> libopenblas-dev<span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> libgomp1<span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> liblapack-dev<span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> liblapacke-dev<span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> python3-distutils<span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> python3-pip<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li><li>phonopy-2.2.0的下载与编译：<br><a href="https://pypi.org/project/phonopy/2.2.0/#files" target="_blank" rel="noopener">下载</a><br>编译<pre class="line-numbers language-bash"><code class="language-bash"><span class="token function">tar</span> zxvf phono3py-1.17.0.post1.tar.gz<span class="token function">cd</span> phono3py-1.17.0.post1.tar.gzpython3.6 setup.py <span class="token function">install</span> --user<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></li><li>phono3py的下载与编译：<br><a href="https://pypi.org/project/phono3py/#files" target="_blank" rel="noopener">下载</a><br>编译<pre class="line-numbers language-bash"><code class="language-bash"><span class="token function">tar</span> zxvf phono3py-1.17.0.post1.tar.gz<span class="token function">cd</span> phono3py-1.17.0.post1.tar.gzpython3.6 setup.py <span class="token function">install</span> --user<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></li><li>设置环境变量：<pre class="line-numbers language-bash"><code class="language-bash"><span class="token function">vi</span> ~/.bashrc<span class="token function">export</span> PYTHONPATH<span class="token operator">=</span>~/.local/lib/python3.6/site-packages:<span class="token variable">$PYTHONPATH</span><span class="token function">export</span> PATH<span class="token operator">=</span>~/.local/bin:<span class="token variable">$PATH</span><span class="token function">source</span> ~/.bashrc<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></li><li>测试结果：<br><img src="/image/phonopy.png" alt="phonopy测试结果"></li></ul><p><img src="/image/phono3py.png" alt="phono3py测试结果"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> phono3py </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> phono3py </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>vasp_kpoints文件设置详解</title>
+      <link href="/2019/09/25/vasp-kpoints/"/>
+      <url>/2019/09/25/vasp-kpoints/</url>
+      
+        <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>kpoints</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> vasp </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> vasp </tag>
+            
+            <tag> kpoints </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>构建根号界面晶体模型</title>
+      <link href="/2019/09/25/materials-studio-build/"/>
+      <url>/2019/09/25/materials-studio-build/</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+      
+      <categories>
+          
+          <category> Materials Studio </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Materials Studio </tag>
+            
+            <tag> 根号表面 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>QE和EPW软件的编译</title>
       <link href="/2019/09/25/quantum-espresso-compile/"/>
       <url>/2019/09/25/quantum-espresso-compile/</url>
