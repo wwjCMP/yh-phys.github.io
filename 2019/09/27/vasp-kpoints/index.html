@@ -5,8 +5,7 @@
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
     <meta name="keywords" content="vasp_kpoints文件设置详解, 电-声子相互作用, 拓扑半金属, 第一性原理计算, 双钙钛矿氧化物">
-    <meta name="description" content="前言kpoints
-">
+    <meta name="description" content="前言&amp;emsp;&amp;emsp;kpoints文件是vasp计算过程中必不可少的输入文件，虽然从vasp.5.2.2版本后可以在INCAR中设置简单的KPOINTS信息，但是不推荐在INCAR中直接设置，原因是INCAR中无法设置复杂的KPOI">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -449,21 +448,21 @@
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2019-09-25
+                    2019-09-27
                 </div>
 
                 
                     
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        3
+                        863
                     </div>
                     
 
                     
                     <div class="info-break-policy">
                         <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                        1 分
+                        3 分
                     </div>
                     
                 
@@ -479,7 +478,44 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>kpoints</p>
+                <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>&emsp;&emsp;kpoints文件是vasp计算过程中必不可少的输入文件，虽然从vasp.5.2.2版本后可以在INCAR中设置简单的KPOINTS信息，但是不推荐在INCAR中直接设置，原因是INCAR中无法设置复杂的KPOINTS信息。合理的kpoints设置不仅可以增加计算效率，而且可以得到合理的计算结果，下面对kpoints的一般格式和设置方法做一个简单的介绍，并且给出自身计算过程中的经验总结。</p>
+<h2 id="kpoints文件简述"><a href="#kpoints文件简述" class="headerlink" title="kpoints文件简述"></a>kpoints文件简述</h2><p>&emsp;&emsp;kpoints文件可以分为两个大类，一是vasp程序自动分割产生k点，二是通过手动输入指定k点信息。在实际计算过程中，除能带计算时手动指定k点信息外，其他计算一律推荐使用自动产生k点方法。</p>
+<h2 id="自动产生k点的kpoints文件设置"><a href="#自动产生k点的kpoints文件设置" class="headerlink" title="自动产生k点的kpoints文件设置"></a>自动产生k点的kpoints文件设置</h2><p>&emsp;&emsp;自动产生k点主要用于结构优化、自洽计算、DOS计算、光学性质计算等，基本格式如下：<br>情形一：</p>
+<pre class="line-numbers language-bash"><code class="language-bash">Automatic k-mesh generation
+0
+Gamma
+4    4    4 
+0.0  0.0  0.0 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><font color="blue">说明：<br>line 1：注释行，没有实际意义，但是不能没有<br>line 2：表示自动生成k点网格<br>line 3：第三行可用的选项有Gamma（vasp程序只识别首字母，即G或g都可，下同），表示按M-P方法以Γ点为中心自动产生k点；选项Monkhorst-pack表示按原始Monkhorst-Pack方法产生k点网格。<br>line 4：确定沿倒格子各方向（x，y，z）上K网格点的数目<br>line 5：对所按网格分割产生的k点进行平移的量，此处不平移。 </font><br>情形二：</p>
+<pre class="line-numbers language-bash"><code class="language-bash">Automatic mesh
+0
+Auto
+10<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p><font color="blue">说明：<br>line 1：注释行，没有实际意义，但是不能没有<br>line 2：表示自动生成k点网格<br>line 3：表示完全自动产生k点<br>line 4：表示a linear k-point density of 10 $\overset{\circ}{A}$，其含义为每1/$\overset{\circ}{A}$上的k点数 </font></p>
+<h2 id="手动指定k点的kpoints文件设置"><a href="#手动指定k点的kpoints文件设置" class="headerlink" title="手动指定k点的kpoints文件设置"></a>手动指定k点的kpoints文件设置</h2><p>&emsp;&emsp;手动指定k点的情形主要用于能带计算，一般格式为：</p>
+<pre class="line-numbers language-bash"><code class="language-bash">k-points along high symmetry lines <span class="token keyword">for</span> hexagonal structure
+ 40
+Line-mode
+Rec
+0.000    0.000    0.500  <span class="token operator">!</span> A
+0.000    0.000    0.000  <span class="token operator">!</span> Gamma
+
+0.000    0.000    0.000  <span class="token operator">!</span> Gamma 
+0.500    0.000    0.000  <span class="token operator">!</span> M
+
+0.500    0.000    0.000  <span class="token operator">!</span> M
+0.333333 0.333333 0.000  <span class="token operator">!</span> K 
+
+0.333333 0.333333 0.000  <span class="token operator">!</span> K
+0.000    0.000    0.000  <span class="token operator">!</span> Gamma<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><font color="blue">说明：<br>line 1：注释行，没有实际意义，但是不能没有<br>line 2：每对高对称点之间产生40个k点<br>line 3：以字母L开头表示按line模式产生k点<br>line 4：以字母R开头表示k点按倒格子坐标系<br>line 5-~~：每对高对称点的坐标，此处的路径为A-G-M-K-G </font></p>
+<h2 id="经验"><a href="#经验" class="headerlink" title="经验"></a>经验</h2><ul>
+<li>结构优化时，k点数目与晶格常数的乘积大约达到40-45之间就够用了。</li>
+<li>自洽计算时k点数目数目大致为结构优化时的2倍。</li>
+<li>DOS计算、光学性质计算时可在自洽的k点基础上适当增大，至少达到自洽计算时k点数目。</li>
+<li>对于六方晶系，强烈推荐使用Gamma方法，对于大部分体系都推荐使用此方法。</li>
+<li>能带计算时高对称点查找可依据如下方法：<br>(1) 通过seek-path工具寻找高对称点，具体用法<a href="https://www.materialscloud.org/work/tools/seekpath" target="_blank" rel="noopener">$这里$</a>。<br>(2) 依据文献<a href="https://doi.org/10.1016/j.commatsci.2010.05.010" target="_blank" rel="noopener">High-throughput electronic band structure calculations: Challenges and tools</a>选取。</li>
+</ul>
 
             </div>
             <hr/>
@@ -517,9 +553,64 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="fa fa-dot-circle-o"></i>&nbsp;本篇
+            </div>
+            <div class="card">
+                <a href="/2019/09/27/vasp-kpoints/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="vasp_kpoints文件设置详解">
+                        
+                        <span class="card-title">vasp_kpoints文件设置详解</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            详细介绍了kpoints文件的设置方法，并给出了经验总结
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-09-27
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/vasp/" class="post-category" target="_blank">
+                                    vasp
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/vasp/" target="_blank">
+                        <span class="chip bg-color">vasp</span>
+                    </a>
+                    
+                    <a href="/tags/kpoints/" target="_blank">
+                        <span class="chip bg-color">kpoints</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fa fa-chevron-right"></i>
+            </div>
             <div class="card">
                 <a href="/2019/09/25/phono3py-install/">
                     <div class="card-image">
@@ -537,9 +628,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2019-09-25
-                        </span>
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-09-25
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
@@ -557,59 +648,6 @@
                     
                     <a href="/tags/phono3py/" target="_blank">
                         <span class="chip bg-color">phono3py</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fa fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2019/09/25/materials-studio-build/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="构建根号界面晶体模型">
-                        
-                        <span class="card-title">构建根号界面晶体模型</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            基于Materials Studio软件建立带有根号表面的晶体模型
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-09-25
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fa fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/Materials-Studio/" class="post-category" target="_blank">
-                                    Materials Studio
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/Materials-Studio/" target="_blank">
-                        <span class="chip bg-color">Materials Studio</span>
-                    </a>
-                    
-                    <a href="/tags/根号表面/" target="_blank">
-                        <span class="chip bg-color">根号表面</span>
                     </a>
                     
                 </div>
@@ -774,7 +812,7 @@
             <br>
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">1.7k</span>&nbsp;字
+                class="white-color">2.6k</span>&nbsp;字
             
             
             

@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>vasp_kpoints文件设置详解</title>
+      <link href="/2019/09/27/vasp-kpoints/"/>
+      <url>/2019/09/27/vasp-kpoints/</url>
+      
+        <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>&emsp;&emsp;kpoints文件是vasp计算过程中必不可少的输入文件，虽然从vasp.5.2.2版本后可以在INCAR中设置简单的KPOINTS信息，但是不推荐在INCAR中直接设置，原因是INCAR中无法设置复杂的KPOINTS信息。合理的kpoints设置不仅可以增加计算效率，而且可以得到合理的计算结果，下面对kpoints的一般格式和设置方法做一个简单的介绍，并且给出自身计算过程中的经验总结。</p><h2 id="kpoints文件简述"><a href="#kpoints文件简述" class="headerlink" title="kpoints文件简述"></a>kpoints文件简述</h2><p>&emsp;&emsp;kpoints文件可以分为两个大类，一是vasp程序自动分割产生k点，二是通过手动输入指定k点信息。在实际计算过程中，除能带计算时手动指定k点信息外，其他计算一律推荐使用自动产生k点方法。</p><h2 id="自动产生k点的kpoints文件设置"><a href="#自动产生k点的kpoints文件设置" class="headerlink" title="自动产生k点的kpoints文件设置"></a>自动产生k点的kpoints文件设置</h2><p>&emsp;&emsp;自动产生k点主要用于结构优化、自洽计算、DOS计算、光学性质计算等，基本格式如下：<br>情形一：</p><pre class="line-numbers language-bash"><code class="language-bash">Automatic k-mesh generation0Gamma4    4    4 0.0  0.0  0.0 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre><p><font color="blue">说明：<br>line 1：注释行，没有实际意义，但是不能没有<br>line 2：表示自动生成k点网格<br>line 3：第三行可用的选项有Gamma（vasp程序只识别首字母，即G或g都可，下同），表示按M-P方法以Γ点为中心自动产生k点；选项Monkhorst-pack表示按原始Monkhorst-Pack方法产生k点网格。<br>line 4：确定沿倒格子各方向（x，y，z）上K网格点的数目<br>line 5：对所按网格分割产生的k点进行平移的量，此处不平移。 </font><br>情形二：</p><pre class="line-numbers language-bash"><code class="language-bash">Automatic mesh0Auto10<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre><p><font color="blue">说明：<br>line 1：注释行，没有实际意义，但是不能没有<br>line 2：表示自动生成k点网格<br>line 3：表示完全自动产生k点<br>line 4：表示a linear k-point density of 10 $\overset{\circ}{A}$，其含义为每1/$\overset{\circ}{A}$上的k点数 </font></p><h2 id="手动指定k点的kpoints文件设置"><a href="#手动指定k点的kpoints文件设置" class="headerlink" title="手动指定k点的kpoints文件设置"></a>手动指定k点的kpoints文件设置</h2><p>&emsp;&emsp;手动指定k点的情形主要用于能带计算，一般格式为：</p><pre class="line-numbers language-bash"><code class="language-bash">k-points along high symmetry lines <span class="token keyword">for</span> hexagonal structure 40Line-modeRec0.000    0.000    0.500  <span class="token operator">!</span> A0.000    0.000    0.000  <span class="token operator">!</span> Gamma0.000    0.000    0.000  <span class="token operator">!</span> Gamma 0.500    0.000    0.000  <span class="token operator">!</span> M0.500    0.000    0.000  <span class="token operator">!</span> M0.333333 0.333333 0.000  <span class="token operator">!</span> K 0.333333 0.333333 0.000  <span class="token operator">!</span> K0.000    0.000    0.000  <span class="token operator">!</span> Gamma<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p><font color="blue">说明：<br>line 1：注释行，没有实际意义，但是不能没有<br>line 2：每对高对称点之间产生40个k点<br>line 3：以字母L开头表示按line模式产生k点<br>line 4：以字母R开头表示k点按倒格子坐标系<br>line 5-~~：每对高对称点的坐标，此处的路径为A-G-M-K-G </font></p><h2 id="经验"><a href="#经验" class="headerlink" title="经验"></a>经验</h2><ul><li>结构优化时，k点数目与晶格常数的乘积大约达到40-45之间就够用了。</li><li>自洽计算时k点数目数目大致为结构优化时的2倍。</li><li>DOS计算、光学性质计算时可在自洽的k点基础上适当增大，至少达到自洽计算时k点数目。</li><li>对于六方晶系，强烈推荐使用Gamma方法，对于大部分体系都推荐使用此方法。</li><li>能带计算时高对称点查找可依据如下方法：<br>(1) 通过seek-path工具寻找高对称点，具体用法<a href="https://www.materialscloud.org/work/tools/seekpath" target="_blank" rel="noopener">$这里$</a>。<br>(2) 依据文献<a href="https://doi.org/10.1016/j.commatsci.2010.05.010" target="_blank" rel="noopener">High-throughput electronic band structure calculations: Challenges and tools</a>选取。</li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> vasp </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> vasp </tag>
+            
+            <tag> kpoints </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>phono3py软件的编译方法</title>
       <link href="/2019/09/25/phono3py-install/"/>
       <url>/2019/09/25/phono3py-install/</url>
@@ -21,33 +48,6 @@
         <tags>
             
             <tag> phono3py </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>vasp_kpoints文件设置详解</title>
-      <link href="/2019/09/25/vasp-kpoints/"/>
-      <url>/2019/09/25/vasp-kpoints/</url>
-      
-        <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>kpoints</p>]]></content>
-      
-      
-      <categories>
-          
-          <category> vasp </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> vasp </tag>
-            
-            <tag> kpoints </tag>
             
         </tags>
       
