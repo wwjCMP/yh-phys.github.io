@@ -4,6 +4,35 @@
   
     
     <entry>
+      <title>vasp-band_structure-dos</title>
+      <link href="/2019/10/04/vasp-band-structure-dos/"/>
+      <url>/2019/10/04/vasp-band-structure-dos/</url>
+      
+        <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>&emsp;&emsp;本文以二维InSe材料为例，详细介绍了二维材料的结构优化、静态自洽，能带计算和态密度计算的计算过程和注意事项。<br>&emsp;&emsp;为了对二维材料的晶格常数进行充分优化，且不对真空层厚度做优化，需要修改vasp安装包～/vasp.5.4.4/src/constr_cell_relax.F源文件，修改的具体说明可以参考清华大学刘锦程博士的<a href="http://blog.wangruixing.cn/2019/05/05/constr/" target="_blank" rel="noopener">博文</a>，编译时直接覆盖掉原文件即可，新的constr_cell_relax.F文件如下：</p><pre><code>!-----------------------------------------------------------------------!! At present, VASP does not allow to relax the cellshape selectively! i.e. for instance only cell relaxation in x direction.! To be more precisse, this behaviour can not be achived via the INCAR! or POSCAR file.! However, it is possible to set selected components of the stress tensor! to zero.! The most conveninent position to do this is the routines ! CONSTR_CELL_RELAX  (constraint cell relaxation).! FCELL contains the forces on the basis vectors.! These forces are used to modify the basis vectors according! to the following equations:!!      A_OLD(1:3,1:3)=A(1:3,1:3) ! F90 style !      DO J=1,3!      DO I=1,3!      DO K=1,3!        A(I,J)=A(I,J) + FCELL(I,K)*A_OLD(K,J)*STEP_SIZE!      ENDDO!      ENDDO!      ENDDO! where A holds the basis vectors (in cartesian coordinates).!!-----------------------------------------------------------------------      SUBROUTINE CONSTR_CELL_RELAX(FCELL)      USE prec      REAL(q) FCELL(3,3)!     just one simple example!     relaxation in x directions only!      SAVE=FCELL(1,1)!      FCELL=0   ! F90 style: set the whole array to zero!      FCELL(1,1)=SAVE!     relaxation in z direction only!      SAVE=FCELL(3,3)!      FCELL=0   ! F90 style: set the whole array to zero!      FCELL(3,3)=SAVE      LOGICAL FILFLG      INTEGER ICELL(3,3)      INQUIRE(FILE=&#39;OPTCELL&#39;,EXIST=FILFLG)      IF (FILFLG) THEN         OPEN(67,FILE=&#39;OPTCELL&#39;,FORM=&#39;FORMATTED&#39;,STATUS=&#39;OLD&#39;)         DO J=1,3            READ(67,&quot;(3I1)&quot;) (ICELL(I,J),I=1,3)         ENDDO         CLOSE(67)         DO J=1,3         DO I=1,3            IF (ICELL(I,J)==0) FCELL(I,J)=0.0         ENDDO         ENDDO      ENDIF      RETURN      END SUBROUTINE</code></pre><p>使用方法：在INCAR中设置ISIF = 3，同时在计算目录下新建OPTCELL文件，该文件为3$\times$3矩阵，在对称性满足的情况下可以对体系的9个自由度做弛豫。例如对于正交的二维材料，OPTCELL文件可写为：</p><pre><code>100  # 优化x方向010  # 优化y方向000  # 不优化z方向</code></pre><h2 id="结构优化"><a href="#结构优化" class="headerlink" title="结构优化"></a>结构优化</h2><h3 id="输入文件"><a href="#输入文件" class="headerlink" title="输入文件"></a>输入文件</h3><ul><li>INCAR<pre><code> SYSTEM = 2D_InSe ISTART = 0 NWRITE = 2    PREC   = Accurate ENCUT  = 500 GGA    = PE NSW    = 200 ISIF   = 3 ISYM   = 2 NBLOCK = 1    KBLOCK = 1 IBRION = 2 NELM   = 80      EDIFF  = 1E-05 EDIFFG = -0.01  ALGO   = Normal LDIAG  = .TRUE. LREAL  = .FALSE. ISMEAR = 0 SIGMA  = 0.02 ICHARG = 2 LPLANE = .TRUE. NPAR   = 4 LSCALU = .FALSE. NSIM   = 4 LWAVE  = .FALSE. LCHARG = .FALSE. ICORELEVEL =  1</code></pre></li><li>POSCAR<br>```<br>2D_InSe</li></ul><p>1.0<br>        4.0836000443         0.0000000000         0.0000000000<br>       -2.0418000221         3.5365013772         0.0000000000<br>        0.0000000000         0.0000000000        25.3775005341<br>   In   Se<br>    2    2<br>Direct<br>     0.666670026         0.333330010         0.589979992<br>     0.666670026         0.333330010         0.478789968<br>     0.333329978         0.666669998         0.428439986<br>     0.333329978         0.666669998         0.640340007</p><pre><code>* KPOINTS</code></pre><p>Monkhorst Pack of Gamma centered<br>0<br>Gamma<br> 13    13    1<br> 0.0   0.0   0.0</p><pre><code>* POTCAR</code></pre><p>cat In_d/POTCAR Se/POTCAR &gt; POTCAR</p><pre><code>* OPTCELL</code></pre><p>100<br>110<br>000</p><pre><code>### 结果分析</code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> vasp </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> vasp </tag>
+            
+            <tag> band structure </tag>
+            
+            <tag> density of states </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>vasp_kpoints文件设置详解</title>
       <link href="/2019/09/27/vasp-kpoints/"/>
       <url>/2019/09/27/vasp-kpoints/</url>

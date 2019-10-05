@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>vasp-band_structure-dos | Physics</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="前言&amp;emsp;&amp;emsp;本文以二维InSe材料为例，详细介绍了二维材料的结构优化、静态自洽，能带计算和态密度计算的计算过程和注意事项。&amp;emsp;&amp;emsp;为了对二维材料的晶格常数进行充分优化，且不对真空层厚度做优化，需要修改vasp安装包～/vasp.5.4.4/src/constr_cell_relax.F源文件，修改的具体说明可以参考清华大学刘锦程博士的博文，编译时直接覆盖掉原文件即可">
+<meta name="keywords" content="vasp,band structure,density of states">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vasp-band_structure-dos">
+<meta property="og:url" content="https://yh-phys.github.io/2019/10/04/vasp-band-structure-dos/index.html">
+<meta property="og:site_name" content="Physics">
+<meta property="og:description" content="前言&amp;emsp;&amp;emsp;本文以二维InSe材料为例，详细介绍了二维材料的结构优化、静态自洽，能带计算和态密度计算的计算过程和注意事项。&amp;emsp;&amp;emsp;为了对二维材料的晶格常数进行充分优化，且不对真空层厚度做优化，需要修改vasp安装包～/vasp.5.4.4/src/constr_cell_relax.F源文件，修改的具体说明可以参考清华大学刘锦程博士的博文，编译时直接覆盖掉原文件即可">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-10-04T11:11:08.532Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="vasp-band_structure-dos">
+<meta name="twitter:description" content="前言&amp;emsp;&amp;emsp;本文以二维InSe材料为例，详细介绍了二维材料的结构优化、静态自洽，能带计算和态密度计算的计算过程和注意事项。&amp;emsp;&amp;emsp;为了对二维材料的晶格常数进行充分优化，且不对真空层厚度做优化，需要修改vasp安装包～/vasp.5.4.4/src/constr_cell_relax.F源文件，修改的具体说明可以参考清华大学刘锦程博士的博文，编译时直接覆盖掉原文件即可">
+  
+    <link rel="alternate" href="/atom.xml" title="Physics" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+  <link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/prism.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Physics</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">凝聚态物理</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://yh-phys.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-vasp-band-structure-dos" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/10/04/vasp-band-structure-dos/" class="article-date">
+  <time datetime="2019-10-04T02:13:57.000Z" itemprop="datePublished">2019-10-04</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/vasp/">vasp</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      vasp-band_structure-dos
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>&emsp;&emsp;本文以二维InSe材料为例，详细介绍了二维材料的结构优化、静态自洽，能带计算和态密度计算的计算过程和注意事项。<br>&emsp;&emsp;为了对二维材料的晶格常数进行充分优化，且不对真空层厚度做优化，需要修改vasp安装包～/vasp.5.4.4/src/constr_cell_relax.F源文件，修改的具体说明可以参考清华大学刘锦程博士的<a href="http://blog.wangruixing.cn/2019/05/05/constr/" target="_blank" rel="noopener">博文</a>，编译时直接覆盖掉原文件即可，新的constr_cell_relax.F文件如下：</p>
+<pre><code>!-----------------------------------------------------------------------
+!
+! At present, VASP does not allow to relax the cellshape selectively
+! i.e. for instance only cell relaxation in x direction.
+! To be more precisse, this behaviour can not be achived via the INCAR
+! or POSCAR file.
+! However, it is possible to set selected components of the stress tensor
+! to zero.
+! The most conveninent position to do this is the routines 
+! CONSTR_CELL_RELAX  (constraint cell relaxation).
+! FCELL contains the forces on the basis vectors.
+! These forces are used to modify the basis vectors according
+! to the following equations:
+!
+!      A_OLD(1:3,1:3)=A(1:3,1:3) ! F90 style 
+!      DO J=1,3
+!      DO I=1,3
+!      DO K=1,3
+!        A(I,J)=A(I,J) + FCELL(I,K)*A_OLD(K,J)*STEP_SIZE
+!      ENDDO
+!      ENDDO
+!      ENDDO
+! where A holds the basis vectors (in cartesian coordinates).
+!
+!-----------------------------------------------------------------------
+
+      SUBROUTINE CONSTR_CELL_RELAX(FCELL)
+      USE prec
+      REAL(q) FCELL(3,3)
+
+!     just one simple example
+!     relaxation in x directions only
+!      SAVE=FCELL(1,1)
+!      FCELL=0   ! F90 style: set the whole array to zero
+!      FCELL(1,1)=SAVE
+!     relaxation in z direction only
+!      SAVE=FCELL(3,3)
+!      FCELL=0   ! F90 style: set the whole array to zero
+!      FCELL(3,3)=SAVE
+
+      LOGICAL FILFLG
+      INTEGER ICELL(3,3)
+      INQUIRE(FILE=&#39;OPTCELL&#39;,EXIST=FILFLG)
+      IF (FILFLG) THEN
+         OPEN(67,FILE=&#39;OPTCELL&#39;,FORM=&#39;FORMATTED&#39;,STATUS=&#39;OLD&#39;)
+         DO J=1,3
+            READ(67,&quot;(3I1)&quot;) (ICELL(I,J),I=1,3)
+         ENDDO
+         CLOSE(67)
+         DO J=1,3
+         DO I=1,3
+            IF (ICELL(I,J)==0) FCELL(I,J)=0.0
+         ENDDO
+         ENDDO
+      ENDIF
+
+      RETURN
+      END SUBROUTINE</code></pre><p>使用方法：在INCAR中设置ISIF = 3，同时在计算目录下新建OPTCELL文件，该文件为3$\times$3矩阵，在对称性满足的情况下可以对体系的9个自由度做弛豫。例如对于正交的二维材料，OPTCELL文件可写为：</p>
+<pre><code>100  # 优化x方向
+010  # 优化y方向
+000  # 不优化z方向</code></pre><h2 id="结构优化"><a href="#结构优化" class="headerlink" title="结构优化"></a>结构优化</h2><h3 id="输入文件"><a href="#输入文件" class="headerlink" title="输入文件"></a>输入文件</h3><ul>
+<li>INCAR<pre><code> SYSTEM = 2D_InSe
+ ISTART = 0
+ NWRITE = 2   
+ PREC   = Accurate
+ ENCUT  = 500
+ GGA    = PE
+ NSW    = 200
+ ISIF   = 3
+ ISYM   = 2
+ NBLOCK = 1   
+ KBLOCK = 1
+ IBRION = 2
+ NELM   = 80     
+ EDIFF  = 1E-05
+ EDIFFG = -0.01 
+ ALGO   = Normal
+ LDIAG  = .TRUE.
+ LREAL  = .FALSE.
+ ISMEAR = 0
+ SIGMA  = 0.02
+ ICHARG = 2
+ LPLANE = .TRUE.
+ NPAR   = 4
+ LSCALU = .FALSE.
+ NSIM   = 4
+ LWAVE  = .FALSE.
+ LCHARG = .FALSE.
+ ICORELEVEL =  1</code></pre></li>
+<li>POSCAR<br>```<br>2D_InSe</li>
+</ul>
+<p>1.0<br>        4.0836000443         0.0000000000         0.0000000000<br>       -2.0418000221         3.5365013772         0.0000000000<br>        0.0000000000         0.0000000000        25.3775005341<br>   In   Se<br>    2    2<br>Direct<br>     0.666670026         0.333330010         0.589979992<br>     0.666670026         0.333330010         0.478789968<br>     0.333329978         0.666669998         0.428439986<br>     0.333329978         0.666669998         0.640340007</p>
+<pre><code>* KPOINTS</code></pre><p>Monkhorst Pack of Gamma centered<br>0<br>Gamma<br> 13    13    1<br> 0.0   0.0   0.0</p>
+<pre><code>* POTCAR</code></pre><p>cat In_d/POTCAR Se/POTCAR &gt; POTCAR</p>
+<pre><code>* OPTCELL</code></pre><p>100<br>110<br>000</p>
+<pre><code>### 结果分析</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://yh-phys.github.io/2019/10/04/vasp-band-structure-dos/" data-id="ck1cyfl0n0008vfcpxehhoqpd" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/band-structure/">band structure</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/density-of-states/">density of states</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vasp/">vasp</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2019/09/27/vasp-kpoints/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">vasp_kpoints文件设置详解</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Materials-Studio/">Materials Studio</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Quantum-ESPRESSO/">Quantum ESPRESSO</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Quantum-ESPRESSO/EPW/">EPW</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/phono3py/">phono3py</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/vasp/">vasp</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/EPW/">EPW</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Materials-Studio/">Materials Studio</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/band-structure/">band structure</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/density-of-states/">density of states</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kpoints/">kpoints</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/phono3py/">phono3py</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/quantum-ESPRESSO/">quantum ESPRESSO</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vasp/">vasp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/根号表面/">根号表面</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/EPW/" style="font-size: 10px;">EPW</a> <a href="/tags/Materials-Studio/" style="font-size: 10px;">Materials Studio</a> <a href="/tags/band-structure/" style="font-size: 10px;">band structure</a> <a href="/tags/density-of-states/" style="font-size: 10px;">density of states</a> <a href="/tags/kpoints/" style="font-size: 10px;">kpoints</a> <a href="/tags/phono3py/" style="font-size: 10px;">phono3py</a> <a href="/tags/quantum-ESPRESSO/" style="font-size: 10px;">quantum ESPRESSO</a> <a href="/tags/vasp/" style="font-size: 20px;">vasp</a> <a href="/tags/根号表面/" style="font-size: 10px;">根号表面</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/10/04/vasp-band-structure-dos/">vasp-band_structure-dos</a>
+          </li>
+        
+          <li>
+            <a href="/2019/09/27/vasp-kpoints/">vasp_kpoints文件设置详解</a>
+          </li>
+        
+          <li>
+            <a href="/2019/09/25/phono3py-install/">phono3py软件的编译方法</a>
+          </li>
+        
+          <li>
+            <a href="/2019/09/25/materials-studio-build/">构建根号界面晶体模型</a>
+          </li>
+        
+          <li>
+            <a href="/2019/09/25/quantum-espresso-compile/">QE和EPW软件的编译</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 Yong He<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
