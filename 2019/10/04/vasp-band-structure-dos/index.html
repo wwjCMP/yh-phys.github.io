@@ -459,14 +459,14 @@
                     
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        649
+                        2k
                     </div>
                     
 
                     
                     <div class="info-break-policy">
                         <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                        3 分
+                        9 分
                     </div>
                     
                 
@@ -543,42 +543,204 @@
       END SUBROUTINE</code></pre><p>使用方法：在INCAR中设置ISIF = 3，同时在计算目录下新建OPTCELL文件，该文件为3$\times$3矩阵，在对称性满足的情况下可以对体系的9个自由度做弛豫。例如对于正交的二维材料，OPTCELL文件可写为：</p>
 <pre><code>100  # 优化x方向
 010  # 优化y方向
-000  # 不优化z方向</code></pre><h2 id="结构优化"><a href="#结构优化" class="headerlink" title="结构优化"></a>结构优化</h2><h3 id="输入文件"><a href="#输入文件" class="headerlink" title="输入文件"></a>输入文件</h3><ul>
-<li>INCAR<pre><code> SYSTEM = 2D_InSe
- ISTART = 0
- NWRITE = 2   
- PREC   = Accurate
- ENCUT  = 500
- GGA    = PE
- NSW    = 200
- ISIF   = 3
- ISYM   = 2
- NBLOCK = 1   
- KBLOCK = 1
- IBRION = 2
- NELM   = 80     
- EDIFF  = 1E-05
- EDIFFG = -0.01 
- ALGO   = Normal
- LDIAG  = .TRUE.
- LREAL  = .FALSE.
- ISMEAR = 0
- SIGMA  = 0.02
- ICHARG = 2
- LPLANE = .TRUE.
- NPAR   = 4
- LSCALU = .FALSE.
- NSIM   = 4
- LWAVE  = .FALSE.
- LCHARG = .FALSE.
- ICORELEVEL =  1</code></pre></li>
-<li>POSCAR<br>```<br>2D_InSe</li>
+000  # 不优化z方向</code></pre><h2 id="结构优化"><a href="#结构优化" class="headerlink" title="结构优化"></a>结构优化</h2><h3 id="输入文件"><a href="#输入文件" class="headerlink" title="输入文件"></a>输入文件</h3><h4 id="INCAR"><a href="#INCAR" class="headerlink" title="INCAR"></a>INCAR</h4><pre><code>   SYSTEM = 2D_InSe
+   ISTART = 0
+   NWRITE = 2   
+   PREC   = Accurate
+   ENCUT  = 500
+   GGA    = PE
+   NSW    = 200
+   ISIF   = 3
+   ISYM   = 2
+   NBLOCK = 1   
+   KBLOCK = 1
+   IBRION = 2
+   NELM   = 80     
+   EDIFF  = 1E-05
+   EDIFFG = -0.01 
+   ALGO   = Normal
+   LDIAG  = .TRUE.
+   LREAL  = .FALSE.
+   ISMEAR = 0
+   SIGMA  = 0.02
+   ICHARG = 2
+   LPLANE = .TRUE.
+   NPAR   = 4
+   LSCALU = .FALSE.
+   NSIM   = 4
+   LWAVE  = .FALSE.
+   LCHARG = .FALSE.
+   ICORELEVEL =  1</code></pre><h4 id="POSCAR"><a href="#POSCAR" class="headerlink" title="POSCAR"></a>POSCAR</h4><pre><code>2D_InSe
+1.0
+        4.0836000443         0.0000000000         0.0000000000
+       -2.0418000221         3.5365013772         0.0000000000
+        0.0000000000         0.0000000000        25.3775005341
+   In   Se
+    2    2
+Direct
+     0.666670026         0.333330010         0.589979992
+     0.666670026         0.333330010         0.478789968
+     0.333329978         0.666669998         0.428439986
+     0.333329978         0.666669998         0.640340007</code></pre><h4 id="KPOINTS"><a href="#KPOINTS" class="headerlink" title="KPOINTS"></a>KPOINTS</h4><pre><code>Monkhorst Pack of Gamma centered
+0
+Gamma
+ 13    13    1
+ 0.0   0.0   0.0</code></pre><h4 id="POTCAR"><a href="#POTCAR" class="headerlink" title="POTCAR"></a>POTCAR</h4><pre><code>cat In_d/POTCAR Se/POTCAR &gt; POTCAR</code></pre><h4 id="OPTCELL"><a href="#OPTCELL" class="headerlink" title="OPTCELL"></a>OPTCELL</h4><pre><code>100
+110
+000</code></pre><h3 id="结果分析"><a href="#结果分析" class="headerlink" title="结果分析"></a>结果分析</h3><ul>
+<li>判断是否达到收敛精度<pre class="line-numbers language-bash"><code class="language-bash"><span class="token function">grep</span> <span class="token string">"reached required accuracy"</span> log<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre><code>reached required accuracy - stopping structural energy minimisation</code></pre></li>
+<li>产看体系总能<pre class="line-numbers language-bash"><code class="language-bash"><span class="token function">grep</span> TOTEN OUTCAR <span class="token operator">|</span> <span class="token function">tail</span> -n 1<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre><code>free  energy   TOTEN  =       -14.21463638 eV</code></pre></li>
+<li>对比优化前后晶格常数的变化</li>
 </ul>
-<p>1.0<br>        4.0836000443         0.0000000000         0.0000000000<br>       -2.0418000221         3.5365013772         0.0000000000<br>        0.0000000000         0.0000000000        25.3775005341<br>   In   Se<br>    2    2<br>Direct<br>     0.666670026         0.333330010         0.589979992<br>     0.666670026         0.333330010         0.478789968<br>     0.333329978         0.666669998         0.428439986<br>     0.333329978         0.666669998         0.640340007</p>
-<pre><code>* KPOINTS</code></pre><p>Monkhorst Pack of Gamma centered<br>0<br>Gamma<br> 13    13    1<br> 0.0   0.0   0.0</p>
-<pre><code>* POTCAR</code></pre><p>cat In_d/POTCAR Se/POTCAR &gt; POTCAR</p>
-<pre><code>* OPTCELL</code></pre><p>100<br>110<br>000</p>
-<pre><code>### 结果分析</code></pre>
+<p>—优化前—</p>
+<pre><code>4.0836000443         0.0000000000         0.0000000000
+-2.0418000221         3.5365013772         0.0000000000
+0.0000000000         0.0000000000        25.3775005341</code></pre><p>—优化后—</p>
+<pre><code>4.0830388054550770    0.0000000000000000    0.0000000000000000
+-2.0415069539304227    3.5360297046777429    0.0000000000000000
+0.0000000000000000    0.0000000000000000   25.3775005341000011</code></pre><p><font color="blue"> 分析：对比发现优化后a轴和b轴方向的晶格常数略微发生了变化，而c轴方向的真空层厚度并没有发生变化，说明使用固定基矢的方法是可以对二维材料做充分优化的 </font></p>
+<ul>
+<li>现使用只优化原子位置、不优化晶格常数（ISIF=2）的方法对二维InSe重新进行优化，对比体系总能变化情况</li>
+</ul>
+<p>—ISIF=3—</p>
+<pre><code>free  energy   TOTEN  =       -14.21463638 eV</code></pre><p>—ISIF=2—</p>
+<pre><code>free  energy   TOTEN  =       -14.21464001 eV</code></pre><p><font color="blue"> 分析：对比发现，两个总能几乎没有差别，说明对于初始结构比较好的体系来说，两种优化方式基本没有差别；但是对于初始结构不是很好的体系，这两种优化方法应该是有差别的，本人推荐使用固定基矢的方法充分优化二维材料晶格；另外，对于材料施加应变，且需要考虑泊松效应时，固定基矢优化是非常好的方式 </font></p>
+<h2 id="截断能收敛性测试"><a href="#截断能收敛性测试" class="headerlink" title="截断能收敛性测试"></a>截断能收敛性测试</h2><p>&emsp;&emsp;在第一性原理计算过程中，截断能和k网格点的选取非常重要，选的太小容易造成体系没有达到最低能量状态，选的太大会耗费大量计算资源，尤其对于计算资源比较紧张的课题组，大量浪费计算资源会引起同学和导师的不满。在实际计算中对于截断能和k点选取的方法，一是参考已发表的论文值，这样有一定的说服力；二是需要自己去测试，一般保证体系总能变化范围在0.01~0.02 eV之间，就可认为截断能和k点达到了我们的计算要求。</p>
+<h3 id="二维InSe的截断能测试"><a href="#二维InSe的截断能测试" class="headerlink" title="二维InSe的截断能测试"></a>二维InSe的截断能测试</h3><p>&emsp;&emsp;首先对二维InSe的截断能做测试，测试范围是400-900 eV，能量间隔为50 eV。</p>
+<h4 id="输入文件-1"><a href="#输入文件-1" class="headerlink" title="输入文件"></a>输入文件</h4><p>&emsp;&emsp;在这一系列计算中，只需对INCAR文件做修改，其他文件无需修改；且计算完成后自动将体系总能随截断能的变化写入toten_vs_encut.dat文件，只需画图即可。实现方法是将INCAR以及一系列操作命令写入提交任务的脚本文件中。计算文件夹中包括：</p>
+<pre><code>KPOINTS POSCAR OPTCELL POTCAR vasp5.4.4.job</code></pre><p>—vasp5.4.4.job—</p>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token shebang important">#!/bin/bash</span>
+<span class="token comment" spellcheck="true">#PBS -N 2D_InSe</span>
+<span class="token comment" spellcheck="true">#PBS -l nodes=1:ppn=16</span>
+<span class="token comment" spellcheck="true">#PBS -m abe</span>
+<span class="token comment" spellcheck="true">#PBS -j n</span>
+<span class="token comment" spellcheck="true">##PBS -o job.log</span>
+<span class="token comment" spellcheck="true">##PBS -e job.err</span>
+<span class="token comment" spellcheck="true">#PBS -l walltime=250:00:00</span>
+<span class="token function">cd</span> <span class="token variable">$PBS_O_WORKDIR</span>
+
+<span class="token function">touch</span> toten_vs_encut.dat
+
+<span class="token keyword">for</span> ENCUT <span class="token keyword">in</span> <span class="token variable"><span class="token variable">$(</span><span class="token function">seq</span> 400 50 900<span class="token variable">)</span></span><span class="token punctuation">;</span> <span class="token keyword">do</span>
+
+<span class="token comment" spellcheck="true"># generate INCAR</span>
+<span class="token function">cat</span> <span class="token operator">></span> INCAR <span class="token operator">&lt;&lt;</span> <span class="token string">EOF
+SYSTEM = 2D_InSe
+ISTART = 0
+NWRITE = 2   
+PREC   = Accurate
+ENCUT  = <span class="token variable">$ENCUT</span>
+GGA    = PE 
+NSW    = 200
+ISIF   = 3
+ISYM   = 2
+NBLOCK = 1   
+KBLOCK = 1
+IBRION = 2
+NELM   = 80   
+EDIFF  = 1E-05
+EDIFFG = -0.01 
+ALGO   = Normal
+LDIAG  = .TRUE.
+LREAL  = .FALSE.
+ISMEAR = 0
+SIGMA  = 0.02
+ICHARG = 2
+LPLANE = .TRUE.
+NPAR   = 4
+LSCALU = .FALSE.
+NSIM   = 4
+LWAVE  = .FALSE.
+LCHARG = .FALSE.
+ICORELEVEL =  1
+EOF</span>
+
+<span class="token function">date</span> <span class="token string">"+01 Today's date is: %D. The time execution %T"</span> <span class="token operator">>></span> time.info
+mpirun -np 16 /your direction/vasp.5.4.4/bin/vasp_std  <span class="token operator">></span> log
+<span class="token function">date</span> <span class="token string">"+02 Today's date is: %D. The time finish %T"</span> <span class="token operator">>></span> time.info
+
+<span class="token keyword">echo</span> -e <span class="token string">"<span class="token variable">$ENCUT</span> \c"</span> <span class="token operator">>></span> toten_vs_encut.dat
+<span class="token function">grep</span> TOTEN OUTCAR <span class="token operator">|</span> <span class="token function">tail</span> -n 1 <span class="token operator">|</span> \
+      <span class="token function">awk</span> <span class="token string">'/TOTEN/{print <span class="token variable"><span class="token variable">$(</span>NF-1<span class="token variable">)</span></span>}'</span> <span class="token operator">>></span> toten_vs_encut.dat
+<span class="token keyword">done</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="计算结果"><a href="#计算结果" class="headerlink" title="计算结果"></a>计算结果</h4><p>—toten_vs_encut.dat—</p>
+<pre><code>400 -14.21436717
+450 -14.21510647
+500 -14.21463638
+550 -14.21432902
+600 -14.21451801
+650 -14.21461952
+700 -14.21462231
+750 -14.21457731
+800 -14.21462766
+850 -14.21452537
+900 -14.21448345</code></pre><p><img src="/image/encut.png" alt="encut"><br>—encut.gnu—</p>
+<pre><code>set term post eps color enh solid 
+datafile=&#39;toten_vs_encut.dat&#39;
+set output &#39;encut.eps&#39;
+set title &#39;toten\_vs\_encut&#39; font &#39;Times_New_Roman,24&#39;
+set xlabel &#39;encut&#39; font &#39;Times_New_Roman,18&#39;
+set ylabel &#39;TOTEN&#39; font &#39;Times_New_Roman,18&#39;
+plot datafile  with linespoints lt 7 lw 4 pt 9 pointsize 2
+set output</code></pre><h3 id="二维InSe的k点测试"><a href="#二维InSe的k点测试" class="headerlink" title="二维InSe的k点测试"></a>二维InSe的k点测试</h3><h4 id="输入文件-2"><a href="#输入文件-2" class="headerlink" title="输入文件"></a>输入文件</h4><p>&emsp;&emsp;在这一系列计算中，只需对KPOINTS文件做修改，其他文件无需修改；且计算完成后自动将体系总能随k点的变化写入toten_vs_kpoints.dat文件，只需画图即可。实现方法是将kpoints以及一系列操作命令写入提交任务的脚本文件中。计算文件夹中包括：</p>
+<pre><code>INCAR POSCAR OPTCELL POTCAR vasp5.4.4.job</code></pre><p>—vasp5.4.4.job—</p>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token shebang important">#!/bin/bash</span>
+<span class="token comment" spellcheck="true">#PBS -N 2D_InSe</span>
+<span class="token comment" spellcheck="true">#PBS -l nodes=1:ppn=16</span>
+<span class="token comment" spellcheck="true">#PBS -m abe</span>
+<span class="token comment" spellcheck="true">#PBS -j n</span>
+<span class="token comment" spellcheck="true">##PBS -o job.log</span>
+<span class="token comment" spellcheck="true">##PBS -e job.err</span>
+<span class="token comment" spellcheck="true">#PBS -l walltime=250:00:00</span>
+<span class="token function">cd</span> <span class="token variable">$PBS_O_WORKDIR</span>
+
+
+<span class="token function">touch</span> toten_vs_kpoints.dat
+
+<span class="token keyword">for</span> KPOINTS <span class="token keyword">in</span> <span class="token variable"><span class="token variable">$(</span><span class="token function">seq</span> 5 2 29<span class="token variable">)</span></span><span class="token punctuation">;</span> <span class="token keyword">do</span>
+
+<span class="token comment" spellcheck="true"># generate KPOINTS</span>
+<span class="token function">cat</span> <span class="token operator">></span> KPOINTS <span class="token operator">&lt;&lt;</span> <span class="token string">EOF
+Monkhorst Pack of Gamma centered
+0
+Gamma
+ <span class="token variable">$KPOINTS</span>    <span class="token variable">$KPOINTS</span>    1
+ 0.0   0.0   0.0
+EOF</span>
+
+<span class="token function">date</span> <span class="token string">"+01 Today's date is: %D. The time execution %T"</span> <span class="token operator">>></span> time.info
+mpirun -np 16 /your direction/vasp.5.4.4/bin/vasp_std  <span class="token operator">></span> log
+<span class="token function">date</span> <span class="token string">"+02 Today's date is: %D. The time finish %T"</span> <span class="token operator">>></span> time.info
+
+<span class="token keyword">echo</span> -e <span class="token string">"<span class="token variable">$KPOINTS</span> \c"</span> <span class="token operator">>></span> toten_vs_kpoints.dat
+<span class="token function">grep</span> TOTEN OUTCAR <span class="token operator">|</span> <span class="token function">tail</span> -n 1 <span class="token operator">|</span> \
+      <span class="token function">awk</span> <span class="token string">'/TOTEN/{print <span class="token variable"><span class="token variable">$(</span>NF-1<span class="token variable">)</span></span>}'</span> <span class="token operator">>></span> toten_vs_kpoints.dat
+<span class="token keyword">done</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="计算结果-1"><a href="#计算结果-1" class="headerlink" title="计算结果"></a>计算结果</h4><p>—toten_vs_kpoints.dat—</p>
+<pre><code>5 -14.19602773
+7 -14.21266556
+9 -14.21439462
+11 -14.21461257
+13 -14.21463638
+15 -14.21464405
+17 -14.21464831
+19 -14.21464821
+21 -14.21464741
+23 -14.21465053
+25 -14.21464752
+27 -14.21464720
+29 -14.21464820</code></pre><p><img src="/image/kpoints.png" alt="kpoints"><br>—kpoints.gnu—</p>
+<pre><code>set term post eps color enh solid 
+datafile=&#39;toten_vs_kpoints.dat&#39;
+set output &#39;kpoints.eps&#39;
+set title &#39;toten\_vs\_kpoints&#39; font &#39;Times_New_Roman,24&#39;
+set xlabel &#39;kpoints&#39; font &#39;Times_New_Roman,18&#39;
+set ylabel &#39;TOTEN&#39; font &#39;Times_New_Roman,18&#39;
+plot datafile  with linespoints lt 7 lw 4 pt 9 pointsize 2
+set output</code></pre><h3 id="整体分析"><a href="#整体分析" class="headerlink" title="整体分析"></a>整体分析</h3><p>&emsp;&emsp;整体分析发现，对于二维InSe的截断能和k点取值分别为500 eV和13$\times$13$\times$1已经足够精确;与<a href="https://pubs.rsc.org/en/content/articlelanding/2018/NR/C8NR03172J#!divAbstract" target="_blank" rel="noopener">Meng Wu</a>等人报道的计算细节基本一致，说明测试是合理的。</p>
+
             </div>
             <hr/>
 
@@ -882,7 +1044,7 @@
             <br>
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">3.2k</span>&nbsp;字
+                class="white-color">4.6k</span>&nbsp;字
             
             
             
