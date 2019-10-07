@@ -607,7 +607,7 @@ Gamma
 <p>—ISIF=3—</p>
 <pre><code>free  energy   TOTEN  =       -14.21463638 eV</code></pre><p>—ISIF=2—</p>
 <pre><code>free  energy   TOTEN  =       -14.21464001 eV</code></pre><p><font color="blue"> 分析：对比发现，两个总能几乎没有差别，说明对于初始结构比较好的体系来说，两种优化方式基本没有差别；但是对于初始结构不是很好的体系，这两种优化方法应该是有差别的，本人推荐使用固定基矢的方法充分优化二维材料晶格；另外，对于材料施加应变，且需要考虑泊松效应时，固定基矢优化是非常好的方式 </font></p>
-<h2 id="截断能收敛性测试"><a href="#截断能收敛性测试" class="headerlink" title="截断能收敛性测试"></a>截断能收敛性测试</h2><p>&emsp;&emsp;在第一性原理计算过程中，截断能和k网格点的选取非常重要，选的太小容易造成体系没有达到最低能量状态，选的太大会耗费大量计算资源，尤其对于计算资源比较紧张的课题组，大量浪费计算资源会引起同学和导师的不满。在实际计算中对于截断能和k点选取的方法，一是参考已发表的论文值，这样有一定的说服力；二是需要自己去测试，一般保证体系总能变化范围在0.01~0.02 eV之间，就可认为截断能和k点达到了我们的计算要求。</p>
+<h2 id="截断能和k网格点收敛性测试"><a href="#截断能和k网格点收敛性测试" class="headerlink" title="截断能和k网格点收敛性测试"></a>截断能和k网格点收敛性测试</h2><p>&emsp;&emsp;在第一性原理计算过程中，截断能和k网格点的选取非常重要，选的太小容易造成体系没有达到最低能量状态，选的太大会耗费大量计算资源，尤其对于计算资源比较紧张的课题组，大量浪费计算资源会引起同学和导师的不满。在实际计算中对于截断能和k点选取的方法，一是参考已发表的论文值，这样有一定的说服力；二是需要自己去测试，一般保证体系总能变化范围在0.01~0.02 eV之间，就可认为截断能和k点达到了我们的计算要求。</p>
 <h3 id="二维InSe的截断能测试"><a href="#二维InSe的截断能测试" class="headerlink" title="二维InSe的截断能测试"></a>二维InSe的截断能测试</h3><p>&emsp;&emsp;首先对二维InSe的截断能做测试，测试范围是400-900 eV，能量间隔为50 eV。</p>
 <h4 id="输入文件-1"><a href="#输入文件-1" class="headerlink" title="输入文件"></a>输入文件</h4><p>&emsp;&emsp;在这一系列计算中，只需对INCAR文件做修改，其他文件无需修改；且计算完成后自动将体系总能随截断能的变化写入toten_vs_encut.dat文件，只需画图即可。实现方法是将INCAR以及一系列操作命令写入提交任务的脚本文件中。计算文件夹中包括：</p>
 <pre><code>KPOINTS POSCAR OPTCELL POTCAR vasp5.4.4.job</code></pre><p>—vasp5.4.4.job—</p>
@@ -623,7 +623,7 @@ Gamma
 
 <span class="token function">touch</span> toten_vs_encut.dat
 
-<span class="token keyword">for</span> ENCUT <span class="token keyword">in</span> <span class="token variable"><span class="token variable">$(</span><span class="token function">seq</span> 400 50 900<span class="token variable">)</span></span><span class="token punctuation">;</span> <span class="token keyword">do</span>
+<span class="token keyword">for</span> ENCUT <span class="token keyword">in</span> <span class="token variable"><span class="token variable">$(</span><span class="token function">seq</span> 400 50 800<span class="token variable">)</span></span><span class="token punctuation">;</span> <span class="token keyword">do</span>
 
 <span class="token comment" spellcheck="true"># generate INCAR</span>
 <span class="token function">cat</span> <span class="token operator">></span> INCAR <span class="token operator">&lt;&lt;</span> <span class="token string">EOF
@@ -666,17 +666,15 @@ mpirun -np 16 /your direction/vasp.5.4.4/bin/vasp_std  <span class="token operat
       <span class="token function">awk</span> <span class="token string">'/TOTEN/{print <span class="token variable"><span class="token variable">$(</span>NF-1<span class="token variable">)</span></span>}'</span> <span class="token operator">>></span> toten_vs_encut.dat
 <span class="token keyword">done</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h4 id="计算结果"><a href="#计算结果" class="headerlink" title="计算结果"></a>计算结果</h4><p>—toten_vs_encut.dat—</p>
-<pre><code>400 -14.21436717
-450 -14.21510647
-500 -14.21463638
-550 -14.21432902
-600 -14.21451801
-650 -14.21461952
-700 -14.21462231
-750 -14.21457731
-800 -14.21462766
-850 -14.21452537
-900 -14.21448345</code></pre><p><img src="/image/encut.png" alt="encut"><br>—encut.gnu—</p>
+<pre><code>400 -14.21435689
+450 -14.21513620
+500 -14.21463059
+550 -14.21432926
+600 -14.21451881
+650 -14.21462419
+700 -14.21461680
+750 -14.21457254
+800 -14.21462319</code></pre><p><img src="/image/encut.png" alt="encut"><br>—encut.gnu—</p>
 <pre><code>set term post eps color enh solid 
 datafile=&#39;toten_vs_encut.dat&#39;
 set output &#39;encut.eps&#39;
