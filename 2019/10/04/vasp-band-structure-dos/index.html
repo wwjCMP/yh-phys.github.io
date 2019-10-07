@@ -459,14 +459,14 @@
                     
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        2k
+                        2.8k
                     </div>
                     
 
                     
                     <div class="info-break-policy">
                         <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                        9 分
+                        13 分
                     </div>
                     
                 
@@ -738,6 +738,126 @@ set xlabel &#39;kpoints&#39; font &#39;Times_New_Roman,18&#39;
 set ylabel &#39;TOTEN&#39; font &#39;Times_New_Roman,18&#39;
 plot datafile  with linespoints lt 7 lw 4 pt 9 pointsize 2
 set output</code></pre><h3 id="整体分析"><a href="#整体分析" class="headerlink" title="整体分析"></a>整体分析</h3><p>&emsp;&emsp;整体分析发现，对于二维InSe的截断能和k点取值分别为500 eV和13$\times$13$\times$1已经足够精确;与<a href="https://pubs.rsc.org/en/content/articlelanding/2018/NR/C8NR03172J#!divAbstract" target="_blank" rel="noopener">Meng Wu</a>等人报道的计算细节基本一致，说明测试是合理的。</p>
+<h2 id="静态自洽"><a href="#静态自洽" class="headerlink" title="静态自洽"></a>静态自洽</h2><h3 id="前言-1"><a href="#前言-1" class="headerlink" title="前言"></a>前言</h3><p>&emsp;&emsp;VASP做静态自洽的目的主要是为了得到好的电子密度和波函数文件，为了使后续的性质计算可以读取电子密度和波函数，进而增加收敛速度。</p>
+<h3 id="输入文件-3"><a href="#输入文件-3" class="headerlink" title="输入文件"></a>输入文件</h3><p>—INCAR—</p>
+<pre><code>SYSTEM = 2D_InSe
+ISTART = 0
+NWRITE = 2   
+PREC   = Accurate
+ENCUT  = 500
+GGA    = PE 
+NSW    = 0
+ISIF   = 2
+ISYM   = 2
+NBLOCK = 1   
+KBLOCK = 1
+IBRION = -1 
+NELM   = 80   
+EDIFF  = 1E-05
+EDIFFG = -0.01 
+ALGO   = Normal
+LDIAG  = .TRUE.
+LREAL  = .FALSE.
+ISMEAR = 0
+SIGMA  = 0.02
+ICHARG = 2
+LPLANE = .TRUE.
+NPAR   = 4
+LSCALU = .FALSE.
+NSIM   = 4
+LWAVE  = .TRUE.
+LCHARG = .TRUE.
+ICORELEVEL =  1</code></pre><p>—POSCAR—<br>将优化完后的CONTCAR直接拷贝为POSCAR即可<br>—POTCAR—<br>与优化时的POTCAR文件相同<br>—KPOINTS—<br>自洽计算要求有密的k网格点，在计算条件允许的情况下要求自洽的k网格点大致为优化时的2倍左右。</p>
+<pre><code>Monkhorst Pack of Gamma centered
+0
+Gamma
+ 25    25    1
+ 0.0   0.0   0.0</code></pre><h2 id="态密度"><a href="#态密度" class="headerlink" title="态密度"></a>态密度</h2><h3 id="前言-2"><a href="#前言-2" class="headerlink" title="前言"></a>前言</h3><p>&emsp;&emsp;态密度是固体物理中一个非常重要的概念，在实验上可利用X射线发射光谱方法测定，在理论上可使用第一性原理计算软件计算得出；可以用于分析材料材料能隙特性、体系成键的特性、体系的自旋极化、相邻原子之间的作用强弱、电子比热和顺磁磁化率等性质。</p>
+<h3 id="输入文件-4"><a href="#输入文件-4" class="headerlink" title="输入文件"></a>输入文件</h3><p>—INCAR—</p>
+<pre><code>SYSTEM = 2D_InSe
+ISTART = 1
+NWRITE = 2
+PREC   = Accurate
+ENCUT  = 500
+GGA    = PE
+NSW    = 0
+ISIF   = 2
+ISYM   = 2
+NBLOCK = 1
+KBLOCK = 1
+IBRION = -1
+NELM   = 80
+EDIFF  = 1E-05
+EDIFFG = -0.01
+ALGO   = Normal
+LDIAG  = .TRUE.
+LREAL  = .FALSE.
+ISMEAR = -5
+SIGMA  = 0.02
+ICHARG = 11
+LPLANE = .TRUE.
+NPAR   = 4
+LSCALU = .FALSE.
+NSIM   = 4
+LWAVE  = .FALSE.
+LCHARG = .FALSE.
+ICORELEVEL =  1
+LORBIT = 11  # output PDOS</code></pre><p>—KPOINTS—<br>DOS计算要求非常密集的k网格点，至少要求与自洽时k网格点相同，或可适当增加。</p>
+<pre><code>Monkhorst Pack of Gamma centered
+0
+Gamma
+ 29    29    1
+ 0.0   0.0   0.0</code></pre><p>POSCAR、POTCAR文件与自洽时相同；并保证在计算目录下有自洽时产生的CHGCAR和WAVECAR文件，以供读取。</p>
+<h3 id="结果分析-1"><a href="#结果分析-1" class="headerlink" title="结果分析"></a>结果分析</h3><h4 id="总的态密度"><a href="#总的态密度" class="headerlink" title="总的态密度"></a>总的态密度</h4><p><img src="/image/TDOS.png" alt="TDOS"></p>
+<h4 id="局域态密度"><a href="#局域态密度" class="headerlink" title="局域态密度"></a>局域态密度</h4><p><img src="/image/PDOS.png" alt="PDOS"></p>
+<h4 id="Se的分波态密度"><a href="#Se的分波态密度" class="headerlink" title="Se的分波态密度"></a>Se的分波态密度</h4><p><img src="/image/Se_PDOS.png" alt="Se_PDOS"></p>
+<h4 id="In的分波态密度"><a href="#In的分波态密度" class="headerlink" title="In的分波态密度"></a>In的分波态密度</h4><p><img src="/image/In_PDOS.png" alt="In_PDOS"></p>
+<h2 id="能带"><a href="#能带" class="headerlink" title="能带"></a>能带</h2><h3 id="前言-3"><a href="#前言-3" class="headerlink" title="前言"></a>前言</h3><p>&emsp;&emsp;能带理论是研究材料性质的重要方法，现利用VASP软件计算二维InSe的能带。</p>
+<h3 id="输入文件-5"><a href="#输入文件-5" class="headerlink" title="输入文件"></a>输入文件</h3><p>—INCAR—</p>
+<pre><code>SYSTEM = 2D_InSe
+ISTART = 1
+NWRITE = 2
+PREC   = Accurate
+ENCUT  = 500
+GGA    = PE
+NSW    = 0
+ISIF   = 2
+ISYM   = 2
+NBLOCK = 1
+KBLOCK = 1
+IBRION = -1
+NELM   = 80
+EDIFF  = 1E-05
+EDIFFG = -0.01
+ALGO   = Normal
+LDIAG  = .TRUE.
+LREAL  = .FALSE.
+ISMEAR = 0
+SIGMA  = 0.02
+ICHARG = 11
+LPLANE = .TRUE.
+NPAR   = 4
+LSCALU = .FALSE.
+NSIM   = 4
+LWAVE  = .FALSE.
+LCHARG = .FALSE.
+ICORELEVEL =  1
+LORBIT = 11</code></pre><p>—KPOINTS—</p>
+<pre class="line-numbers language-bash"><code class="language-bash">k-points along high symmetry lines
+  100
+Line-mode
+Rec
+   0.3333333  0.3333333 0       <span class="token operator">!</span>K
+   0          0         0       <span class="token operator">!</span>GAMMA
+
+   0          0         0       <span class="token operator">!</span>GAMMA
+   0.5        0         0       <span class="token operator">!</span>M
+
+   0.5        0         0       <span class="token operator">!</span>M
+   0.3333333  0.3333333 0       <span class="token operator">!</span>K<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>POSCAR、POTCAR文件与自洽时相同；并保证在计算目录下有自洽时产生的CHGCAR和WAVECAR文件，以供读取。</p>
+<h3 id="结果分析-2"><a href="#结果分析-2" class="headerlink" title="结果分析"></a>结果分析</h3><p>二维InSe能带<br><img src="/image/band.png" alt="band.png"><br>漂亮的二维InSe能带<br><img src="/image/new_band.png" alt="band.png"><br>二维InSe按原子投影的能带图<br><img src="/image/PBAND.png" alt="PBAND.png"><br>二维InSe按原子的$s$、$p$、$d$轨道投影的能带图<br>In原子<br><img src="/image/PBANDInspd.png" alt="PBANDInspd.png"><br>Se原子<br><img src="/image/PBANDSespd.png" alt="PBANDSespd.png"><br>InSe<br><img src="/image/PBNDSeInspd.png" alt="PBNDSeInspd.png"><br>二维InSe按原子的$s$、$p_x$、$p_y$、$p_z$轨道投影的能带图<br>In原子<br><img src="/image/PBANDInspxpypz.png" alt="PBANDInspxpypz.png"><br>Se原子<br><img src="/image/PBANDSespxpypz.png" alt="PBANDSespxpypz.png"></p>
+<p><font color="blue"> Note：通过做投影能带图，与分波态密度做对比发现，对于带边位置的贡献是一致的 </font></p>
 
             </div>
             <hr/>
@@ -1042,7 +1162,7 @@ set output</code></pre><h3 id="整体分析"><a href="#整体分析" class="head
             <br>
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">4.6k</span>&nbsp;字
+                class="white-color">5.4k</span>&nbsp;字
             
             
             
