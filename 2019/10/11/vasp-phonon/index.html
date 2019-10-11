@@ -4,8 +4,8 @@
 
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="VASP计算能带和态密度, 电-声子相互作用, 拓扑半金属, 第一性原理计算, 双钙钛矿氧化物">
-    <meta name="description" content="前言&amp;emsp;&amp;emsp;本文以二维InSe材料为例，详细介绍了二维材料的结构优化、静态自洽，能带计算和态密度计算的计算过程和注意事项。&amp;emsp;&amp;emsp;为了对二维材料的晶格常数进行充分优化，且不对真空层厚度做优化，需要修改vasp">
+    <meta name="keywords" content="vasp计算声子谱, 电-声子相互作用, 拓扑半金属, 第一性原理计算, 双钙钛矿氧化物">
+    <meta name="description" content="前言&amp;emsp;&amp;emsp;在第一性原理计算过程中考察体系稳定性是经常遇到的一个问题，也是大部分审稿人容易提问的地方；通常，使用声子谱研究体系的动力学稳定性，使用分子动力学研究体系的热稳定性；另外，可以借助于一些其他方法进一步说明体系的稳定">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -13,7 +13,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>VASP计算能带和态密度 | Physics</title>
+    <title>vasp计算声子谱 | Physics</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -303,13 +303,13 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/image/LDOS.png')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/image/InSe-our-calculation.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        VASP计算能带和态密度
+                        vasp计算声子谱
                     </div>
                 </div>
             </div>
@@ -424,12 +424,8 @@
                                 <span class="chip bg-color">vasp</span>
                             </a>
                         
-                            <a href="/tags/band-structure/" target="_blank">
-                                <span class="chip bg-color">band structure</span>
-                            </a>
-                        
-                            <a href="/tags/density-of-states/" target="_blank">
-                                <span class="chip bg-color">density of states</span>
+                            <a href="/tags/phonon-spectrum/" target="_blank">
+                                <span class="chip bg-color">phonon spectrum</span>
                             </a>
                         
                     </div>
@@ -452,21 +448,21 @@
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2019-10-04
+                    2019-10-11
                 </div>
 
                 
                     
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        2.8k
+                        1.5k
                     </div>
                     
 
                     
                     <div class="info-break-policy">
                         <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                        13 分
+                        6 分
                     </div>
                     
                 
@@ -482,95 +478,67 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>&emsp;&emsp;本文以二维InSe材料为例，详细介绍了二维材料的结构优化、静态自洽，能带计算和态密度计算的计算过程和注意事项。<br>&emsp;&emsp;为了对二维材料的晶格常数进行充分优化，且不对真空层厚度做优化，需要修改vasp安装包～/vasp.5.4.4/src/constr_cell_relax.F源文件，修改的具体说明可以参考清华大学刘锦程博士的<a href="http://blog.wangruixing.cn/2019/05/05/constr/" target="_blank" rel="noopener">博文</a>，编译时直接覆盖掉原文件即可，新的constr_cell_relax.F文件如下：</p>
-<pre><code>!-----------------------------------------------------------------------
-!
-! At present, VASP does not allow to relax the cellshape selectively
-! i.e. for instance only cell relaxation in x direction.
-! To be more precisse, this behaviour can not be achived via the INCAR
-! or POSCAR file.
-! However, it is possible to set selected components of the stress tensor
-! to zero.
-! The most conveninent position to do this is the routines 
-! CONSTR_CELL_RELAX  (constraint cell relaxation).
-! FCELL contains the forces on the basis vectors.
-! These forces are used to modify the basis vectors according
-! to the following equations:
-!
-!      A_OLD(1:3,1:3)=A(1:3,1:3) ! F90 style 
-!      DO J=1,3
-!      DO I=1,3
-!      DO K=1,3
-!        A(I,J)=A(I,J) + FCELL(I,K)*A_OLD(K,J)*STEP_SIZE
-!      ENDDO
-!      ENDDO
-!      ENDDO
-! where A holds the basis vectors (in cartesian coordinates).
-!
-!-----------------------------------------------------------------------
-
-      SUBROUTINE CONSTR_CELL_RELAX(FCELL)
-      USE prec
-      REAL(q) FCELL(3,3)
-
-!     just one simple example
-!     relaxation in x directions only
-!      SAVE=FCELL(1,1)
-!      FCELL=0   ! F90 style: set the whole array to zero
-!      FCELL(1,1)=SAVE
-!     relaxation in z direction only
-!      SAVE=FCELL(3,3)
-!      FCELL=0   ! F90 style: set the whole array to zero
-!      FCELL(3,3)=SAVE
-
-      LOGICAL FILFLG
-      INTEGER ICELL(3,3)
-      INQUIRE(FILE=&#39;OPTCELL&#39;,EXIST=FILFLG)
-      IF (FILFLG) THEN
-         OPEN(67,FILE=&#39;OPTCELL&#39;,FORM=&#39;FORMATTED&#39;,STATUS=&#39;OLD&#39;)
-         DO J=1,3
-            READ(67,&quot;(3I1)&quot;) (ICELL(I,J),I=1,3)
-         ENDDO
-         CLOSE(67)
-         DO J=1,3
-         DO I=1,3
-            IF (ICELL(I,J)==0) FCELL(I,J)=0.0
-         ENDDO
-         ENDDO
-      ENDIF
-
-      RETURN
-      END SUBROUTINE</code></pre><p>使用方法：在INCAR中设置ISIF = 3，同时在计算目录下新建OPTCELL文件，该文件为3$\times$3矩阵，在对称性满足的情况下可以对体系的9个自由度做弛豫。例如对于正交的二维材料，OPTCELL文件可写为：</p>
-<pre><code>100  # 优化x方向
-010  # 优化y方向
-000  # 不优化z方向</code></pre><h2 id="结构优化"><a href="#结构优化" class="headerlink" title="结构优化"></a>结构优化</h2><h3 id="输入文件"><a href="#输入文件" class="headerlink" title="输入文件"></a>输入文件</h3><h4 id="INCAR"><a href="#INCAR" class="headerlink" title="INCAR"></a>INCAR</h4><pre><code>   SYSTEM = 2D_InSe
-   ISTART = 0
-   NWRITE = 2   
-   PREC   = Accurate
-   ENCUT  = 500
-   GGA    = PE
-   NSW    = 200
-   ISIF   = 3
-   ISYM   = 2
-   NBLOCK = 1   
-   KBLOCK = 1
-   IBRION = 2
-   NELM   = 80     
-   EDIFF  = 1E-05
-   EDIFFG = -0.01 
-   ALGO   = Normal
-   LDIAG  = .TRUE.
-   LREAL  = .FALSE.
-   ISMEAR = 0
-   SIGMA  = 0.02
-   ICHARG = 2
-   LPLANE = .TRUE.
-   NPAR   = 4
-   LSCALU = .FALSE.
-   NSIM   = 4
-   LWAVE  = .FALSE.
-   LCHARG = .FALSE.
-   ICORELEVEL =  1</code></pre><h4 id="POSCAR"><a href="#POSCAR" class="headerlink" title="POSCAR"></a>POSCAR</h4><pre><code>2D_InSe
+                <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>&emsp;&emsp;在第一性原理计算过程中考察体系稳定性是经常遇到的一个问题，也是大部分审稿人容易提问的地方；通常，使用声子谱研究体系的动力学稳定性，使用分子动力学研究体系的热稳定性；另外，可以借助于一些其他方法进一步说明体系的稳定性，例如研究钙钛矿体系时通过离子半径判断稳定性，研究异质结时通过计算结合能判断稳定性等。</p>
+<h2 id="声子谱计算方法"><a href="#声子谱计算方法" class="headerlink" title="声子谱计算方法"></a>声子谱计算方法</h2><p>&emsp;&emsp;声子谱的计算主要有两种方法，一种是直接法，另一种是微扰密度泛函方法（DFPT）。<br>&emsp;&emsp;直接法，或称frozen-phonon方法，是通过在优化后的平衡结构中引入原子位移，计算作用在原子上的Hellmann-Feynman力，进而由动力学矩阵算出声子色散曲线。直接法的缺陷在于它要求声子波矢与原胞边界(super size)正交，或者原胞足够大使得Hellmann-Feynman力在原胞外可以忽略不计。这使得对于复杂系统，如对称性高的晶体、合金、超晶格等材料需要采用超原胞。超原胞的采用使计算量急剧增加，极大的限制了该方法的使用。<br>&emsp;&emsp;1987年，Baroni、Giannozzi和Testa提出了DFPT方法。DFPT通过计算系统能量对外场微扰的响应来求出晶格动力学性质。该方法最大的优势在于它不限定微扰的波矢与原胞边界正交，不需要超原胞也可以对任意波矢求解。Castep、Vasp等采用的是一种linear response theory 的方法（或者称为 density perturbation functional theory，DFPT），直接计算出原子的移动而导致的势场变化，再进一步构造出动力学矩阵。进而计算出声子谱。</p>
+<h2 id="计算环境的搭建"><a href="#计算环境的搭建" class="headerlink" title="计算环境的搭建"></a>计算环境的搭建</h2><p>&emsp;&emsp;计算所用的软件为VASP与phonopy code。</p>
+<h3 id="phonopy-code编译"><a href="#phonopy-code编译" class="headerlink" title="phonopy code编译"></a>phonopy code编译</h3><ul>
+<li><p>搭建Anaconda环境，下载链接，点<a href="https://www.anaconda.com/distribution/" target="_blank" rel="noopener">这里</a></p>
+</li>
+<li><p>安装Anaconda</p>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token function">bash</span> Anaconda3-2019.07-Linux-x86_64.sh<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</li>
+<li><p>写入环境变量</p>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token keyword">echo</span> <span class="token string">"export PATH=/……/anaconda3/bin:<span class="token variable">$PATH</span>"</span> <span class="token operator">>></span> ~/.bashrc
+<span class="token function">source</span> ~/.bashrc<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p><font color="blue"> Note: /……/表示自己服务器路径 </font></p>
+</li>
+<li><p>下载phonopy code，点<a href="https://pypi.org/project/phonopy/2.2.0/#files" target="_blank" rel="noopener">这里</a></p>
+</li>
+<li><p>编译phonopy code</p>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token function">tar</span> zxvf phonopy-2.2.0.tar.gz
+<span class="token function">cd</span> phonopy-2.2.0
+python3 setup.py <span class="token function">install</span> --user<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>写入phonopy的环境变量</p>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token keyword">echo</span> <span class="token string">"export PATH=/……/phonopy-2.2.0/build/scripts-3.7:<span class="token variable">$PATH</span>"</span> <span class="token operator">>></span> ~/.bashrc
+<span class="token function">source</span> ~/.bashrc<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p><font color="blue"> Note: /……/表示自己服务器路径 </font></p>
+</li>
+<li><p>检查phonopy code是否安装完成</p>
+<pre class="line-numbers language-bash"><code class="language-bash">$ phonopy<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p><img src="/image/phonopy.png" alt="phonopy"></p>
+</li>
+</ul>
+<h2 id="声子谱计算步骤"><a href="#声子谱计算步骤" class="headerlink" title="声子谱计算步骤"></a>声子谱计算步骤</h2><h3 id="结构优化"><a href="#结构优化" class="headerlink" title="结构优化"></a>结构优化</h3><p>&emsp;&emsp;声子谱的计算需要对原胞结构做高精度的充分优化，否则很容易出现虚频；下面以二维InSe为例，详细说明声子谱的计算步骤。</p>
+<h4 id="INCAR"><a href="#INCAR" class="headerlink" title="INCAR"></a>INCAR</h4><pre class="line-numbers language-bash"><code class="language-bash">   SYSTEM <span class="token operator">=</span> 2D_InSe
+   ISTART <span class="token operator">=</span> 0
+   NWRITE <span class="token operator">=</span> 2   
+   PREC   <span class="token operator">=</span> Accurate
+   ENCUT  <span class="token operator">=</span> 500
+   GGA    <span class="token operator">=</span> PE
+   NSW    <span class="token operator">=</span> 200
+   ISIF   <span class="token operator">=</span> 3
+   ISYM   <span class="token operator">=</span> 2
+   NBLOCK <span class="token operator">=</span> 1   
+   KBLOCK <span class="token operator">=</span> 1
+   IBRION <span class="token operator">=</span> 2
+   NELM   <span class="token operator">=</span> 80     
+   EDIFF  <span class="token operator">=</span> 1E-08
+   EDIFFG <span class="token operator">=</span> -0.001 
+   ALGO   <span class="token operator">=</span> Normal
+   LDIAG  <span class="token operator">=</span> .TRUE.
+   LREAL  <span class="token operator">=</span> .FALSE.
+   ISMEAR <span class="token operator">=</span> 0
+   SIGMA  <span class="token operator">=</span> 0.02
+   ICHARG <span class="token operator">=</span> 2
+   LPLANE <span class="token operator">=</span> .TRUE.
+   NPAR   <span class="token operator">=</span> 4
+   LSCALU <span class="token operator">=</span> .FALSE.
+   NSIM   <span class="token operator">=</span> 4
+   LWAVE  <span class="token operator">=</span> .FALSE.
+   LCHARG <span class="token operator">=</span> .FALSE.
+   ICORELEVEL <span class="token operator">=</span>  1<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="POSCAR"><a href="#POSCAR" class="headerlink" title="POSCAR"></a>POSCAR</h4><pre class="line-numbers language-bash"><code class="language-bash">2D_InSe
 1.0
         4.0836000443         0.0000000000         0.0000000000
        -2.0418000221         3.5365013772         0.0000000000
@@ -581,283 +549,77 @@ Direct
      0.666670026         0.333330010         0.589979992
      0.666670026         0.333330010         0.478789968
      0.333329978         0.666669998         0.428439986
-     0.333329978         0.666669998         0.640340007</code></pre><h4 id="KPOINTS"><a href="#KPOINTS" class="headerlink" title="KPOINTS"></a>KPOINTS</h4><pre><code>Monkhorst Pack of Gamma centered
+     0.333329978         0.666669998         0.640340007<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="KPOINTS"><a href="#KPOINTS" class="headerlink" title="KPOINTS"></a>KPOINTS</h4><pre class="line-numbers language-bash"><code class="language-bash">Monkhorst Pack of Gamma centered
 0
 Gamma
  13    13    1
- 0.0   0.0   0.0</code></pre><h4 id="POTCAR"><a href="#POTCAR" class="headerlink" title="POTCAR"></a>POTCAR</h4><pre><code>cat In_d/POTCAR Se/POTCAR &gt; POTCAR</code></pre><h4 id="OPTCELL"><a href="#OPTCELL" class="headerlink" title="OPTCELL"></a>OPTCELL</h4><pre><code>100
+ 0.0   0.0   0.0<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="POTCAR"><a href="#POTCAR" class="headerlink" title="POTCAR"></a>POTCAR</h4><pre class="line-numbers language-bash"><code class="language-bash"><span class="token function">cat</span> In_d/POTCAR Se/POTCAR <span class="token operator">></span> POTCAR<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h4 id="OPTCELL"><a href="#OPTCELL" class="headerlink" title="OPTCELL"></a>OPTCELL</h4><pre class="line-numbers language-bash"><code class="language-bash">100
 110
-000</code></pre><h3 id="结果分析"><a href="#结果分析" class="headerlink" title="结果分析"></a>结果分析</h3><ul>
-<li>判断是否达到收敛精度<pre class="line-numbers language-bash"><code class="language-bash"><span class="token function">grep</span> <span class="token string">"reached required accuracy"</span> log<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<pre><code>reached required accuracy - stopping structural energy minimisation</code></pre></li>
-<li>产看体系总能<pre class="line-numbers language-bash"><code class="language-bash"><span class="token function">grep</span> TOTEN OUTCAR <span class="token operator">|</span> <span class="token function">tail</span> -n 1<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<pre><code>free  energy   TOTEN  =       -14.21463638 eV</code></pre></li>
-<li>对比优化前后晶格常数的变化</li>
+000<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<h3 id="通过phonopy-code建立超胞"><a href="#通过phonopy-code建立超胞" class="headerlink" title="通过phonopy code建立超胞"></a>通过phonopy code建立超胞</h3><ul>
+<li><p>将优化后的结构文件拷贝为POSCAR</p>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token function">cp</span> CONTCAR POSCAR<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</li>
+<li><p>建立超胞</p>
+<pre class="line-numbers language-bash"><code class="language-bash">$ phonopy -d --dim<span class="token operator">=</span><span class="token string">"4 4 1"</span>
+$ <span class="token function">ls</span>
+phonopy_disp.yaml  POSCAR-002  POSCAR-005  POSCAR-008  POSCAR-011  POSCAR-014  SPOSCAR
+POSCAR             POSCAR-003  POSCAR-006  POSCAR-009  POSCAR-012  POSCAR-015
+POSCAR-001         POSCAR-004  POSCAR-007  POSCAR-010  POSCAR-013  POSCAR-016<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><font color="red"> Note: 建立超胞之前，一定要在MS中找好对称性，否则会增加大量的计算量 </font></p>
+</li>
+<li><p>POSCAR和SPOSCAR的重命名</p>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token function">cp</span> POSCAR POSCAR-unitcell
+<span class="token function">cp</span> SPOSCAR POSCAR<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h3 id="计算力学Hessian矩阵"><a href="#计算力学Hessian矩阵" class="headerlink" title="计算力学Hessian矩阵"></a>计算力学Hessian矩阵</h3><p>&emsp;&emsp;力学Hessian矩阵可由VASP计算得到，该矩阵保存于VASP的输出文件vasprun.xml中；计算过程中KPOINTS文件根据服务器计算能力，可适当增加，POTCAR文件无需改变，INCAR文件设置如下：</p>
+</li>
+<li><p>INCAR</p>
+<pre class="line-numbers language-bash"><code class="language-bash"> SYSTEM <span class="token operator">=</span> 2D_InSe
+ ISTART <span class="token operator">=</span> 0
+ NWRITE <span class="token operator">=</span> 2
+ IBRION <span class="token operator">=</span> 8 
+ NSW    <span class="token operator">=</span> 1
+ IALGO  <span class="token operator">=</span> 38
+ NELM   <span class="token operator">=</span> 200
+ EDIFF  <span class="token operator">=</span> 1E-07
+ EDIFFG <span class="token operator">=</span> -0.001
+ ISMEAR <span class="token operator">=</span> 0
+ SIGMA  <span class="token operator">=</span> 0.02
+ ENCUT  <span class="token operator">=</span> 500
+ PREC   <span class="token operator">=</span> Accurate
+ LREAL  <span class="token operator">=</span> .FALSE.
+ LWAVE  <span class="token operator">=</span> .FALSE.
+ LCHARG <span class="token operator">=</span> .FALSE.
+ ADDGRID <span class="token operator">=</span> .TRUE<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="数据处理"><a href="#数据处理" class="headerlink" title="数据处理"></a>数据处理</h3></li>
+<li><p>根据vasprun.xml文件生成力学文件FORCE_CONSTRAINS</p>
+<pre class="line-numbers language-bash"><code class="language-bash">phonopy --fc vasprun.xml<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</li>
+<li><p>编辑band.conf文件，该文件给出了高对称点路径的信息</p>
+<pre class="line-numbers language-bash"><code class="language-bash">ATOM_NAME <span class="token operator">=</span> In Se
+DIM <span class="token operator">=</span> 4 4 1
+BAND <span class="token operator">=</span> 0.5 0.0 0.0  0.0 0.0 0.0  0.333333 0.333333 0.0  0.5 0.0 0.0
+FORCE_CONSTANTS <span class="token operator">=</span> READ<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p><font color="blue"> Note:<br>line 1：元素名称，顺序与POSCAR保持一致<br>line 2：建立超胞的大小<br>line 3：高对称点路径，每组高对称点之间用两个空格隔开<br>line 4：表示读取力常数文件FORCE_CONSTANTS</font></p>
+
+</li>
+<li><p>生成band.yaml文件</p>
+<pre class="line-numbers language-bash"><code class="language-bash">phonopy --dim<span class="token operator">=</span><span class="token string">"4 4 1"</span> -c POSCAR-unitcell band.conf<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p><font color="blue"> Note：4 4 1为建立超胞的大小 </font></p>
+</li>
+<li><p>得到声子谱数据文件PBAND.dat文件</p>
+<pre class="line-numbers language-bash"><code class="language-bash">phonopy-bandplot  --gnuplot<span class="token operator">></span> PBAND.dat<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p><font color="blue"> Note: 高对称点标注说明：phonopy软件默认在两个高对称点之间打点51个，且在PBAND.dat中每组高对称点数据以一个空行分割，据此即可得到完整的声子谱图像 </font></p>
+</li>
+<li><p>计算结果<br><img src="/image/InSe-our-calculation.jpg" alt="InSe-our-Claculation"></p>
+</li>
+<li><p>文献结果<br><img src="/image/InSe-Reference.png" alt="InSe-Reference"></p>
+</li>
 </ul>
-<p>—优化前—</p>
-<pre><code>4.0836000443         0.0000000000         0.0000000000
--2.0418000221         3.5365013772         0.0000000000
-0.0000000000         0.0000000000        25.3775005341</code></pre><p>—优化后—</p>
-<pre><code>4.0830388054550770    0.0000000000000000    0.0000000000000000
--2.0415069539304227    3.5360297046777429    0.0000000000000000
-0.0000000000000000    0.0000000000000000   25.3775005341000011</code></pre><p><font color="blue"> 分析：对比发现优化后a轴和b轴方向的晶格常数略微发生了变化，而c轴方向的真空层厚度并没有发生变化，说明使用固定基矢的方法是可以对二维材料做充分优化的 </font></p>
-<ul>
-<li>现使用只优化原子位置、不优化晶格常数（ISIF=2）的方法对二维InSe重新进行优化，对比体系总能变化情况</li>
-</ul>
-<p>—ISIF=3—</p>
-<pre><code>free  energy   TOTEN  =       -14.21463638 eV</code></pre><p>—ISIF=2—</p>
-<pre><code>free  energy   TOTEN  =       -14.21464001 eV</code></pre><p><font color="blue"> 分析：对比发现，两个总能几乎没有差别，说明对于初始结构比较好的体系来说，两种优化方式基本没有差别；但是对于初始结构不是很好的体系，这两种优化方法应该是有差别的，本人推荐使用固定基矢的方法充分优化二维材料晶格；另外，对于材料施加应变，且需要考虑泊松效应时，固定基矢优化是非常好的方式 </font></p>
-<h2 id="截断能和k网格点收敛性测试"><a href="#截断能和k网格点收敛性测试" class="headerlink" title="截断能和k网格点收敛性测试"></a>截断能和k网格点收敛性测试</h2><p>&emsp;&emsp;在第一性原理计算过程中，截断能和k网格点的选取非常重要，选的太小容易造成体系没有达到最低能量状态，选的太大会耗费大量计算资源，尤其对于计算资源比较紧张的课题组，大量浪费计算资源会引起同学和导师的不满。在实际计算中对于截断能和k点选取的方法，一是参考已发表的论文值，这样有一定的说服力；二是需要自己去测试，一般保证体系总能变化范围在0.01~0.02 eV之间，就可认为截断能和k点达到了我们的计算要求。</p>
-<h3 id="二维InSe的截断能测试"><a href="#二维InSe的截断能测试" class="headerlink" title="二维InSe的截断能测试"></a>二维InSe的截断能测试</h3><p>&emsp;&emsp;首先对二维InSe的截断能做测试，测试范围是400-900 eV，能量间隔为50 eV。</p>
-<h4 id="输入文件-1"><a href="#输入文件-1" class="headerlink" title="输入文件"></a>输入文件</h4><p>&emsp;&emsp;在这一系列计算中，只需对INCAR文件做修改，其他文件无需修改；且计算完成后自动将体系总能随截断能的变化写入toten_vs_encut.dat文件，只需画图即可。实现方法是将INCAR以及一系列操作命令写入提交任务的脚本文件中。计算文件夹中包括：</p>
-<pre><code>KPOINTS POSCAR OPTCELL POTCAR vasp5.4.4.job</code></pre><p>—vasp5.4.4.job—</p>
-<pre class="line-numbers language-bash"><code class="language-bash"><span class="token shebang important">#!/bin/bash</span>
-<span class="token comment" spellcheck="true">#PBS -N 2D_InSe</span>
-<span class="token comment" spellcheck="true">#PBS -l nodes=1:ppn=16</span>
-<span class="token comment" spellcheck="true">#PBS -m abe</span>
-<span class="token comment" spellcheck="true">#PBS -j n</span>
-<span class="token comment" spellcheck="true">##PBS -o job.log</span>
-<span class="token comment" spellcheck="true">##PBS -e job.err</span>
-<span class="token comment" spellcheck="true">#PBS -l walltime=250:00:00</span>
-<span class="token function">cd</span> <span class="token variable">$PBS_O_WORKDIR</span>
-
-<span class="token function">touch</span> toten_vs_encut.dat
-
-<span class="token keyword">for</span> ENCUT <span class="token keyword">in</span> <span class="token variable"><span class="token variable">$(</span><span class="token function">seq</span> 400 50 800<span class="token variable">)</span></span><span class="token punctuation">;</span> <span class="token keyword">do</span>
-
-<span class="token comment" spellcheck="true"># generate INCAR</span>
-<span class="token function">cat</span> <span class="token operator">></span> INCAR <span class="token operator">&lt;&lt;</span> <span class="token string">EOF
-SYSTEM = 2D_InSe
-ISTART = 0
-NWRITE = 2   
-PREC   = Accurate
-ENCUT  = <span class="token variable">$ENCUT</span>
-GGA    = PE 
-NSW    = 200
-ISIF   = 3
-ISYM   = 2
-NBLOCK = 1   
-KBLOCK = 1
-IBRION = 2
-NELM   = 80   
-EDIFF  = 1E-05
-EDIFFG = -0.01 
-ALGO   = Normal
-LDIAG  = .TRUE.
-LREAL  = .FALSE.
-ISMEAR = 0
-SIGMA  = 0.02
-ICHARG = 2
-LPLANE = .TRUE.
-NPAR   = 4
-LSCALU = .FALSE.
-NSIM   = 4
-LWAVE  = .FALSE.
-LCHARG = .FALSE.
-ICORELEVEL =  1
-EOF</span>
-
-<span class="token function">date</span> <span class="token string">"+01 Today's date is: %D. The time execution %T"</span> <span class="token operator">>></span> time.info
-mpirun -np 16 /your direction/vasp.5.4.4/bin/vasp_std  <span class="token operator">></span> log
-<span class="token function">date</span> <span class="token string">"+02 Today's date is: %D. The time finish %T"</span> <span class="token operator">>></span> time.info
-
-<span class="token keyword">echo</span> -e <span class="token string">"<span class="token variable">$ENCUT</span> \c"</span> <span class="token operator">>></span> toten_vs_encut.dat
-<span class="token function">grep</span> TOTEN OUTCAR <span class="token operator">|</span> <span class="token function">tail</span> -n 1 <span class="token operator">|</span> \
-      <span class="token function">awk</span> <span class="token string">'/TOTEN/{print <span class="token variable"><span class="token variable">$(</span>NF-1<span class="token variable">)</span></span>}'</span> <span class="token operator">>></span> toten_vs_encut.dat
-<span class="token keyword">done</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h4 id="计算结果"><a href="#计算结果" class="headerlink" title="计算结果"></a>计算结果</h4><p>—toten_vs_encut.dat—</p>
-<pre><code>400 -14.21435689
-450 -14.21513620
-500 -14.21463059
-550 -14.21432926
-600 -14.21451881
-650 -14.21462419
-700 -14.21461680
-750 -14.21457254
-800 -14.21462319</code></pre><p><img src="/image/encut.png" alt="encut"><br>—encut.gnu—</p>
-<pre><code>set term post eps color enh solid 
-datafile=&#39;toten_vs_encut.dat&#39;
-set output &#39;encut.eps&#39;
-set title &#39;toten\_vs\_encut&#39; font &#39;Times_New_Roman,24&#39;
-set xlabel &#39;encut&#39; font &#39;Times_New_Roman,18&#39;
-set ylabel &#39;TOTEN&#39; font &#39;Times_New_Roman,18&#39;
-plot datafile  with linespoints lt 7 lw 4 pt 9 pointsize 2
-set output</code></pre><h3 id="二维InSe的k点测试"><a href="#二维InSe的k点测试" class="headerlink" title="二维InSe的k点测试"></a>二维InSe的k点测试</h3><h4 id="输入文件-2"><a href="#输入文件-2" class="headerlink" title="输入文件"></a>输入文件</h4><p>&emsp;&emsp;在这一系列计算中，只需对KPOINTS文件做修改，其他文件无需修改；且计算完成后自动将体系总能随k点的变化写入toten_vs_kpoints.dat文件，只需画图即可。实现方法是将kpoints以及一系列操作命令写入提交任务的脚本文件中。计算文件夹中包括：</p>
-<pre><code>INCAR POSCAR OPTCELL POTCAR vasp5.4.4.job</code></pre><p>—vasp5.4.4.job—</p>
-<pre class="line-numbers language-bash"><code class="language-bash"><span class="token shebang important">#!/bin/bash</span>
-<span class="token comment" spellcheck="true">#PBS -N 2D_InSe</span>
-<span class="token comment" spellcheck="true">#PBS -l nodes=1:ppn=16</span>
-<span class="token comment" spellcheck="true">#PBS -m abe</span>
-<span class="token comment" spellcheck="true">#PBS -j n</span>
-<span class="token comment" spellcheck="true">##PBS -o job.log</span>
-<span class="token comment" spellcheck="true">##PBS -e job.err</span>
-<span class="token comment" spellcheck="true">#PBS -l walltime=250:00:00</span>
-<span class="token function">cd</span> <span class="token variable">$PBS_O_WORKDIR</span>
-
-
-<span class="token function">touch</span> toten_vs_kpoints.dat
-
-<span class="token keyword">for</span> KPOINTS <span class="token keyword">in</span> <span class="token variable"><span class="token variable">$(</span><span class="token function">seq</span> 5 2 29<span class="token variable">)</span></span><span class="token punctuation">;</span> <span class="token keyword">do</span>
-
-<span class="token comment" spellcheck="true"># generate KPOINTS</span>
-<span class="token function">cat</span> <span class="token operator">></span> KPOINTS <span class="token operator">&lt;&lt;</span> <span class="token string">EOF
-Monkhorst Pack of Gamma centered
-0
-Gamma
- <span class="token variable">$KPOINTS</span>    <span class="token variable">$KPOINTS</span>    1
- 0.0   0.0   0.0
-EOF</span>
-
-<span class="token function">date</span> <span class="token string">"+01 Today's date is: %D. The time execution %T"</span> <span class="token operator">>></span> time.info
-mpirun -np 16 /your direction/vasp.5.4.4/bin/vasp_std  <span class="token operator">></span> log
-<span class="token function">date</span> <span class="token string">"+02 Today's date is: %D. The time finish %T"</span> <span class="token operator">>></span> time.info
-
-<span class="token keyword">echo</span> -e <span class="token string">"<span class="token variable">$KPOINTS</span> \c"</span> <span class="token operator">>></span> toten_vs_kpoints.dat
-<span class="token function">grep</span> TOTEN OUTCAR <span class="token operator">|</span> <span class="token function">tail</span> -n 1 <span class="token operator">|</span> \
-      <span class="token function">awk</span> <span class="token string">'/TOTEN/{print <span class="token variable"><span class="token variable">$(</span>NF-1<span class="token variable">)</span></span>}'</span> <span class="token operator">>></span> toten_vs_kpoints.dat
-<span class="token keyword">done</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h4 id="计算结果-1"><a href="#计算结果-1" class="headerlink" title="计算结果"></a>计算结果</h4><p>—toten_vs_kpoints.dat—</p>
-<pre><code>5 -14.19602773
-7 -14.21266556
-9 -14.21439462
-11 -14.21461257
-13 -14.21463638
-15 -14.21464405
-17 -14.21464831
-19 -14.21464821
-21 -14.21464741
-23 -14.21465053
-25 -14.21464752
-27 -14.21464720
-29 -14.21464820</code></pre><p><img src="/image/kpoints.png" alt="kpoints"><br>—kpoints.gnu—</p>
-<pre><code>set term post eps color enh solid 
-datafile=&#39;toten_vs_kpoints.dat&#39;
-set output &#39;kpoints.eps&#39;
-set title &#39;toten\_vs\_kpoints&#39; font &#39;Times_New_Roman,24&#39;
-set xlabel &#39;kpoints&#39; font &#39;Times_New_Roman,18&#39;
-set ylabel &#39;TOTEN&#39; font &#39;Times_New_Roman,18&#39;
-plot datafile  with linespoints lt 7 lw 4 pt 9 pointsize 2
-set output</code></pre><h3 id="整体分析"><a href="#整体分析" class="headerlink" title="整体分析"></a>整体分析</h3><p>&emsp;&emsp;整体分析发现，对于二维InSe的截断能和k点取值分别为500 eV和13$\times$13$\times$1已经足够精确;与<a href="https://pubs.rsc.org/en/content/articlelanding/2018/NR/C8NR03172J#!divAbstract" target="_blank" rel="noopener">Meng Wu</a>等人报道的计算细节基本一致，说明测试是合理的。</p>
-<h2 id="静态自洽"><a href="#静态自洽" class="headerlink" title="静态自洽"></a>静态自洽</h2><h3 id="前言-1"><a href="#前言-1" class="headerlink" title="前言"></a>前言</h3><p>&emsp;&emsp;VASP做静态自洽的目的主要是为了得到好的电子密度和波函数文件，为了使后续的性质计算可以读取电子密度和波函数，进而增加收敛速度。</p>
-<h3 id="输入文件-3"><a href="#输入文件-3" class="headerlink" title="输入文件"></a>输入文件</h3><p>—INCAR—</p>
-<pre><code>SYSTEM = 2D_InSe
-ISTART = 0
-NWRITE = 2   
-PREC   = Accurate
-ENCUT  = 500
-GGA    = PE 
-NSW    = 0
-ISIF   = 2
-ISYM   = 2
-NBLOCK = 1   
-KBLOCK = 1
-IBRION = -1 
-NELM   = 80   
-EDIFF  = 1E-05
-EDIFFG = -0.01 
-ALGO   = Normal
-LDIAG  = .TRUE.
-LREAL  = .FALSE.
-ISMEAR = 0
-SIGMA  = 0.02
-ICHARG = 2
-LPLANE = .TRUE.
-NPAR   = 4
-LSCALU = .FALSE.
-NSIM   = 4
-LWAVE  = .TRUE.
-LCHARG = .TRUE.
-ICORELEVEL =  1</code></pre><p>—POSCAR—<br>将优化完后的CONTCAR直接拷贝为POSCAR即可<br>—POTCAR—<br>与优化时的POTCAR文件相同<br>—KPOINTS—<br>自洽计算要求有密的k网格点，在计算条件允许的情况下要求自洽的k网格点大致为优化时的2倍左右。</p>
-<pre><code>Monkhorst Pack of Gamma centered
-0
-Gamma
- 25    25    1
- 0.0   0.0   0.0</code></pre><h2 id="态密度"><a href="#态密度" class="headerlink" title="态密度"></a>态密度</h2><h3 id="前言-2"><a href="#前言-2" class="headerlink" title="前言"></a>前言</h3><p>&emsp;&emsp;态密度是固体物理中一个非常重要的概念，在实验上可利用X射线发射光谱方法测定，在理论上可使用第一性原理计算软件计算得出；可以用于分析材料材料能隙特性、体系成键的特性、体系的自旋极化、相邻原子之间的作用强弱、电子比热和顺磁磁化率等性质。</p>
-<h3 id="输入文件-4"><a href="#输入文件-4" class="headerlink" title="输入文件"></a>输入文件</h3><p>—INCAR—</p>
-<pre><code>SYSTEM = 2D_InSe
-ISTART = 1
-NWRITE = 2
-PREC   = Accurate
-ENCUT  = 500
-GGA    = PE
-NSW    = 0
-ISIF   = 2
-ISYM   = 2
-NBLOCK = 1
-KBLOCK = 1
-IBRION = -1
-NELM   = 80
-EDIFF  = 1E-05
-EDIFFG = -0.01
-ALGO   = Normal
-LDIAG  = .TRUE.
-LREAL  = .FALSE.
-ISMEAR = -5
-SIGMA  = 0.02
-ICHARG = 11
-LPLANE = .TRUE.
-NPAR   = 4
-LSCALU = .FALSE.
-NSIM   = 4
-LWAVE  = .FALSE.
-LCHARG = .FALSE.
-ICORELEVEL =  1
-LORBIT = 11  # output PDOS</code></pre><p>—KPOINTS—<br>DOS计算要求非常密集的k网格点，至少要求与自洽时k网格点相同，或可适当增加。</p>
-<pre><code>Monkhorst Pack of Gamma centered
-0
-Gamma
- 29    29    1
- 0.0   0.0   0.0</code></pre><p>POSCAR、POTCAR文件与自洽时相同；并保证在计算目录下有自洽时产生的CHGCAR和WAVECAR文件，以供读取。</p>
-<h3 id="结果分析-1"><a href="#结果分析-1" class="headerlink" title="结果分析"></a>结果分析</h3><h4 id="总的态密度"><a href="#总的态密度" class="headerlink" title="总的态密度"></a>总的态密度</h4><p><img src="/image/TDOS.png" alt="TDOS"></p>
-<h4 id="局域态密度"><a href="#局域态密度" class="headerlink" title="局域态密度"></a>局域态密度</h4><p><img src="/image/LDOS.png" alt="LDOS"></p>
-<h4 id="Se的分波态密度"><a href="#Se的分波态密度" class="headerlink" title="Se的分波态密度"></a>Se的分波态密度</h4><p><img src="/image/Se_PDOS.png" alt="Se_PDOS"></p>
-<h4 id="In的分波态密度"><a href="#In的分波态密度" class="headerlink" title="In的分波态密度"></a>In的分波态密度</h4><p><img src="/image/In_PDOS.png" alt="In_PDOS"></p>
-<h2 id="能带"><a href="#能带" class="headerlink" title="能带"></a>能带</h2><h3 id="前言-3"><a href="#前言-3" class="headerlink" title="前言"></a>前言</h3><p>&emsp;&emsp;能带理论是研究材料性质的重要方法，现利用VASP软件计算二维InSe的能带。</p>
-<h3 id="输入文件-5"><a href="#输入文件-5" class="headerlink" title="输入文件"></a>输入文件</h3><p>—INCAR—</p>
-<pre><code>SYSTEM = 2D_InSe
-ISTART = 1
-NWRITE = 2
-PREC   = Accurate
-ENCUT  = 500
-GGA    = PE
-NSW    = 0
-ISIF   = 2
-ISYM   = 2
-NBLOCK = 1
-KBLOCK = 1
-IBRION = -1
-NELM   = 80
-EDIFF  = 1E-05
-EDIFFG = -0.01
-ALGO   = Normal
-LDIAG  = .TRUE.
-LREAL  = .FALSE.
-ISMEAR = 0
-SIGMA  = 0.02
-ICHARG = 11
-LPLANE = .TRUE.
-NPAR   = 4
-LSCALU = .FALSE.
-NSIM   = 4
-LWAVE  = .FALSE.
-LCHARG = .FALSE.
-ICORELEVEL =  1
-LORBIT = 11</code></pre><p>—KPOINTS—</p>
-<pre class="line-numbers language-bash"><code class="language-bash">k-points along high symmetry lines
-  100
-Line-mode
-Rec
-   0.3333333  0.3333333 0       <span class="token operator">!</span>K
-   0          0         0       <span class="token operator">!</span>GAMMA
-
-   0          0         0       <span class="token operator">!</span>GAMMA
-   0.5        0         0       <span class="token operator">!</span>M
-
-   0.5        0         0       <span class="token operator">!</span>M
-   0.3333333  0.3333333 0       <span class="token operator">!</span>K<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>POSCAR、POTCAR文件与自洽时相同；并保证在计算目录下有自洽时产生的CHGCAR和WAVECAR文件，以供读取。</p>
-<h3 id="结果分析-2"><a href="#结果分析-2" class="headerlink" title="结果分析"></a>结果分析</h3><p>二维InSe能带<br><img src="/image/band.png" alt="band.png"><br>漂亮的二维InSe能带<br><img src="/image/new_band.png" alt="band.png"><br>二维InSe按原子投影的能带图<br><img src="/image/PBAND.png" alt="PBAND.png"><br>二维InSe按原子的$s$、$p$、$d$轨道投影的能带图<br>In原子<br><img src="/image/PBANDInspd.png" alt="PBANDInspd.png"><br>Se原子<br><img src="/image/PBANDSespd.png" alt="PBANDSespd.png"><br>InSe<br><img src="/image/PBNDSeInspd.png" alt="PBNDSeInspd.png"><br>二维InSe按原子的$s$、$p_x$、$p_y$、$p_z$轨道投影的能带图<br>In原子<br><img src="/image/PBANDInspxpypz.png" alt="PBANDInspxpypz.png"><br><img src="/image/PBANDIn.png" alt="PBANDInspxpypz.png"><br>Se原子<br><img src="/image/PBANDSespxpypz.png" alt="PBANDSespxpypz.png"><br><img src="/image/PBANDSe.png" alt="PBANDSespxpypz.png"></p>
-<p><font color="blue"> Note：通过做投影能带图，与分波态密度做对比发现，对于带边位置的贡献是一致的 </font></p>
+<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>&emsp;&emsp;如果计算完的声子谱其他地方都好，就是在Γ点有一点点虚频，那么这个材料很可能是稳定的，只是你优化做得不够好，进一步提高优化的精度可消除这一点点虚频。<br>&emsp;&emsp;对于二维材料，如果在Γ点出现很小的虚频，基本可以认为这个材料是稳定的，大部分二维材料都会有此现象；尤其是VASP结合phonopy code计算二维材料的声子谱在Γ点更是容易出现虚频；使用Quantum-ESPRESSO的PWSCF和PH模块计算声子谱对于内存的需求较小一些，且对于二维材料的声子谱计算更友好一些，后期会详细介绍Quantum-ESPRESSO计算声子谱的具体步骤。</p>
 
             </div>
             <hr/>
@@ -895,9 +657,10 @@ Rec
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="fa fa-dot-circle-o"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <a href="/2019/10/11/vasp-phonon/">
                     <div class="card-image">
@@ -914,9 +677,9 @@ Rec
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2019-10-11
-                        </span>
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-10-11
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
@@ -929,6 +692,7 @@ Rec
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -951,24 +715,23 @@ Rec
                 下一篇&nbsp;<i class="fa fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2019/09/27/vasp-kpoints/">
+                <a href="/2019/10/04/vasp-band-structure-dos/">
                     <div class="card-image">
                         
+                        <img src="/image/LDOS.png" class="responsive-img" alt="VASP计算能带和态密度">
                         
-                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="vasp_kpoints文件设置详解">
-                        
-                        <span class="card-title">vasp_kpoints文件设置详解</span>
+                        <span class="card-title">VASP计算能带和态密度</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            详细介绍了kpoints文件的设置方法，并给出了经验总结
+                            以单层InSe为例，详细介绍了结构优化，静态自洽，能带计算和态密度计算过程
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-09-27
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-10-04
                             </span>
                         <span class="publish-author">
                             
@@ -989,8 +752,12 @@ Rec
                         <span class="chip bg-color">vasp</span>
                     </a>
                     
-                    <a href="/tags/kpoints/" target="_blank">
-                        <span class="chip bg-color">kpoints</span>
+                    <a href="/tags/band-structure/" target="_blank">
+                        <span class="chip bg-color">band structure</span>
+                    </a>
+                    
+                    <a href="/tags/density-of-states/" target="_blank">
+                        <span class="chip bg-color">density of states</span>
                     </a>
                     
                 </div>
