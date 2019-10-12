@@ -4,8 +4,12 @@
 
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="vasp计算声子谱, 电-声子相互作用, 拓扑半金属, 第一性原理计算, 双钙钛矿氧化物">
-    <meta name="description" content="前言&amp;emsp;&amp;emsp;在第一性原理计算过程中考察体系稳定性是经常遇到的一个问题，也是大部分审稿人容易提问的地方；通常，使用声子谱研究体系的动力学稳定性，使用分子动力学研究体系的热稳定性；另外，可以借助于一些其他方法进一步说明体系的稳定">
+    <meta name="keywords" content="vasp计算光学性质, 电-声子相互作用, 拓扑半金属, 第一性原理计算, 双钙钛矿氧化物">
+    <meta name="description" content="前言&amp;emsp;&amp;emsp;本文以二维InSe材料为例，详细介绍了二维InSe的光学性质计算过程。
+结构优化INCAR   SYSTEM = 2D_InSe
+   ISTART = 0
+   NWRITE = 2   
+   PREC   ">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -13,7 +17,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>vasp计算声子谱 | Physics</title>
+    <title>vasp计算光学性质 | Physics</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -303,13 +307,13 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/image/InSe-our-calculation.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/image/2D_InSe-absorption.png')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        vasp计算声子谱
+                        vasp计算光学性质
                     </div>
                 </div>
             </div>
@@ -420,8 +424,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/phonon-spectrum/" target="_blank">
-                                <span class="chip bg-color">phonon spectrum</span>
+                            <a href="/tags/optics/" target="_blank">
+                                <span class="chip bg-color">optics</span>
                             </a>
                         
                     </div>
@@ -444,21 +448,21 @@
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2019-10-11
+                    2019-10-12
                 </div>
 
                 
                     
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        1.5k
+                        1.4k
                     </div>
                     
 
                     
                     <div class="info-break-policy">
                         <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                        6 分
+                        8 分
                     </div>
                     
                 
@@ -474,39 +478,8 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>&emsp;&emsp;在第一性原理计算过程中考察体系稳定性是经常遇到的一个问题，也是大部分审稿人容易提问的地方；通常，使用声子谱研究体系的动力学稳定性，使用分子动力学研究体系的热稳定性；另外，可以借助于一些其他方法进一步说明体系的稳定性，例如研究钙钛矿体系时通过离子半径判断稳定性，研究异质结时通过计算结合能判断稳定性等。</p>
-<h2 id="声子谱计算方法"><a href="#声子谱计算方法" class="headerlink" title="声子谱计算方法"></a>声子谱计算方法</h2><p>&emsp;&emsp;声子谱的计算主要有两种方法，一种是直接法，另一种是微扰密度泛函方法（DFPT）。<br>&emsp;&emsp;直接法，或称frozen-phonon方法，是通过在优化后的平衡结构中引入原子位移，计算作用在原子上的Hellmann-Feynman力，进而由动力学矩阵算出声子色散曲线。直接法的缺陷在于它要求声子波矢与原胞边界(super size)正交，或者原胞足够大使得Hellmann-Feynman力在原胞外可以忽略不计。这使得对于复杂系统，如对称性高的晶体、合金、超晶格等材料需要采用超原胞。超原胞的采用使计算量急剧增加，极大的限制了该方法的使用。<br>&emsp;&emsp;1987年，Baroni、Giannozzi和Testa提出了DFPT方法。DFPT通过计算系统能量对外场微扰的响应来求出晶格动力学性质。该方法最大的优势在于它不限定微扰的波矢与原胞边界正交，不需要超原胞也可以对任意波矢求解。Castep、Vasp等采用的是一种linear response theory 的方法（或者称为 density perturbation functional theory，DFPT），直接计算出原子的移动而导致的势场变化，再进一步构造出动力学矩阵。进而计算出声子谱。</p>
-<h2 id="计算环境的搭建"><a href="#计算环境的搭建" class="headerlink" title="计算环境的搭建"></a>计算环境的搭建</h2><p>&emsp;&emsp;计算所用的软件为VASP与phonopy code。</p>
-<h3 id="phonopy-code编译"><a href="#phonopy-code编译" class="headerlink" title="phonopy code编译"></a>phonopy code编译</h3><ul>
-<li><p>搭建Anaconda环境，下载链接，点<a href="https://www.anaconda.com/distribution/" target="_blank" rel="noopener">这里</a></p>
-</li>
-<li><p>安装Anaconda</p>
-<pre class="line-numbers language-bash"><code class="language-bash"><span class="token function">bash</span> Anaconda3-2019.07-Linux-x86_64.sh<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-</li>
-<li><p>写入环境变量</p>
-<pre class="line-numbers language-bash"><code class="language-bash"><span class="token keyword">echo</span> <span class="token string">"export PATH=/……/anaconda3/bin:<span class="token variable">$PATH</span>"</span> <span class="token operator">>></span> ~/.bashrc
-<span class="token function">source</span> ~/.bashrc<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<p><font color="blue"> Note: /……/表示自己服务器路径 </font></p>
-</li>
-<li><p>下载phonopy code，点<a href="https://pypi.org/project/phonopy/2.2.0/#files" target="_blank" rel="noopener">这里</a></p>
-</li>
-<li><p>编译phonopy code</p>
-<pre class="line-numbers language-bash"><code class="language-bash"><span class="token function">tar</span> zxvf phonopy-2.2.0.tar.gz
-<span class="token function">cd</span> phonopy-2.2.0
-python3 setup.py <span class="token function">install</span> --user<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-</li>
-<li><p>写入phonopy的环境变量</p>
-<pre class="line-numbers language-bash"><code class="language-bash"><span class="token keyword">echo</span> <span class="token string">"export PATH=/……/phonopy-2.2.0/build/scripts-3.7:<span class="token variable">$PATH</span>"</span> <span class="token operator">>></span> ~/.bashrc
-<span class="token function">source</span> ~/.bashrc<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<p><font color="blue"> Note: /……/表示自己服务器路径 </font></p>
-</li>
-<li><p>检查phonopy code是否安装完成</p>
-<pre class="line-numbers language-bash"><code class="language-bash">$ phonopy<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p><img src="/image/phonopy.png" alt="phonopy"></p>
-</li>
-</ul>
-<h2 id="声子谱计算步骤"><a href="#声子谱计算步骤" class="headerlink" title="声子谱计算步骤"></a>声子谱计算步骤</h2><h3 id="结构优化"><a href="#结构优化" class="headerlink" title="结构优化"></a>结构优化</h3><p>&emsp;&emsp;声子谱的计算需要对原胞结构做高精度的充分优化，否则很容易出现虚频；下面以二维InSe为例，详细说明声子谱的计算步骤。</p>
-<h4 id="INCAR"><a href="#INCAR" class="headerlink" title="INCAR"></a>INCAR</h4><pre class="line-numbers language-bash"><code class="language-bash">   SYSTEM <span class="token operator">=</span> 2D_InSe
+                <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>&emsp;&emsp;本文以二维InSe材料为例，详细介绍了二维InSe的光学性质计算过程。</p>
+<h2 id="结构优化"><a href="#结构优化" class="headerlink" title="结构优化"></a>结构优化</h2><h4 id="INCAR"><a href="#INCAR" class="headerlink" title="INCAR"></a>INCAR</h4><pre class="line-numbers language-bash"><code class="language-bash">   SYSTEM <span class="token operator">=</span> 2D_InSe
    ISTART <span class="token operator">=</span> 0
    NWRITE <span class="token operator">=</span> 2   
    PREC   <span class="token operator">=</span> Accurate
@@ -519,8 +492,8 @@ python3 setup.py <span class="token function">install</span> --user<span aria-hi
    KBLOCK <span class="token operator">=</span> 1
    IBRION <span class="token operator">=</span> 2
    NELM   <span class="token operator">=</span> 80     
-   EDIFF  <span class="token operator">=</span> 1E-08
-   EDIFFG <span class="token operator">=</span> -0.001 
+   EDIFF  <span class="token operator">=</span> 1E-05
+   EDIFFG <span class="token operator">=</span> -0.01 
    ALGO   <span class="token operator">=</span> Normal
    LDIAG  <span class="token operator">=</span> .TRUE.
    LREAL  <span class="token operator">=</span> .FALSE.
@@ -555,67 +528,188 @@ Gamma
 <h4 id="OPTCELL"><a href="#OPTCELL" class="headerlink" title="OPTCELL"></a>OPTCELL</h4><pre class="line-numbers language-bash"><code class="language-bash">100
 110
 000<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<h3 id="通过phonopy-code建立超胞"><a href="#通过phonopy-code建立超胞" class="headerlink" title="通过phonopy code建立超胞"></a>通过phonopy code建立超胞</h3><ul>
-<li><p>将优化后的结构文件拷贝为POSCAR</p>
-<pre class="line-numbers language-bash"><code class="language-bash"><span class="token function">cp</span> CONTCAR POSCAR<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h2 id="静态自洽"><a href="#静态自洽" class="headerlink" title="静态自洽"></a>静态自洽</h2><h4 id="INCAR-1"><a href="#INCAR-1" class="headerlink" title="INCAR"></a>INCAR</h4><pre class="line-numbers language-bash"><code class="language-bash">SYSTEM <span class="token operator">=</span> 2D_InSe
+ISTART <span class="token operator">=</span> 0
+NWRITE <span class="token operator">=</span> 2   
+PREC   <span class="token operator">=</span> Accurate
+ENCUT  <span class="token operator">=</span> 500
+GGA    <span class="token operator">=</span> PE 
+NSW    <span class="token operator">=</span> 0
+ISIF   <span class="token operator">=</span> 2
+ISYM   <span class="token operator">=</span> 2
+NBLOCK <span class="token operator">=</span> 1   
+KBLOCK <span class="token operator">=</span> 1
+IBRION <span class="token operator">=</span> -1 
+NELM   <span class="token operator">=</span> 80   
+EDIFF  <span class="token operator">=</span> 1E-05
+EDIFFG <span class="token operator">=</span> -0.01 
+ALGO   <span class="token operator">=</span> Normal
+LDIAG  <span class="token operator">=</span> .TRUE.
+LREAL  <span class="token operator">=</span> .FALSE.
+ISMEAR <span class="token operator">=</span> 0
+SIGMA  <span class="token operator">=</span> 0.02
+ICHARG <span class="token operator">=</span> 2
+LPLANE <span class="token operator">=</span> .TRUE.
+NPAR   <span class="token operator">=</span> 4
+LSCALU <span class="token operator">=</span> .FALSE.
+NSIM   <span class="token operator">=</span> 4
+LWAVE  <span class="token operator">=</span> .TRUE.
+LCHARG <span class="token operator">=</span> .TRUE.
+ICORELEVEL <span class="token operator">=</span>  1<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="POSCAR-1"><a href="#POSCAR-1" class="headerlink" title="POSCAR"></a>POSCAR</h4><pre class="line-numbers language-bash"><code class="language-bash"><span class="token function">cp</span> CONTCAR POSCAR<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h4 id="KPOINTS-1"><a href="#KPOINTS-1" class="headerlink" title="KPOINTS"></a>KPOINTS</h4><p>&emsp;&emsp;自洽计算要求有密的k网格点，在计算条件允许的情况下要求自洽的k网格点大致为优化时的2倍左右。</p>
+<pre class="line-numbers language-bash"><code class="language-bash">Monkhorst Pack of Gamma centered
+0
+Gamma
+ 25    25    1
+ 0.0   0.0   0.0<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="光学性质计算"><a href="#光学性质计算" class="headerlink" title="光学性质计算"></a>光学性质计算</h2><h4 id="INCAR-2"><a href="#INCAR-2" class="headerlink" title="INCAR"></a>INCAR</h4><pre class="line-numbers language-bash"><code class="language-bash">SYSTEM <span class="token operator">=</span> 2D_InSe
+ISTART <span class="token operator">=</span> 1
+NWRITE <span class="token operator">=</span> 2   
+PREC   <span class="token operator">=</span> Accurate
+ENCUT  <span class="token operator">=</span> 500
+GGA    <span class="token operator">=</span> PE
+NSW    <span class="token operator">=</span> 0
+ISIF   <span class="token operator">=</span> 2
+ISYM   <span class="token operator">=</span> 2
+NBLOCK <span class="token operator">=</span> 1   
+KBLOCK <span class="token operator">=</span> 1
+IBRION <span class="token operator">=</span> -1
+NELM   <span class="token operator">=</span> 80     
+EDIFF  <span class="token operator">=</span> 1E-05
+EDIFFG <span class="token operator">=</span> -0.01 
+ALGO   <span class="token operator">=</span> Normal
+LDIAG  <span class="token operator">=</span> .TRUE.
+LREAL  <span class="token operator">=</span> .FALSE.
+ISMEAR <span class="token operator">=</span> 0
+SIGMA  <span class="token operator">=</span> 0.02
+ICHARG <span class="token operator">=</span> 11
+LPLANE <span class="token operator">=</span> .TRUE.
+NPAR   <span class="token operator">=</span> 4
+LSCALU <span class="token operator">=</span> .FALSE.
+NSIM   <span class="token operator">=</span> 4
+LWAVE  <span class="token operator">=</span> .FALSE.
+LCHARG <span class="token operator">=</span> .FALSE.
+LOPTICS <span class="token operator">=</span> .TRUE.
+NBANDS  <span class="token operator">=</span>  72 
+NEDOS   <span class="token operator">=</span>  2000
+CSHIFT  <span class="token operator">=</span>  0.1 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="KPOINTS-2"><a href="#KPOINTS-2" class="headerlink" title="KPOINTS"></a>KPOINTS</h4><pre class="line-numbers language-bash"><code class="language-bash">Monkhorst Pack of Gamma centered
+0
+Gamma
+ 29    29    1
+ 0.0   0.0   0.0<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><font color="blue"> Note：对于光学性质的计算，也就是计算材料的介电函数，需要足够多的空带和致密的K网格点，使其达到非常好的收敛状态，我们才可以得到合理的光学性质；因此通常计算中，一般设置NBANDS为默认值（可在自洽的OUTCAR中以关键字NBANDS查找到）的2-3倍，K网格点为自洽值或适当增加 </font></p>
+<ul>
+<li>其余的POSCAR、POTCAR不变，并要求有WAVECAR和CHGCAR文件，以供读取<h3 id="数据处理"><a href="#数据处理" class="headerlink" title="数据处理"></a>数据处理</h3></li>
+<li>使用optics.sh脚本得到介电函数的实部和虚部<pre class="line-numbers language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># extract image and real parts of dielectric function from vasprun.xml</span>
+<span class="token function">awk</span> <span class="token string">'BEGIN{i=1} /&lt;imag>/,\
+              /&lt;\/imag>/ \
+               {a[i]=<span class="token variable">$2</span> ; b[i]=<span class="token variable">$3</span> ; c[i]=<span class="token variable">$4</span>; d[i]=<span class="token variable">$5</span> ; e[i]=<span class="token variable">$6</span> ; f[i]=<span class="token variable">$7</span>; g[i]=<span class="token variable">$8</span>; i=i+1} \
+   END{for (j=12;j&lt;i-3;j++) print a[j],b[j],c[j],d[j],e[j],f[j],g[j]}'</span> vasprun.xml <span class="token operator">></span> IMAG.in
+<span class="token comment" spellcheck="true">#awk 'BEGIN{i=1} /imag/,\</span>
+<span class="token comment" spellcheck="true">#                /\/imag/ \</span>
+<span class="token comment" spellcheck="true">#                 {a[i]=$2 ; b[i]=$3 ; c[i]=$4; d[i]=$5 ; e[i]=$6 ; f[i]=$7; g[i]=$8; i=i+1} \</span>
+<span class="token comment" spellcheck="true">#     END{for (j=12;j&lt;i-3;j++) print a[j],b[j],c[j],d[j],e[j],f[j],g[j]}' vasprun.xml > IMAG.in</span>
+<span class="token function">awk</span> <span class="token string">'BEGIN{i=1} /&lt;real>/,\
+              /&lt;\/real>/ \
+               {a[i]=<span class="token variable">$2</span> ; b[i]=<span class="token variable">$3</span> ; c[i]=<span class="token variable">$4</span>; d[i]=<span class="token variable">$5</span> ; e[i]=<span class="token variable">$6</span> ; f[i]=<span class="token variable">$7</span>; g[i]=<span class="token variable">$8</span>; i=i+1} \
+   END{for (j=12;j&lt;i-3;j++) print a[j],b[j],c[j],d[j],e[j],f[j],g[j]}'</span> vasprun.xml <span class="token operator">></span> REAL.in<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 </li>
-<li><p>建立超胞</p>
-<pre class="line-numbers language-bash"><code class="language-bash">$ phonopy -d --dim<span class="token operator">=</span><span class="token string">"4 4 1"</span>
-$ <span class="token function">ls</span>
-phonopy_disp.yaml  POSCAR-002  POSCAR-005  POSCAR-008  POSCAR-011  POSCAR-014  SPOSCAR
-POSCAR             POSCAR-003  POSCAR-006  POSCAR-009  POSCAR-012  POSCAR-015
-POSCAR-001         POSCAR-004  POSCAR-007  POSCAR-010  POSCAR-013  POSCAR-016<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><font color="red"> Note: 建立超胞之前，一定要在MS中找好对称性，否则会增加大量的计算量 </font></p>
+<li>使用<a href="https://sourceforge.net/projects/vaspkit/" target="_blank" rel="noopener">vaspkit-1.00</a>后处理软件得到光学性质<pre class="line-numbers language-bash"><code class="language-bash">$ vaspkit-1.00
+          \\\///
+         / _  _ \       Hey, you must know what you are doing.
+       <span class="token punctuation">(</span><span class="token operator">|</span> <span class="token punctuation">(</span>.<span class="token punctuation">)</span><span class="token punctuation">(</span>.<span class="token punctuation">)</span> <span class="token operator">|</span><span class="token punctuation">)</span>     Otherwise you might get wrong results<span class="token operator">!</span>
++-----.OOOo--<span class="token punctuation">(</span><span class="token punctuation">)</span>--oOOO.------------------------------------------+
+<span class="token operator">|</span>             VASPKIT Version: 1.00 <span class="token punctuation">(</span>16 Sep. 2019<span class="token punctuation">)</span>              <span class="token operator">|</span>
+<span class="token operator">|</span>       A Pre- and Post-Processing Program <span class="token keyword">for</span> VASP Code        <span class="token operator">|</span>
+<span class="token operator">|</span>       Core Developers: Vei WANG, Nan XU, Jin-Cheng LIU        <span class="token operator">|</span>
+<span class="token operator">|</span>    Please send Bugs and Suggestions to vaspkit@gmail.com      <span class="token operator">|</span>
++-----.oooO-----------------------------------------------------+
+      <span class="token punctuation">(</span>   <span class="token punctuation">)</span>   Oooo.
+       \ <span class="token punctuation">(</span>    <span class="token punctuation">(</span>   <span class="token punctuation">)</span>
+        \_<span class="token punctuation">)</span>    <span class="token punctuation">)</span> /
+              <span class="token punctuation">(</span>_/
+<span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">=</span> Structural Options <span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span>
+1<span class="token punctuation">)</span>  VASP Input Files Generator    2<span class="token punctuation">)</span>  Elastic-Properties
+3<span class="token punctuation">)</span>  K-Path Generator              4<span class="token punctuation">)</span>  Structure Editor
+5<span class="token punctuation">)</span>  Catalysis-ElectroChemi Kit    6<span class="token punctuation">)</span>  Symmetry Search
+<span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">=</span> Electronic Options <span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span>
+11<span class="token punctuation">)</span> Density-of-States             21<span class="token punctuation">)</span> DFT Band-Structure
+23<span class="token punctuation">)</span> 3D Band-Structure             25<span class="token punctuation">)</span> Hybrid-DFT Band-Structure
+26<span class="token punctuation">)</span> Fermi-Surface                 28<span class="token punctuation">)</span> Band-Structure Unfolding
+<span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">=</span> Charge <span class="token operator">&amp;</span> Potential <span class="token operator">&amp;</span> Wavefunction Options <span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">=</span>
+31<span class="token punctuation">)</span> Charge <span class="token operator">&amp;</span> Spin Density         42<span class="token punctuation">)</span> Potential-Related
+51<span class="token punctuation">)</span> Wave-Function Analysis
+<span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span> Misc Utilities <span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">=</span>
+71<span class="token punctuation">)</span> Optical-Properties            72<span class="token punctuation">)</span> Molecular-Dynamics Kit
+73<span class="token punctuation">)</span> VASP2BoltzTraP Interface
+91<span class="token punctuation">)</span> Semiconductor Calculator      92<span class="token punctuation">)</span> 2D-Materials Kit
+0<span class="token punctuation">)</span>  Quit
+------------<span class="token operator">>></span>
+71
+<span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span> Optical Options <span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span>
+711<span class="token punctuation">)</span> Linear Optical Spectrums
+712<span class="token punctuation">)</span> Transition Dipole Moment at Single Kpoint
+713<span class="token punctuation">)</span> Transition Dipole Moment <span class="token keyword">for</span> Band-Structure
+716<span class="token punctuation">)</span> Total Joint Density of States
+717<span class="token punctuation">)</span> Partial Joint Density of States
+0<span class="token punctuation">)</span>   Quit
+9<span class="token punctuation">)</span>   Back
+------------<span class="token operator">>></span>
+711
++-------------------------- Warm Tips --------------------------+
+       See an example <span class="token keyword">in</span> vaspkit/examples/Si_bse_optical.
+   This module is NOT suitable <span class="token keyword">for</span> low-dimensional materials.
++---------------------------------------------------------------+
+<span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">=</span> Energy Unit <span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">=</span>
+Which Energy Unit Do You Want to Adopt?
+1<span class="token punctuation">)</span> eV
+2<span class="token punctuation">)</span> nm
+3<span class="token punctuation">)</span> THz
+------------<span class="token operator">>></span>
+1
+--<span class="token operator">>></span> <span class="token punctuation">(</span>01<span class="token punctuation">)</span> Reading IMAG.in and REAL.in Files<span class="token punctuation">..</span>.
+--<span class="token operator">>></span> <span class="token punctuation">(</span>02<span class="token punctuation">)</span> Written Optical Files Succesfully<span class="token operator">!</span>
++---------------------------------------------------------------+
+<span class="token operator">|</span>                         * DISCLAIMER *                        <span class="token operator">|</span>
+<span class="token operator">|</span>      Check the Consistency of Your Results <span class="token keyword">if</span> Necessary       <span class="token operator">|</span>
+<span class="token operator">|</span>         Any Suggestions <span class="token keyword">for</span> Improvements are Welcome          <span class="token operator">|</span>
+<span class="token operator">|</span>                     <span class="token punctuation">(</span>^.^<span class="token punctuation">)</span> GOOD LUCK <span class="token punctuation">(</span>^.^<span class="token punctuation">)</span>                     <span class="token operator">|</span>
+<span class="token operator">|</span>---------------------------------------------------------------<span class="token operator">|</span>
+<span class="token operator">|</span> We Would Appreciate <span class="token keyword">if</span> You Cite <span class="token keyword">in</span> Your Research with VASPKIT.<span class="token operator">|</span>
+<span class="token operator">|</span> Ref: V. Wang, N. Xu, J.C. LIU, G. Tang, et al, VASPKIT: A Pre-<span class="token operator">|</span>
+<span class="token operator">|</span> and Post-Processing Program <span class="token keyword">for</span> VASP Code, arXiv:1908.08269.  <span class="token operator">|</span>
++---------------------------------------------------------------+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 </li>
-<li><p>POSCAR和SPOSCAR的重命名</p>
-<pre class="line-numbers language-bash"><code class="language-bash"><span class="token function">cp</span> POSCAR POSCAR-unitcell
-<span class="token function">cp</span> SPOSCAR POSCAR<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<h3 id="计算力学Hessian矩阵"><a href="#计算力学Hessian矩阵" class="headerlink" title="计算力学Hessian矩阵"></a>计算力学Hessian矩阵</h3><p>&emsp;&emsp;力学Hessian矩阵可由VASP计算得到，该矩阵保存于VASP的输出文件vasprun.xml中；计算过程中KPOINTS文件根据服务器计算能力，可适当增加，POTCAR文件无需改变，INCAR文件设置如下：</p>
-</li>
-<li><p>INCAR</p>
-<pre class="line-numbers language-bash"><code class="language-bash"> SYSTEM <span class="token operator">=</span> 2D_InSe
- ISTART <span class="token operator">=</span> 0
- NWRITE <span class="token operator">=</span> 2
- IBRION <span class="token operator">=</span> 8 
- NSW    <span class="token operator">=</span> 1
- IALGO  <span class="token operator">=</span> 38
- NELM   <span class="token operator">=</span> 200
- EDIFF  <span class="token operator">=</span> 1E-07
- EDIFFG <span class="token operator">=</span> -0.001
- ISMEAR <span class="token operator">=</span> 0
- SIGMA  <span class="token operator">=</span> 0.02
- ENCUT  <span class="token operator">=</span> 500
- PREC   <span class="token operator">=</span> Accurate
- LREAL  <span class="token operator">=</span> .FALSE.
- LWAVE  <span class="token operator">=</span> .FALSE.
- LCHARG <span class="token operator">=</span> .FALSE.
- ADDGRID <span class="token operator">=</span> .TRUE<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="数据处理"><a href="#数据处理" class="headerlink" title="数据处理"></a>数据处理</h3></li>
-<li><p>根据vasprun.xml文件生成力学文件FORCE_CONSTRAINS</p>
-<pre class="line-numbers language-bash"><code class="language-bash">phonopy --fc vasprun.xml<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-</li>
-<li><p>编辑band.conf文件，该文件给出了高对称点路径的信息</p>
-<pre class="line-numbers language-bash"><code class="language-bash">ATOM_NAME <span class="token operator">=</span> In Se
-DIM <span class="token operator">=</span> 4 4 1
-BAND <span class="token operator">=</span> 0.5 0.0 0.0  0.0 0.0 0.0  0.333333 0.333333 0.0  0.5 0.0 0.0
-FORCE_CONSTANTS <span class="token operator">=</span> READ<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<p><font color="blue"> Note:<br>line 1：元素名称，顺序与POSCAR保持一致<br>line 2：建立超胞的大小<br>line 3：高对称点路径，每组高对称点之间用两个空格隔开<br>line 4：表示读取力常数文件FORCE_CONSTANTS</font></p>
-
-</li>
-<li><p>生成band.yaml文件</p>
-<pre class="line-numbers language-bash"><code class="language-bash">phonopy --dim<span class="token operator">=</span><span class="token string">"4 4 1"</span> -c POSCAR-unitcell band.conf<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p><font color="blue"> Note：4 4 1为建立超胞的大小 </font></p>
-</li>
-<li><p>得到声子谱数据文件PBAND.dat文件</p>
-<pre class="line-numbers language-bash"><code class="language-bash">phonopy-bandplot  --gnuplot<span class="token operator">></span> PBAND.dat<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p><font color="blue"> Note: 高对称点标注说明：phonopy软件默认在两个高对称点之间打点51个，且在PBAND.dat中每组高对称点数据以一个空行分割，据此即可得到完整的声子谱图像 </font></p>
-</li>
-<li><p>计算结果<br><img src="/image/InSe-our-calculation.jpg" alt="InSe-our-Claculation"></p>
-</li>
-<li><p>文献结果<br><img src="/image/InSe-Reference.png" alt="InSe-Reference"></p>
-</li>
+<li>得到的光学性质包括</li>
 </ul>
-<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>&emsp;&emsp;如果计算完的声子谱其他地方都好，就是在Γ点有一点点虚频，那么这个材料很可能是稳定的，只是你优化做得不够好，进一步提高优化的精度可消除这一点点虚频。<br>&emsp;&emsp;对于二维材料，如果在Γ点出现很小的虚频，基本可以认为这个材料是稳定的，大部分二维材料都会有此现象；尤其是VASP结合phonopy code计算二维材料的声子谱在Γ点更是容易出现虚频；使用Quantum-ESPRESSO的PWSCF和PH模块计算声子谱对于内存的需求较小一些，且对于二维材料的声子谱计算更友好一些，后期会详细介绍Quantum-ESPRESSO计算声子谱的具体步骤。</p>
+<ol>
+<li>光吸收系数ABSORB.dat<pre class="line-numbers language-bash"><code class="language-bash"><span class="token comment" spellcheck="true">#energy      xx(cm^-1)       yy(cm^-1)       zz(cm^-1)       xy(cm^-1)       yz(cm^-1)       zx(cm^-1)</span>
+0.000      0.0000E+00      0.0000E+00      0.0000E+00      0.0000E+00      0.0000E+00      0.0000E+00
+0.020      0.3820E+00      0.3820E+00      0.5428E+00      0.0000E+00      0.0000E+00      0.0000E+00
+0.040      0.1415E+01      0.1415E+01      0.2057E+01      0.0000E+00      0.0000E+00      0.0000E+00
+0.060      0.3268E+01      0.3268E+01      0.4714E+01      0.0000E+00      0.0000E+00      0.0000E+00
+0.080      0.5885E+01      0.5885E+01      0.8238E+01      0.0000E+00      0.0000E+00      0.0000E+00
+0.100      0.9265E+01      0.9265E+01      0.1301E+02      0.0000E+00      0.0000E+00      0.0000E+00
+0.120      0.1307E+02      0.1307E+02      0.1885E+02      0.0000E+00      0.0000E+00      0.0000E+00
+0.141      0.1792E+02      0.1792E+02      0.2540E+02      0.0000E+00      0.0000E+00      0.0000E+00
+0.161      0.2353E+02      0.2353E+02      0.3336E+02      0.0000E+00      0.0000E+00      0.0000E+00
+0.181      0.2990E+02      0.2990E+02      0.4240E+02      0.0000E+00      0.0000E+00      0.0000E+00
+0.201      0.3701E+02      0.3702E+02      0.5250E+02      0.0000E+00      0.0000E+00      0.0000E+00
+0.221      0.4431E+02      0.4431E+02      0.6369E+02      0.0000E+00      0.0000E+00      0.0000E+00
+0.241      0.5290E+02      0.5290E+02      0.7596E+02      0.0000E+00      0.0000E+00      0.0000E+00
+0.261      0.6223E+02      0.6223E+02      0.8927E+02      0.0000E+00      0.0000E+00      0.0000E+00
+0.281      0.7233E+02      0.7234E+02      0.1037E+03      0.0000E+00      0.0000E+00      0.0000E+00<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li>能量损失谱ENERGYLOSSSPECTRUM.dat</li>
+<li>消光系数EXTINCTION.dat</li>
+<li>反射系数REFLECTIVITY.dat</li>
+<li>折射系数REFRACTIVE.dat</li>
+</ol>
+<ul>
+<li>可以选择自己感兴趣的性质进一步作图，例如对于吸收系数作图如下<br><img src="/image/2D_InSe-absorption.png" alt="2D_InSe-absorption"></li>
+</ul>
 
             </div>
             <hr/>
@@ -653,9 +747,59 @@ FORCE_CONSTANTS <span class="token operator">=</span> READ<span aria-hidden="tru
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="fa fa-dot-circle-o"></i>&nbsp;本篇
+            </div>
+            <div class="card">
+                <a href="/2019/10/12/vasp-optics/">
+                    <div class="card-image">
+                        
+                        <img src="/image/2D_InSe-absorption.png" class="responsive-img" alt="vasp计算光学性质">
+                        
+                        <span class="card-title">vasp计算光学性质</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            以单层InSe为例，详细介绍了光学性质的计算过程
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-10-12
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/vasp/" class="post-category" target="_blank">
+                                    vasp
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/optics/" target="_blank">
+                        <span class="chip bg-color">optics</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fa fa-chevron-right"></i>
+            </div>
             <div class="card">
                 <a href="/2019/10/11/qe-band/">
                     <div class="card-image">
@@ -673,9 +817,9 @@ FORCE_CONSTANTS <span class="token operator">=</span> READ<span aria-hidden="tru
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2019-10-11
-                        </span>
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-10-11
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
@@ -701,58 +845,6 @@ FORCE_CONSTANTS <span class="token operator">=</span> READ<span aria-hidden="tru
                     
                     <a href="/tags/band-structure/" target="_blank">
                         <span class="chip bg-color">band structure</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fa fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2019/10/04/vasp-band-structure-dos/">
-                    <div class="card-image">
-                        
-                        <img src="/image/LDOS.png" class="responsive-img" alt="VASP计算能带和态密度">
-                        
-                        <span class="card-title">VASP计算能带和态密度</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            以单层InSe为例，详细介绍了结构优化，静态自洽，能带计算和态密度计算过程
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-10-04
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fa fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/vasp/" class="post-category" target="_blank">
-                                    vasp
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/band-structure/" target="_blank">
-                        <span class="chip bg-color">band structure</span>
-                    </a>
-                    
-                    <a href="/tags/density-of-states/" target="_blank">
-                        <span class="chip bg-color">density of states</span>
                     </a>
                     
                 </div>
