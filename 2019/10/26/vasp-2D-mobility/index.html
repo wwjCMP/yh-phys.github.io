@@ -455,14 +455,14 @@
                     
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        2.3k
+                        2.7k
                     </div>
                     
 
                     
                     <div class="info-break-policy">
                         <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                        11 分
+                        12 分
                     </div>
                     
                 
@@ -762,6 +762,12 @@ Rec
  0.5        0.5       0       !S
  0          0.5       0       !Y<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h3 id="有效质量计算"><a href="#有效质量计算" class="headerlink" title="有效质量计算"></a>有效质量计算</h3><h4 id="计算说明"><a href="#计算说明" class="headerlink" title="计算说明"></a>计算说明</h4><p>&emsp;&emsp;对于包含了晶格周期性的有效质量的表达式，表示为如下表达式：<br><img src="/image/%E6%9C%89%E6%95%88%E8%B4%A8%E9%87%8F%E8%AE%A1%E7%AE%97%E5%85%AC%E5%BC%8F.png" alt="有效质量计算公式"><br>在带入物理量进行计算时，涉及单位制问题。一般写输入文件时，长度单位为Å；而程序输出的能带结构中，能量单位为eV，计算起来比较繁琐。<br>&emsp;&emsp;原子单位制有两种，一种为Hartree原子单位制，另一种为Rydberg单位制。这两种单位制的区别在于，Hartree单位制下基本物理量简单，电子电荷和质量都为1；而Rydberg单位制下薛定谔方程简单，系数为1。Hartree单位制下，一个长度单位等于1$\rm L_{bohr}$=0.5292Å，一个能量单位1$\rm E_{Hartree}$=27.21eV，约化普朗克常数$\hbar=1$。这样有效质量表达式中的约化普朗克常数就没了。</p>
+<h4 id="根据原胞基矢和正倒格子基矢间对应关系，算出倒格子基矢"><a href="#根据原胞基矢和正倒格子基矢间对应关系，算出倒格子基矢" class="headerlink" title="根据原胞基矢和正倒格子基矢间对应关系，算出倒格子基矢"></a>根据原胞基矢和正倒格子基矢间对应关系，算出倒格子基矢</h4><p><img src="/image/emass-1.png" alt></p>
+<h4 id="将VASP计算band时的k点坐标（分数坐标）转变为笛卡尔坐标"><a href="#将VASP计算band时的k点坐标（分数坐标）转变为笛卡尔坐标" class="headerlink" title="将VASP计算band时的k点坐标（分数坐标）转变为笛卡尔坐标"></a>将VASP计算band时的k点坐标（分数坐标）转变为笛卡尔坐标</h4><p><img src="/image/emass-2.png" alt></p>
+<h4 id="根据两点间的距离公式，计算出各K点之间的距离"><a href="#根据两点间的距离公式，计算出各K点之间的距离" class="headerlink" title="根据两点间的距离公式，计算出各K点之间的距离"></a>根据两点间的距离公式，计算出各K点之间的距离</h4><p><img src="/image/emass-3.png" alt></p>
+<h4 id="求每个K点的位置值"><a href="#求每个K点的位置值" class="headerlink" title="求每个K点的位置值"></a>求每个K点的位置值</h4><p>&emsp;&emsp;根据VASP计算能带时各高对称点间均匀撒点，求出每个点的位置值，第一个点设为0，本例中为80个点，在excel中进行操作。<br>&emsp;&emsp;因计算时均匀撒点80个，故有79个小间隔，对于|$\rm Y{\Gamma}$|来说，每个小间隔为0.002975210683544，故1-80个点的坐标值都可算出，以此类推，后面的点的坐标在前面点的基础上加上间隔即可。（注意：在80个点结束处和81个点开始处的值是一样的，后面的点类似。）<br><img src="/image/emass-4.png" alt></p>
+<h4 id="画出价带顶和导带底的能带"><a href="#画出价带顶和导带底的能带" class="headerlink" title="画出价带顶和导带底的能带"></a>画出价带顶和导带底的能带</h4><p>&emsp;&emsp;在origin中找出能带数据的价带顶（VBM）和导带底（CBM）的数据，把上面计算得到的K点路径做为X轴，VBM和CBM作为Y轴，在origin中画图如下：<br><img src="/image/emass-5.png" alt></p>
+<h4 id="计算有效质量（以x方向电子的有效质量为例）"><a href="#计算有效质量（以x方向电子的有效质量为例）" class="headerlink" title="计算有效质量（以x方向电子的有效质量为例）"></a>计算有效质量（以x方向电子的有效质量为例）</h4><p>&emsp;&emsp;首先换算能量单位，由eV换算为原子单位制下的能量CBM/27.21然后选取$\Gamma$-X方向上以Γ开始的4-8个点的数据画能带图，如下:<br><img src="/image/emass-6.png" alt><br>用$y=a+bx+cx^2$函数拟合，操作如下：<br><img src="/image/emass-7.png" alt><br><img src="/image/emass-8.png" alt><br><img src="/image/emass-9.png" alt><br>有效质量为$\frac{1}{2c}$，其中C=2.69188，算得有效质量为0.19 ，为电子沿x方向的质量。文献计算结果为0.19，符合一致。</p>
 </li>
 </ul>
 <p>参考文献：<br>[1] Bardeen J, Shockley W. Deformation Potentials and Mobilities in Non-Polar<br>Crystals[J]. Physical Review, 2008, 80(1):72-80.</p>
@@ -1060,7 +1066,7 @@ Rec
             <br>
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">12.7k</span>&nbsp;字
+                class="white-color">13.1k</span>&nbsp;字
             
             
             
