@@ -455,14 +455,14 @@
                     
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        2.7k
+                        3.8k
                     </div>
                     
 
                     
                     <div class="info-break-policy">
                         <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                        12 分
+                        17 分
                     </div>
                     
                 
@@ -484,8 +484,8 @@
 <p>其中，$m^{\ast}$是传输方向上的有效质量，$T$是温度，$k_B$是玻尔兹曼常数。$E_1$表示沿着传输方向上位于价带顶（VBM）的空穴或聚于导带底（CBM）的电子的形变势常数，由公式$E_1$=${\Delta}E/({\Delta}l/l_o)$确定，${\Delta}E$为在压缩或拉伸应变下CBM或VBM 的能量变化，$l_0$是传输方向上的晶格常数，${\Delta}l$是$l_0$的变形量。$m_d$是载流子的平均有效质量，由公式$m_d$=$\sqrt{m_x^{\ast}m_y^{\ast}}$定义。$C_{2D}$是均匀变形晶体的弹性模量，对于2D材料，弹性模量可以通过公式$C_{2D}=2[{\partial}^2E/{\partial}({\Delta}l/l_0)^2]/S_0$来计算，其中$E$是总能量，$S_0$是优化后的面积。<br>&emsp;&emsp;下面对公式中的单位（量纲）做一个简单换算，具体如下：</p>
 <ul>
 <li>$m_d=\sqrt{m_x^{\ast}m_y^{\ast}}$：（Kg）</li>
-<li>$E_1 = {\Delta}E/({\Delta}l/l_o)$：（J） 在VASP中${\Delta}E$的单位是eV，1eV=1.6$\times$10$^{19}$J，此处需要换算</li>
-<li>$C_{2D} = 2[{\partial}^2E/{\partial}({\Delta}l/l_0)^2]/S_0$：（J/m$^2$) 其中$E$是总能（eV），$S_0$表示面积（A$^2$）</li>
+<li>$E_1 = {\Delta}E/({\Delta}l/l_o)$：（J） 在VASP中${\Delta}E$的单位是eV，1eV=1.6$\times$10$^{-19}$J，此处需要换算</li>
+<li>$C_{2D} = 2[{\partial}^2E/{\partial}({\Delta}l/l_0)^2]/S_0$：（J/m$^2$) 其中$E$是总能（eV），$S_0$表示面积（Å$^2$）</li>
 <li>$e$：1.6$\times$10$^{-19}$ C</li>
 <li>$h$：6.626$\times$10$^{-34}$ J$\cdot$s</li>
 <li>$k_B$：1.38$\times$10$^{-23}$ J/K</li>
@@ -623,14 +623,11 @@
  sys<span class="token punctuation">.</span>exit<span class="token punctuation">(</span>main<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 </li>
 </ul>
-<h2 id="二维InSe有效质量计算过程"><a href="#二维InSe有效质量计算过程" class="headerlink" title="二维InSe有效质量计算过程"></a>二维InSe有效质量计算过程</h2><h3 id="建模"><a href="#建模" class="headerlink" title="建模"></a>建模</h3><p>&emsp;&emsp;由于计算过程中需要对二维InSe施加应变，但二维InSe原胞是六角结构，不容易施加应变。但是侯柱峰老师讲了对石墨烯原胞施加应变的方法，笔者认为虽然可行，但过于繁琐，故不采用此法。我们可以利用根号建模的方法讲六角结构InSe原胞变为方形结构的InSe超胞，然后施加应变可大大提高操作效率，但计算量的增加再可接受范围之内。下面给出详细的建模步骤，更多的根号建模部分可参考我的往期博客文章。</p>
+<h2 id="二维InSe有效质量计算过程"><a href="#二维InSe有效质量计算过程" class="headerlink" title="二维InSe有效质量计算过程"></a>二维InSe有效质量计算过程</h2><h3 id="建模"><a href="#建模" class="headerlink" title="建模"></a>建模</h3><p>&emsp;&emsp;由于计算过程中需要对二维InSe施加应变，但二维InSe原胞是六角结构，不容易施加应变。但是侯柱峰老师讲了对石墨烯原胞施加应变的方法，笔者认为虽然可行，但过于繁琐，故不采用此法。我们可以利用根号建模的方法讲六角结构InSe原胞变为方形结构的InSe超胞，然后施加应变可大大提高操作效率，但计算量的增加再可接受范围之内。下面给出关键的建模步骤，更多的根号建模部分可参考我的往期博客文章。</p>
 <ul>
-<li><p>切面并构建二维InSe原胞</p>
-</li>
-<li><p>调整基失构建方形结构的二维InSe超胞</p>
-</li>
-<li><p>设置20Å的真空层</p>
-<h3 id="能带计算"><a href="#能带计算" class="headerlink" title="能带计算"></a>能带计算</h3><h4 id="结构优化"><a href="#结构优化" class="headerlink" title="结构优化"></a>结构优化</h4></li>
+<li>切面并构建二维InSe原胞，同时调整晶格基矢，使其变为方形结构<br><img src="/image/2D-InSe-mobility.png" alt></li>
+</ul>
+<h3 id="能带计算"><a href="#能带计算" class="headerlink" title="能带计算"></a>能带计算</h3><h4 id="结构优化"><a href="#结构优化" class="headerlink" title="结构优化"></a>结构优化</h4><ul>
 <li><p>INCAR</p>
 <pre class="line-numbers language-shell"><code class="language-shell">SYSTEM = InSe             
 ISTART = 0       
@@ -761,7 +758,7 @@ Rec
 
  0.5        0.5       0       !S
  0          0.5       0       !Y<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="有效质量计算"><a href="#有效质量计算" class="headerlink" title="有效质量计算"></a>有效质量计算</h3><h4 id="计算说明"><a href="#计算说明" class="headerlink" title="计算说明"></a>计算说明</h4><p>&emsp;&emsp;对于包含了晶格周期性的有效质量的表达式，表示为如下表达式：<br><img src="/image/%E6%9C%89%E6%95%88%E8%B4%A8%E9%87%8F%E8%AE%A1%E7%AE%97%E5%85%AC%E5%BC%8F.png" alt="有效质量计算公式"><br>在带入物理量进行计算时，涉及单位制问题。一般写输入文件时，长度单位为Å；而程序输出的能带结构中，能量单位为eV，计算起来比较繁琐。<br>&emsp;&emsp;原子单位制有两种，一种为Hartree原子单位制，另一种为Rydberg单位制。这两种单位制的区别在于，Hartree单位制下基本物理量简单，电子电荷和质量都为1；而Rydberg单位制下薛定谔方程简单，系数为1。Hartree单位制下，一个长度单位等于1$\rm L_{bohr}$=0.5292Å，一个能量单位1$\rm E_{Hartree}$=27.21eV，约化普朗克常数$\hbar=1$。这样有效质量表达式中的约化普朗克常数就没了。</p>
+<h3 id="有效质量计算"><a href="#有效质量计算" class="headerlink" title="有效质量计算"></a>有效质量计算</h3><h4 id="计算说明"><a href="#计算说明" class="headerlink" title="计算说明"></a>计算说明</h4><p>&emsp;&emsp;对于包含了晶格周期性的有效质量的表达式，表示为如下表cp ./CHGCAR ./band/达式：<br><img src="/image/%E6%9C%89%E6%95%88%E8%B4%A8%E9%87%8F%E8%AE%A1%E7%AE%97%E5%85%AC%E5%BC%8F.png" alt="有效质量计算公cp ./CHGCAR ./band/式"><br>在带入物理量进行cp ./CHGCAR ./band/计算时，涉及单位制问题。一般写输入文件时，长度单位为Å；而程序输出的能带结构中，能量单位为eV，计算起来比较繁琐。<br>&emsp;&emsp;原子单位制有两种，一种为Hartree原子单位制，另一种为Rydberg单位制。这两种单位制的区别在于，Hartree单位制下基本物理量简单，电子电荷和质量都为1；而Rydberg单位制下薛定谔方程简单，系数为1。Hartree单位制下，一个长度单位等于1$\rm L_{bohr}$=0.5292Å，一个能量单位1$\rm E_{Hartree}$=27.21eV，约化普朗克常数$\hbar=1$。这样有效质量表达式中的约化普朗克常数就没了。</p>
 <h4 id="根据原胞基矢和正倒格子基矢间对应关系，算出倒格子基矢"><a href="#根据原胞基矢和正倒格子基矢间对应关系，算出倒格子基矢" class="headerlink" title="根据原胞基矢和正倒格子基矢间对应关系，算出倒格子基矢"></a>根据原胞基矢和正倒格子基矢间对应关系，算出倒格子基矢</h4><p><img src="/image/emass-1.png" alt></p>
 <h4 id="将VASP计算band时的k点坐标（分数坐标）转变为笛卡尔坐标"><a href="#将VASP计算band时的k点坐标（分数坐标）转变为笛卡尔坐标" class="headerlink" title="将VASP计算band时的k点坐标（分数坐标）转变为笛卡尔坐标"></a>将VASP计算band时的k点坐标（分数坐标）转变为笛卡尔坐标</h4><p><img src="/image/emass-2.png" alt></p>
 <h4 id="根据两点间的距离公式，计算出各K点之间的距离"><a href="#根据两点间的距离公式，计算出各K点之间的距离" class="headerlink" title="根据两点间的距离公式，计算出各K点之间的距离"></a>根据两点间的距离公式，计算出各K点之间的距离</h4><p><img src="/image/emass-3.png" alt></p>
@@ -770,7 +767,101 @@ Rec
 <h4 id="计算有效质量（以x方向电子的有效质量为例）"><a href="#计算有效质量（以x方向电子的有效质量为例）" class="headerlink" title="计算有效质量（以x方向电子的有效质量为例）"></a>计算有效质量（以x方向电子的有效质量为例）</h4><p>&emsp;&emsp;首先换算能量单位，由eV换算为原子单位制下的能量CBM/27.21然后选取$\Gamma$-X方向上以Γ开始的4-8个点的数据画能带图，如下:<br><img src="/image/emass-6.png" alt><br>用$y=a+bx+cx^2$函数拟合，操作如下：<br><img src="/image/emass-7.png" alt><br><img src="/image/emass-8.png" alt><br><img src="/image/emass-9.png" alt><br>有效质量为$\frac{1}{2c}$，其中C=2.69188，算得有效质量为0.19 ，为电子沿x方向的质量。文献计算结果为0.19，符合一致。</p>
 </li>
 </ul>
-<p>参考文献：<br>[1] Bardeen J, Shockley W. Deformation Potentials and Mobilities in Non-Polar<br>Crystals[J]. Physical Review, 2008, 80(1):72-80.</p>
+<h2 id="二维InSe载流子迁移率计算过程"><a href="#二维InSe载流子迁移率计算过程" class="headerlink" title="二维InSe载流子迁移率计算过程"></a>二维InSe载流子迁移率计算过程</h2><p>&emsp;&emsp;本文载流子迁移率的计算依据的是形变势理论，因此需要对二维InSe的x方向和y方向施加应变，施加应变的范围是-2%~2%。为了计算的准确性，计算过程中考虑了泊松效应，即对x轴施加应变时，固定x轴和z轴，优化y方向的晶格常数；对y轴施加应变时，固定y轴和z轴，优化x方向的晶格常数。</p>
+<h3 id="能带计算过程"><a href="#能带计算过程" class="headerlink" title="能带计算过程"></a>能带计算过程</h3><h4 id="准备输入文件"><a href="#准备输入文件" class="headerlink" title="准备输入文件"></a>准备输入文件</h4><ul>
+<li>首先建立mobility-x文件夹，然后在该文件夹下建立初始文件夹，命名为IS，其结构目录如下：<pre class="line-numbers language-shell"><code class="language-shell">$ tree mobility
+mobility
+├── IS
+│   ├── 2_scf
+│   │   ├── band
+│   │   │   ├── INCAR
+│   │   │   ├── KPOINTS
+│   │   │   └── POTCAR
+│   │   ├── INCAR
+│   │   ├── KPOINTS
+│   │   └── POTCAR
+│   ├── INCAR
+│   ├── KPOINTS
+│   ├── OPTCELL
+│   ├── pbs
+│   ├── POSCAR
+│   └── POTCAR
+└── mobility.sh<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+说明：</li>
+<li>pbs文件：<pre class="line-numbers language-shell"><code class="language-shell">#!/bin/bash
+#PBS -N mobility
+#PBS -l nodes=1:ppn=16
+#PBS -m abe
+#PBS -j n
+##PBS -o job.log
+##PBS -e job.err
+#PBS -l walltime=120:00:00
+cd $PBS_O_WORKDIR
+date "+01 Today's date is: %D. The time execution %T" >> time.info
+mpirun -np 16 /opt/soft/strainvasp5.4.4/vasp.5.4.4/build/std/vasp  > log
+date "+02 Today's date is: %D. The time finish %T" >> time.info
+cp ./CONTCAR ./2_scf/POSCAR
+cd ./2_scf/
+date "+01 Today's date is: %D. The time execution %T" >> time.info
+mpirun /opt/soft/strainvasp5.4.4/vasp.5.4.4/build/std/vasp  > log
+date "+02 Today's date is: %D. The time finish %T" >> time.info
+cp ./CONTCAR ./band/POSCAR
+cp ./WAVECAR ./band/
+cd ./band/
+date "+01 Today's date is: %D. The time execution %T" >> time.info
+mpirun -np 16 /opt/soft/strainvasp5.4.4/vasp.5.4.4/build/std/vasp  > log
+date "+02 Today's date is: %D. The time finish %T" >> time.info<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li>OPTCELL文件</li>
+</ul>
+<p>—X 方向—</p>
+<pre class="line-numbers language-shell"><code class="language-shell">000
+010
+000<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>—Y 方向—</p>
+<pre class="line-numbers language-shell"><code class="language-shell">100
+000
+000<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<ul>
+<li>自洽计算时INCAR文件中加入计算真空能级的命令<pre class="line-numbers language-shell"><code class="language-shell">LVHAR = .TRUE.<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</li>
+<li>mobility.sh文件<pre class="line-numbers language-shell"><code class="language-shell">#!/bin/bash
+#3 November, 2018
+#To use it: bash mobility.sh
+mkdir mobility-x
+cd mobility-x
+x=4.083622259999999                           #"x" stands for the lattice constant in x direction
+for i in $(seq 0.98 0.005 1.02)                #"i" defines the range of strain
+do
+cp -r ../IS ./$i                               #"IS" stands for the origin file 
+sed -i "3s/$x/$(echo "$x*$i"|bc)/g" $i/POSCAR
+cd $i
+#qsub ./pbs
+cd $OLDPWD
+done
+cd ../
+mkdir mobility-y
+cd mobility-y
+y=7.073041233239241                            #"y" stands for the lattice constant in y direction
+for j in $(seq 0.98 0.005 1.02)                #"j" defines the range of strain
+do
+cp -r ../IS ./$j                               #"IS" stands for the origin file 
+sed -i "4s/$y/$(echo "$y*$j"|bc)/g" $j/POSCAR
+cd $j
+#qsub ./pbs
+cd $OLDPWD
+done<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+Note：计算过程中需要根据自己的体系修改x和y方向的晶格常数值</li>
+<li>其余文件与前面计算能带过程的输入文件相同，在mobility文件夹下输入bash mobility.sh文件即可完成全部计算</li>
+</ul>
+<h3 id="数据处理（以x方向为例）"><a href="#数据处理（以x方向为例）" class="headerlink" title="数据处理（以x方向为例）"></a>数据处理（以x方向为例）</h3><h4 id="计算形变势常数-E-1"><a href="#计算形变势常数-E-1" class="headerlink" title="计算形变势常数$E_1$"></a>计算形变势常数$E_1$</h4><ul>
+<li>以真空能级为参考，确定VBM和CBM的位置。思路是读取能带计算结果中的最高占据态VBM和最低非占据态CBM（未扣除费米能级）的结果，然后减去真空能级就可得到我们需要的结果。</li>
+<li>对得到的数据以应变量为x轴（-0.02~0.02），VBM和CBM为y轴画图，然后在origin中做线性拟合，即可得到形变势常数，最终结果如下：<br><img src="/image/mobility-1.png" alt="形变势常数"><h4 id="计算弹性模量-C-2D-（以x方向为例）"><a href="#计算弹性模量-C-2D-（以x方向为例）" class="headerlink" title="计算弹性模量$C_{2D}$（以x方向为例）"></a>计算弹性模量$C_{2D}$（以x方向为例）</h4></li>
+<li>读取每个应变下的体系总能量，然后画图。</li>
+<li>对其做二次函数拟合，然后带入$C_{2D}$的计算公式，并对单位做换算后，得到的结果如下：<br><img src="/image/mobility-2.png" alt><h4 id="计算迁移率"><a href="#计算迁移率" class="headerlink" title="计算迁移率"></a>计算迁移率</h4>&emsp;&emsp;现已得到有效质量、形变势常数和弹性模量，依据载流子迁移率计算公式，并注意单位换算，即可得到载流子的迁移率具体数值。计算结果可参考我的<a href="https://pubs.acs.org/doi/abs/10.1021/acs.jpcc.9b01175" target="_blank" rel="noopener">JPCC</a>文章，如下：<br><img src="/image/mobility-3.png" alt="迁移率计算结果"></li>
+</ul>
+<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>&emsp;&emsp;因时间关系，本文写作比较仓促，文中一些数据处理的细节没有详细给出，并且可能存在一些小的错误，欢迎大家阅读过程中积极指出，以便在后续更正过程中改正。另外，本文公式较多，但mathjax环境对公式编辑不是很友好，排版过程中公式很容易乱，故而部分公式以插图的形式放入了本文中，看起来版面搅乱，后续会想办法处理。</p>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p>[1] Bardeen J, Shockley W. Deformation Potentials and Mobilities in Non-Polar Crystals[J]. Physical Review, 2008, 80(1):72-80.</p>
 
             </div>
             <hr/>
@@ -1066,7 +1157,7 @@ Rec
             <br>
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">13.1k</span>&nbsp;字
+                class="white-color">14.2k</span>&nbsp;字
             
             
             
