@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="https://www.w3.org/2005/Atom">
+  <title>Physics</title>
+  
+  <subtitle>凝聚态物理</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="https://github.com/yh-phys/"/>
+  <updated>2019-11-12T13:10:00.289Z</updated>
+  <id>https://github.com/yh-phys/</id>
+  
+  <author>
+    <name>Yong He</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>VASP计算二维材料的载流子迁移率</title>
+    <link href="https://github.com/yh-phys/2019/10/26/vasp-2D-mobility/"/>
+    <id>https://github.com/yh-phys/2019/10/26/vasp-2D-mobility/</id>
+    <published>2019-10-26T10:05:28.000Z</published>
+    <updated>2019-11-12T13:10:00.289Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="vasp" scheme="https://github.com/yh-phys/categories/vasp/"/>
+    
+    
+      <category term="mobility" scheme="https://github.com/yh-phys/tags/mobility/"/>
+    
+      <category term="effective mass" scheme="https://github.com/yh-phys/tags/effective-mass/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>vasp计算光学性质</title>
+    <link href="https://github.com/yh-phys/2019/10/12/vasp-optics/"/>
+    <id>https://github.com/yh-phys/2019/10/12/vasp-optics/</id>
+    <published>2019-10-12T06:49:33.000Z</published>
+    <updated>2019-10-12T07:03:47.008Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;&amp;emsp;&amp;emsp;本文以二维InSe材料为例，详细介绍了二维InSe的光学性质计算过程。&lt;/p&gt;
+&lt;h2 id=&quot;结构优化&quot;&gt;&lt;a
+        
+      
+    
+    </summary>
+    
+    
+      <category term="vasp" scheme="https://github.com/yh-phys/categories/vasp/"/>
+    
+    
+      <category term="optics" scheme="https://github.com/yh-phys/tags/optics/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>QE计算能带过程</title>
+    <link href="https://github.com/yh-phys/2019/10/11/qe-band/"/>
+    <id>https://github.com/yh-phys/2019/10/11/qe-band/</id>
+    <published>2019-10-11T14:48:35.000Z</published>
+    <updated>2019-10-12T07:08:54.463Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;说明：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;以二维InSe原胞为例&lt;/li&gt;
+&lt;li&gt;QE版本：qe-6.4.1&lt;/li&gt;
+&lt;li&gt;赝势：SSSP&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&quot;结构优化&quot;&gt;&lt;a href=&quot;#结构优化&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="Quantum ESPRESSO" scheme="https://github.com/yh-phys/categories/Quantum-ESPRESSO/"/>
+    
+    
+      <category term="PWSCF" scheme="https://github.com/yh-phys/tags/PWSCF/"/>
+    
+      <category term="vc-relax" scheme="https://github.com/yh-phys/tags/vc-relax/"/>
+    
+      <category term="band structure" scheme="https://github.com/yh-phys/tags/band-structure/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>vasp计算声子谱</title>
+    <link href="https://github.com/yh-phys/2019/10/11/vasp-phonon/"/>
+    <id>https://github.com/yh-phys/2019/10/11/vasp-phonon/</id>
+    <published>2019-10-11T02:20:24.000Z</published>
+    <updated>2019-10-11T14:53:57.494Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="vasp" scheme="https://github.com/yh-phys/categories/vasp/"/>
+    
+    
+      <category term="phonon spectrum" scheme="https://github.com/yh-phys/tags/phonon-spectrum/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>VASP计算能带和态密度</title>
+    <link href="https://github.com/yh-phys/2019/10/04/vasp-band-structure-dos/"/>
+    <id>https://github.com/yh-phys/2019/10/04/vasp-band-structure-dos/</id>
+    <published>2019-10-04T02:13:57.000Z</published>
+    <updated>2019-10-11T14:53:34.222Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="vasp" scheme="https://github.com/yh-phys/categories/vasp/"/>
+    
+    
+      <category term="band structure" scheme="https://github.com/yh-phys/tags/band-structure/"/>
+    
+      <category term="density of states" scheme="https://github.com/yh-phys/tags/density-of-states/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>vasp_kpoints文件设置详解</title>
+    <link href="https://github.com/yh-phys/2019/09/27/vasp-kpoints/"/>
+    <id>https://github.com/yh-phys/2019/09/27/vasp-kpoints/</id>
+    <published>2019-09-27T12:00:00.000Z</published>
+    <updated>2019-10-11T14:53:48.131Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="vasp" scheme="https://github.com/yh-phys/categories/vasp/"/>
+    
+    
+      <category term="kpoints" scheme="https://github.com/yh-phys/tags/kpoints/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>phono3py软件的编译方法</title>
+    <link href="https://github.com/yh-phys/2019/09/25/phono3py-install/"/>
+    <id>https://github.com/yh-phys/2019/09/25/phono3py-install/</id>
+    <published>2019-09-25T13:09:20.000Z</published>
+    <updated>2019-10-11T14:53:03.144Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;编译环境：Ubuntu18.04.3 LTS&lt;br&gt;phono3py版本：phono3py–1.17.0.post1&lt;br&gt;phonopy版本：phonopy–2.2.0&lt;br&gt;python版本：python–3.6.8&lt;/p&gt;
+&lt;h2
+        
+      
+    
+    </summary>
+    
+    
+      <category term="phonopy" scheme="https://github.com/yh-phys/categories/phonopy/"/>
+    
+      <category term="phono3py" scheme="https://github.com/yh-phys/categories/phonopy/phono3py/"/>
+    
+    
+      <category term="phonopy" scheme="https://github.com/yh-phys/tags/phonopy/"/>
+    
+      <category term="phono3py" scheme="https://github.com/yh-phys/tags/phono3py/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>构建根号界面晶体模型</title>
+    <link href="https://github.com/yh-phys/2019/09/25/materials-studio-build/"/>
+    <id>https://github.com/yh-phys/2019/09/25/materials-studio-build/</id>
+    <published>2019-09-25T12:04:41.000Z</published>
+    <updated>2019-10-11T14:52:03.239Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+      <category term="Materials Studio" scheme="https://github.com/yh-phys/categories/Materials-Studio/"/>
+    
+    
+      <category term="根号表面" scheme="https://github.com/yh-phys/tags/%E6%A0%B9%E5%8F%B7%E8%A1%A8%E9%9D%A2/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>QE和EPW软件的编译</title>
+    <link href="https://github.com/yh-phys/2019/09/25/quantum-espresso-compile/"/>
+    <id>https://github.com/yh-phys/2019/09/25/quantum-espresso-compile/</id>
+    <published>2019-09-25T04:00:00.000Z</published>
+    <updated>2019-09-25T09:57:15.373Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;编译环境：Ubuntu18.04.2&lt;br&gt;Intel编译器：parallel_studio_xe_2019_update4&lt;/p&gt;
+&lt;h2 id=&quot;Intel编译器的安装与配置&quot;&gt;&lt;a href=&quot;#Intel编译器的安装与配置&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="Quantum ESPRESSO" scheme="https://github.com/yh-phys/categories/Quantum-ESPRESSO/"/>
+    
+      <category term="EPW" scheme="https://github.com/yh-phys/categories/Quantum-ESPRESSO/EPW/"/>
+    
+    
+      <category term="quantum ESPRESSO" scheme="https://github.com/yh-phys/tags/quantum-ESPRESSO/"/>
+    
+      <category term="EPW" scheme="https://github.com/yh-phys/tags/EPW/"/>
+    
+  </entry>
+  
+</feed>
