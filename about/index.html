@@ -32,7 +32,6 @@
     </style>
 
     <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
-<link rel="alternate" href="/atom.xml" title="Physics" type="application/atom+xml">
 <link rel="stylesheet" href="/css/prism.css" type="text/css">
 <link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
 
@@ -329,21 +328,21 @@ $('.bg-cover').css('background-image', 'url(/medias/banner/' + new Date().getDay
                     <div class="post-statis col l4 hide-on-med-and-down" data-aos="zoom-in-right">
                         
 <div class="statis">
-    <span class="count"><a href="/" target="_blank">9</a></span>
+    <span class="count"><a href="/" target="_blank">10</a></span>
     <span class="name">文章</span>
 </div>
 
 
 
 <div class="statis">
-    <span class="count"><a href="/categories" target="_blank">6</a></span>
+    <span class="count"><a href="/categories" target="_blank">7</a></span>
     <span class="name">分类</span>
 </div>
 
 
 
 <div class="statis">
-    <span class="count"><a href="/tags" target="_blank">14</a></span>
+    <span class="count"><a href="/tags" target="_blank">15</a></span>
     <span class="name">标签</span>
 </div>
 
@@ -358,21 +357,21 @@ $('.bg-cover').css('background-image', 'url(/medias/banner/' + new Date().getDay
                                 <div class="post-statis hide-on-large-only" data-aos="zoom-in-right">
                                     
 <div class="statis">
-    <span class="count"><a href="/" target="_blank">9</a></span>
+    <span class="count"><a href="/" target="_blank">10</a></span>
     <span class="name">文章</span>
 </div>
 
 
 
 <div class="statis">
-    <span class="count"><a href="/categories" target="_blank">6</a></span>
+    <span class="count"><a href="/categories" target="_blank">7</a></span>
     <span class="name">分类</span>
 </div>
 
 
 
 <div class="statis">
-    <span class="count"><a href="/tags" target="_blank">14</a></span>
+    <span class="count"><a href="/tags" target="_blank">15</a></span>
     <span class="name">标签</span>
 </div>
 
@@ -406,10 +405,6 @@ $('.bg-cover').css('background-image', 'url(/medias/banner/' + new Date().getDay
 
 
 
-
-    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
-        <i class="fa fa-rss"></i>
-    </a>
 
 
                                 </div>
@@ -445,16 +440,12 @@ $('.bg-cover').css('background-image', 'url(/medias/banner/' + new Date().getDay
 
 
 
-    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
-        <i class="fa fa-rss"></i>
-    </a>
-
 
                         </div>
                     </div>
                 </div>
 
-                <div class="introduction center-align" data-aos="fade-up">主要专注于通过第一性原理计算方法研究电-声子相互作用及其相关性质，拓扑半金属材料的相关性质。</div>
+                <div class="introduction center-align" data-aos="fade-up">主要专注于通过第一性原理计算方法研究电-声子相互作用及其相关性质，拓扑绝缘体和拓扑半金属材料的相关性质。</div>
 
                 <style type="text/css">
     #posts-chart,
@@ -515,7 +506,7 @@ $('.bg-cover').css('background-image', 'url(/medias/banner/' + new Date().getDay
                 name: '文章篇数',
                 type: 'line',
                 color: ['#6772e5'],
-                data: [0,0,0,0,0,0,0,0,0,0,4,5,0],
+                data: [0,0,0,0,0,0,0,0,0,0,4,5,1],
                 markPoint: {
                     symbolSize: 45,
                     color: ['#fa755a','#3ecf8e','#82d3f4'],
@@ -557,7 +548,7 @@ $('.bg-cover').css('background-image', 'url(/medias/banner/' + new Date().getDay
                 type: 'pie',
                 radius: '50%',
                 color: ['#6772e5', '#ff9e0f', '#fa755a', '#3ecf8e', '#82d3f4', '#ab47bc', '#525f7f', '#f51c47', '#26A69A'],
-                data: [{"name":"phonopy","value":1},{"name":"vasp","value":5},{"name":"Quantum ESPRESSO","value":2},{"name":"Materials Studio","value":1},{"name":"phono3py","value":1},{"name":"EPW","value":1}],
+                data: [{"name":"Abinit","value":1},{"name":"Materials Studio","value":1},{"name":"phonopy","value":1},{"name":"Quantum ESPRESSO","value":2},{"name":"vasp","value":5},{"name":"phono3py","value":1},{"name":"EPW","value":1}],
                 itemStyle: {
                     emphasis: {
                         shadowBlur: 10,
@@ -581,7 +572,7 @@ $('.bg-cover').css('background-image', 'url(/medias/banner/' + new Date().getDay
         xAxis: [
             {
                 type: 'category',
-                data: ["band structure","phonopy","phono3py","density of states","quantum ESPRESSO","EPW","根号表面","optics","PWSCF","vc-relax"]
+                data: ["band structure","Abinit","根号表面","phonopy","phono3py","PWSCF","vc-relax","mobility","effective mass","density of states"]
             }
         ],
         yAxis: [
@@ -733,12 +724,48 @@ $('.bg-cover').css('background-image', 'url(/medias/banner/' + new Date().getDay
         <div class="tag-chips center-align">
             
             
+            <a href="/tags/Abinit/" target="_blank">
+                <span class="chip center-align waves-effect waves-light chip-default">Abinit</span>
+            </a>
             
+            
+            
+            <a href="/tags/根号表面/" target="_blank">
+                <span class="chip center-align waves-effect waves-light chip-default">根号表面</span>
+            </a>
+            
+            
+            
+            
+            
+            
+            
+            <a href="/tags/PWSCF/" target="_blank">
+                <span class="chip center-align waves-effect waves-light chip-default">PWSCF</span>
+            </a>
+            
+            
+            
+            <a href="/tags/vc-relax/" target="_blank">
+                <span class="chip center-align waves-effect waves-light chip-default">vc-relax</span>
+            </a>
             
             
             
             <a href="/tags/band-structure/" target="_blank">
                 <span class="chip center-align waves-effect waves-light chip-default">band structure</span>
+            </a>
+            
+            
+            
+            <a href="/tags/mobility/" target="_blank">
+                <span class="chip center-align waves-effect waves-light chip-default">mobility</span>
+            </a>
+            
+            
+            
+            <a href="/tags/effective-mass/" target="_blank">
+                <span class="chip center-align waves-effect waves-light chip-default">effective mass</span>
             </a>
             
             
@@ -757,26 +784,8 @@ $('.bg-cover').css('background-image', 'url(/medias/banner/' + new Date().getDay
             
             
             
-            <a href="/tags/根号表面/" target="_blank">
-                <span class="chip center-align waves-effect waves-light chip-default">根号表面</span>
-            </a>
-            
-            
-            
-            <a href="/tags/optics/" target="_blank">
-                <span class="chip center-align waves-effect waves-light chip-default">optics</span>
-            </a>
-            
-            
-            
-            <a href="/tags/PWSCF/" target="_blank">
-                <span class="chip center-align waves-effect waves-light chip-default">PWSCF</span>
-            </a>
-            
-            
-            
-            <a href="/tags/vc-relax/" target="_blank">
-                <span class="chip center-align waves-effect waves-light chip-default">vc-relax</span>
+            <a href="/tags/kpoints/" target="_blank">
+                <span class="chip center-align waves-effect waves-light chip-default">kpoints</span>
             </a>
             
             
@@ -787,20 +796,8 @@ $('.bg-cover').css('background-image', 'url(/medias/banner/' + new Date().getDay
             
             
             
-            <a href="/tags/kpoints/" target="_blank">
-                <span class="chip center-align waves-effect waves-light chip-default">kpoints</span>
-            </a>
-            
-            
-            
-            <a href="/tags/mobility/" target="_blank">
-                <span class="chip center-align waves-effect waves-light chip-default">mobility</span>
-            </a>
-            
-            
-            
-            <a href="/tags/effective-mass/" target="_blank">
-                <span class="chip center-align waves-effect waves-light chip-default">effective mass</span>
+            <a href="/tags/optics/" target="_blank">
+                <span class="chip center-align waves-effect waves-light chip-default">optics</span>
             </a>
             
             
@@ -826,7 +823,7 @@ $('.bg-cover').css('background-image', 'url(/medias/banner/' + new Date().getDay
             <br>
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">14.2k</span>&nbsp;字
+                class="white-color">14.5k</span>&nbsp;字
             
             
             
@@ -901,10 +898,6 @@ $('.bg-cover').css('background-image', 'url(/medias/banner/' + new Date().getDay
 
 
 
-
-    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
-        <i class="fa fa-rss"></i>
-    </a>
 
 </div>
     </div>
