@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>使用gnuplot画投影能带图</title>
+      <link href="/2019/12/07/fatband-gnuplot/"/>
+      <url>/2019/12/07/fatband-gnuplot/</url>
+      
+        <content type="html"><![CDATA[<h1 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h1><ul><li><p>gnuplot的安装：Ubuntu系统可直接如下命令安装</p><pre class="line-numbers language-bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> gnuplot-qt<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>其余操作系统安装方式可参考<a href="http://gnuplot.sourceforge.net/" target="_blank" rel="noopener">官网</a></p></li><li><p>投影能带数据处理是基于vaspkit code完成的，可参考<a href="https://sourceforge.net/projects/vaspkit/" target="_blank" rel="noopener">这里</a>, <a href="http://blog.wangruixing.cn/" target="_blank" rel="noopener">这里</a>,<a href="http://vaspkit.com/" target="_blank" rel="noopener">这里</a>和<a href="https://arxiv.org/abs/1908.08269" target="_blank" rel="noopener">这里</a></p></li></ul><h1 id="绘图"><a href="#绘图" class="headerlink" title="绘图"></a>绘图</h1><ul><li><p>绘图方法</p><pre class="line-numbers language-bash"><code class="language-bash">gnuplot fat_band.gnu<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li><li><p>fat_band.gnu</p><pre class="line-numbers language-bash"><code class="language-bash"><span class="token keyword">set</span> encoding iso_8859_1<span class="token comment" spellcheck="true"># set terminal  postscript enhanced color font "TimesNewRoman, 11" size 5, 4</span><span class="token keyword">set</span> terminal  pngcairo truecolor enhanced lw 5.0 font <span class="token string">"TimesNewRoman, 44"</span> size 1920, 1680<span class="token keyword">set</span> palette rgbformulae 22, 13, -31<span class="token comment" spellcheck="true"># set palette rgbformulae 7,5,15</span><span class="token keyword">set</span> output <span class="token string">'Se_s.png'</span><span class="token keyword">set</span> borderunset colorbox<span class="token keyword">set</span> title <span class="token string">"Se\\_s"</span> offset 0, -0.8 font <span class="token string">"TimesNewRoman, 54"</span><span class="token keyword">set</span> style data linespointsunset zticsunset key<span class="token comment" spellcheck="true"># set key outside top vertical center</span><span class="token comment" spellcheck="true"># set pointsize 0.3</span><span class="token keyword">set</span> view 0,0<span class="token keyword">set</span> xtics font <span class="token string">"TimesNewRoman, 44"</span><span class="token keyword">set</span> xtics offset 0, 0.3<span class="token keyword">set</span> ytics font <span class="token string">"TimesNewRoman, 40"</span><span class="token keyword">set</span> ytics -4, 2, 4<span class="token keyword">set</span> ylabel font <span class="token string">"TimesNewRoman, 48"</span><span class="token keyword">set</span> ylabel offset 1.0, 0<span class="token keyword">set</span> xrange <span class="token punctuation">[</span>0:2.426<span class="token punctuation">]</span><span class="token keyword">set</span> ylabel <span class="token string">"Energy (eV)"</span><span class="token keyword">set</span> yrange <span class="token punctuation">[</span>-4:4<span class="token punctuation">]</span><span class="token keyword">set</span> xtics <span class="token punctuation">(</span><span class="token string">"M"</span> 0.00000, <span class="token string">"G"</span> 0.888, <span class="token string">"K"</span> 1.913, <span class="token string">"M"</span> 2.426<span class="token punctuation">)</span>plot -4 with filledcurves y1<span class="token operator">=</span>4 lc rgb <span class="token string">"navy"</span>, \<span class="token string">'PBAND_Se.dat'</span> u <span class="token punctuation">(</span><span class="token variable">$1</span><span class="token punctuation">)</span>:<span class="token punctuation">(</span><span class="token variable">$2</span><span class="token punctuation">)</span>:<span class="token punctuation">(</span><span class="token variable">$3</span><span class="token punctuation">)</span> w lines lw 1.5 lc palette, \0 w l dt 2 lc rgb <span class="token string">"gray"</span>, \<span class="token string">'&lt; echo "0.888 -4 \n 0.888 4"'</span> w l dt 2 lc rgb <span class="token string">"gray"</span>, \<span class="token string">'&lt; echo "1.913 -4 \n 1.913 4"'</span> w l dt 2 lc rgb <span class="token string">"gray"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li></ul><h1 id="绘图结果"><a href="#绘图结果" class="headerlink" title="绘图结果"></a>绘图结果</h1><ul><li><p>In_p<br><img src="/image/In_p.png" alt="In_p"></p></li><li><p>In_s<br><img src="/image/In_s.png" alt="In_s"></p></li><li><p>Se_p<br><img src="/image/Se_p.png" alt="Se_p"></p></li><li><p>Se_p_colorbox<br><img src="/image/Se_p_colorbox.png" alt="Se_p"></p></li><li><p>Se_s<br><img src="/image/Se_s.png" alt="Se_s"></p></li><li><p>Note: 因时间仓促，显示效果不是很理想，后期会对细节做进一步处理；绘图脚本可在我的<a href="https://github.com/yh-phys/vasp_tools/tree/master/fatband_gnuplot">Github</a>上下载。</p></li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> vasp </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> fatband </tag>
+            
+            <tag> gnuplot </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Abinit的编译教程</title>
       <link href="/2019/11/29/abinit-install/"/>
       <url>/2019/11/29/abinit-install/</url>

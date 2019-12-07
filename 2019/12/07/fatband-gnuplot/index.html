@@ -4,13 +4,13 @@
 
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="Abinit的编译教程, 电-声子相互作用, 拓扑半金属, 第一性原理计算, 双钙钛矿氧化物">
-    <meta name="description" content="编译环境：Intel2015+impi
-准备工作
-在Abinit官网下载最新版安装包abinit-8.10.3。
-下载附加程序包这里：LibXC 3.0.0，NetCDF 4.1.1和LAPACK for Abinit ≥ 6.10。
+    <meta name="keywords" content="使用gnuplot画投影能带图, 电-声子相互作用, 拓扑半金属, 第一性原理计算, 双钙钛矿氧化物">
+    <meta name="description" content="引言
+gnuplot的安装：Ubuntu系统可直接如下命令安装
+sudo apt-get install gnuplot-qt
+其余操作系统安装方式可参考官网
 
-安">
+投影能带数据处理是基于vaspkit code完成的，可参考这里, 这里,这里">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -18,7 +18,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Abinit的编译教程 | Physics</title>
+    <title>使用gnuplot画投影能带图 | Physics</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -308,13 +308,13 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/image/abinit_logo.png')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/20.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        Abinit的编译教程
+                        使用gnuplot画投影能带图
                     </div>
                 </div>
             </div>
@@ -425,8 +425,12 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/Abinit/" target="_blank">
-                                <span class="chip bg-color">Abinit</span>
+                            <a href="/tags/fatband/" target="_blank">
+                                <span class="chip bg-color">fatband</span>
+                            </a>
+                        
+                            <a href="/tags/gnuplot/" target="_blank">
+                                <span class="chip bg-color">gnuplot</span>
                             </a>
                         
                     </div>
@@ -437,8 +441,8 @@
                     <div class="post-cate">
                         <i class="fa fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/Abinit/" class="post-category" target="_blank">
-                                Abinit
+                            <a href="/categories/vasp/" class="post-category" target="_blank">
+                                vasp
                             </a>
                         
                     </div>
@@ -449,14 +453,14 @@
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2019-11-29
+                    2019-12-07
                 </div>
 
                 
                     
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        326
+                        328
                     </div>
                     
 
@@ -479,50 +483,64 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>编译环境：Intel2015+impi</p>
-<h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><ul>
-<li>在<a href="https://www.abinit.org/" target="_blank" rel="noopener">Abinit</a>官网下载最新版安装包abinit-8.10.3。</li>
-<li>下载附加程序包<a href="https://www.abinit.org/fallbacks" target="_blank" rel="noopener">这里</a>：LibXC 3.0.0，NetCDF 4.1.1和LAPACK for Abinit ≥ 6.10。</li>
-</ul>
-<h1 id="安装过程"><a href="#安装过程" class="headerlink" title="安装过程"></a>安装过程</h1><ul>
-<li>上传安装包与附加程序包到指定安装路径，此处以~/software/为例。</li>
-<li>解压缩并在abinit-8.10.3中新建build与tarballs文件夹。<pre class="line-numbers language-bash"><code class="language-bash"><span class="token function">tar</span> zxvf abinit-8.10.3.tar.gz <span class="token operator">&amp;&amp;</span> <span class="token function">cd</span> abinit-8.10.3 <span class="token operator">&amp;&amp;</span> <span class="token function">mkdir</span> build tarballs<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+                <h1 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h1><ul>
+<li><p>gnuplot的安装：Ubuntu系统可直接如下命令安装</p>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> gnuplot-qt<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>其余操作系统安装方式可参考<a href="http://gnuplot.sourceforge.net/" target="_blank" rel="noopener">官网</a></p>
 </li>
-<li>将LibXC 3.0.0，NetCDF 4.1.1和LAPACK for Abinit ≥ 6.10拷贝到tarballs中。</li>
-<li>进入build文件夹中，并查看计算机名称。<pre class="line-numbers language-bash"><code class="language-bash"><span class="token function">hostname</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-</li>
-<li>在build中建立hostname.ac文件，内容如下：<pre><code># ================================================================
-# Configuration file for ABINIT 8 compilation on COBALT
-# tested for Intel2015 + impi
-#
-# ================================================================
-#
-FC=&quot;mpiifort&quot;
-CC=&quot;mpiicc&quot;
-CXX=&quot;mpicxx&quot;
-#
-enable_mpi=&quot;yes&quot;
-enable_openmp=&quot;yes&quot;
-#
-with_linalg_flavor=&quot;mkl+scalapack&quot;
-with_linalg_libs=${SCALAPACK_LDFLAGS}
-#
-with_fft_flavor=&quot;fftw3&quot;
-with_fft_incs=&quot;-I${MKL_INCDIR}&quot;
-with_fft_libs=${MKL_LDFLAGS}
-#
-with_trio_flavor=&quot;netcdf&quot;
-with_dft_flavor=&quot;libxc&quot;</code></pre></li>
-<li>在build中执行configure如下：<pre><code>../configure --with-tardir=~/software/abinit-8.10.3/tarballs !根据自己机器路径修改</code></pre></li>
-<li>如果configure过程没有报错，即可编译：<pre class="line-numbers language-bash"><code class="language-bash"><span class="token function">make</span> mj4<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<li><p>投影能带数据处理是基于vaspkit code完成的，可参考<a href="https://sourceforge.net/projects/vaspkit/" target="_blank" rel="noopener">这里</a>, <a href="http://blog.wangruixing.cn/" target="_blank" rel="noopener">这里</a>,<a href="http://vaspkit.com/" target="_blank" rel="noopener">这里</a>和<a href="https://arxiv.org/abs/1908.08269" target="_blank" rel="noopener">这里</a></p>
 </li>
 </ul>
-<h1 id="编译测试"><a href="#编译测试" class="headerlink" title="编译测试"></a>编译测试</h1><p>在build中执行：</p>
-<pre><code>cd tests &amp;&amp; ../../tests/runtests.py fast</code></pre><p>如果测试通过，则完成编译。<br>编译好的可执行文件为：</p>
-<pre class="line-numbers language-bash"><code class="language-bash">~/software/abinit-8.10.3/build/src/98_main/abinit <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><ul>
-<li>Abinit官网：<a href="https://www.abinit.org/" target="_blank" rel="noopener">https://www.abinit.org/</a></li>
-<li>Course and Hands-on session material：<a href="https://school2019.abinit.org/course-material" target="_blank" rel="noopener">https://school2019.abinit.org/course-material</a></li>
+<h1 id="绘图"><a href="#绘图" class="headerlink" title="绘图"></a>绘图</h1><ul>
+<li><p>绘图方法</p>
+<pre class="line-numbers language-bash"><code class="language-bash">gnuplot fat_band.gnu<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</li>
+<li><p>fat_band.gnu</p>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token keyword">set</span> encoding iso_8859_1
+<span class="token comment" spellcheck="true"># set terminal  postscript enhanced color font "TimesNewRoman, 11" size 5, 4</span>
+<span class="token keyword">set</span> terminal  pngcairo truecolor enhanced lw 5.0 font <span class="token string">"TimesNewRoman, 44"</span> size 1920, 1680
+<span class="token keyword">set</span> palette rgbformulae 22, 13, -31
+<span class="token comment" spellcheck="true"># set palette rgbformulae 7,5,15</span>
+<span class="token keyword">set</span> output <span class="token string">'Se_s.png'</span>
+<span class="token keyword">set</span> border
+unset colorbox
+<span class="token keyword">set</span> title <span class="token string">"Se\\_s"</span> offset 0, -0.8 font <span class="token string">"TimesNewRoman, 54"</span>
+<span class="token keyword">set</span> style data linespoints
+unset ztics
+unset key
+<span class="token comment" spellcheck="true"># set key outside top vertical center</span>
+<span class="token comment" spellcheck="true"># set pointsize 0.3</span>
+<span class="token keyword">set</span> view 0,0
+<span class="token keyword">set</span> xtics font <span class="token string">"TimesNewRoman, 44"</span>
+<span class="token keyword">set</span> xtics offset 0, 0.3
+<span class="token keyword">set</span> ytics font <span class="token string">"TimesNewRoman, 40"</span>
+<span class="token keyword">set</span> ytics -4, 2, 4
+<span class="token keyword">set</span> ylabel font <span class="token string">"TimesNewRoman, 48"</span>
+<span class="token keyword">set</span> ylabel offset 1.0, 0
+<span class="token keyword">set</span> xrange <span class="token punctuation">[</span>0:2.426<span class="token punctuation">]</span>
+<span class="token keyword">set</span> ylabel <span class="token string">"Energy (eV)"</span>
+<span class="token keyword">set</span> yrange <span class="token punctuation">[</span>-4:4<span class="token punctuation">]</span>
+<span class="token keyword">set</span> xtics <span class="token punctuation">(</span><span class="token string">"M"</span> 0.00000, <span class="token string">"G"</span> 0.888, <span class="token string">"K"</span> 1.913, <span class="token string">"M"</span> 2.426<span class="token punctuation">)</span>
+plot -4 with filledcurves y1<span class="token operator">=</span>4 lc rgb <span class="token string">"navy"</span>, \
+<span class="token string">'PBAND_Se.dat'</span> u <span class="token punctuation">(</span><span class="token variable">$1</span><span class="token punctuation">)</span>:<span class="token punctuation">(</span><span class="token variable">$2</span><span class="token punctuation">)</span>:<span class="token punctuation">(</span><span class="token variable">$3</span><span class="token punctuation">)</span> w lines lw 1.5 lc palette, \
+0 w l dt 2 lc rgb <span class="token string">"gray"</span>, \
+<span class="token string">'&lt; echo "0.888 -4 \n 0.888 4"'</span> w l dt 2 lc rgb <span class="token string">"gray"</span>, \
+<span class="token string">'&lt; echo "1.913 -4 \n 1.913 4"'</span> w l dt 2 lc rgb <span class="token string">"gray"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+</ul>
+<h1 id="绘图结果"><a href="#绘图结果" class="headerlink" title="绘图结果"></a>绘图结果</h1><ul>
+<li><p>In_p<br><img src="/image/In_p.png" alt="In_p"></p>
+</li>
+<li><p>In_s<br><img src="/image/In_s.png" alt="In_s"></p>
+</li>
+<li><p>Se_p<br><img src="/image/Se_p.png" alt="Se_p"></p>
+</li>
+<li><p>Se_p_colorbox<br><img src="/image/Se_p_colorbox.png" alt="Se_p"></p>
+</li>
+<li><p>Se_s<br><img src="/image/Se_s.png" alt="Se_s"></p>
+</li>
+<li><p>Note: 因时间仓促，显示效果不是很理想，后期会对细节做进一步处理；绘图脚本可在我的<a href="https://github.com/yh-phys/vasp_tools/tree/master/fatband_gnuplot">Github</a>上下载。</p>
+</li>
 </ul>
 
             </div>
@@ -561,9 +579,10 @@ with_dft_flavor=&quot;libxc&quot;</code></pre></li>
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="fa fa-dot-circle-o"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <a href="/2019/12/07/fatband-gnuplot/">
                     <div class="card-image">
@@ -581,9 +600,9 @@ with_dft_flavor=&quot;libxc&quot;</code></pre></li>
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2019-12-07
-                        </span>
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-12-07
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
@@ -596,6 +615,7 @@ with_dft_flavor=&quot;libxc&quot;</code></pre></li>
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -618,31 +638,30 @@ with_dft_flavor=&quot;libxc&quot;</code></pre></li>
                 下一篇&nbsp;<i class="fa fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2019/10/26/vasp-2D-mobility/">
+                <a href="/2019/11/29/abinit-install/">
                     <div class="card-image">
                         
+                        <img src="/image/abinit_logo.png" class="responsive-img" alt="Abinit的编译教程">
                         
-                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="VASP计算二维材料的载流子迁移率">
-                        
-                        <span class="card-title">VASP计算二维材料的载流子迁移率</span>
+                        <span class="card-title">Abinit的编译教程</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            以单层InSe为例，详细介绍了载流子迁移率的计算过程
+                            基于Intel2015+impi编译器编译并行版Abinit软件的方法说明
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-10-26
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-11-29
                             </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/vasp/" class="post-category" target="_blank">
-                                    vasp
+                            <a href="/categories/Abinit/" class="post-category" target="_blank">
+                                    Abinit
                                 </a>
                             
                             
@@ -652,12 +671,8 @@ with_dft_flavor=&quot;libxc&quot;</code></pre></li>
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/mobility/" target="_blank">
-                        <span class="chip bg-color">mobility</span>
-                    </a>
-                    
-                    <a href="/tags/effective-mass/" target="_blank">
-                        <span class="chip bg-color">effective mass</span>
+                    <a href="/tags/Abinit/" target="_blank">
+                        <span class="chip bg-color">Abinit</span>
                     </a>
                     
                 </div>

@@ -328,7 +328,7 @@ $('.bg-cover').css('background-image', 'url(/medias/banner/' + new Date().getDay
                     <div class="post-statis col l4 hide-on-med-and-down" data-aos="zoom-in-right">
                         
 <div class="statis">
-    <span class="count"><a href="/" target="_blank">10</a></span>
+    <span class="count"><a href="/" target="_blank">11</a></span>
     <span class="name">文章</span>
 </div>
 
@@ -342,7 +342,7 @@ $('.bg-cover').css('background-image', 'url(/medias/banner/' + new Date().getDay
 
 
 <div class="statis">
-    <span class="count"><a href="/tags" target="_blank">15</a></span>
+    <span class="count"><a href="/tags" target="_blank">17</a></span>
     <span class="name">标签</span>
 </div>
 
@@ -357,7 +357,7 @@ $('.bg-cover').css('background-image', 'url(/medias/banner/' + new Date().getDay
                                 <div class="post-statis hide-on-large-only" data-aos="zoom-in-right">
                                     
 <div class="statis">
-    <span class="count"><a href="/" target="_blank">10</a></span>
+    <span class="count"><a href="/" target="_blank">11</a></span>
     <span class="name">文章</span>
 </div>
 
@@ -371,7 +371,7 @@ $('.bg-cover').css('background-image', 'url(/medias/banner/' + new Date().getDay
 
 
 <div class="statis">
-    <span class="count"><a href="/tags" target="_blank">15</a></span>
+    <span class="count"><a href="/tags" target="_blank">17</a></span>
     <span class="name">标签</span>
 </div>
 
@@ -512,7 +512,7 @@ $('.bg-cover').css('background-image', 'url(/medias/banner/' + new Date().getDay
         },
         xAxis: {
             type: 'category',
-            data: ["2018-11","2018-12","2019-01","2019-02","2019-03","2019-04","2019-05","2019-06","2019-07","2019-08","2019-09","2019-10","2019-11"]
+            data: ["2018-12","2019-01","2019-02","2019-03","2019-04","2019-05","2019-06","2019-07","2019-08","2019-09","2019-10","2019-11","2019-12"]
         },
         yAxis: {
             type: 'value',
@@ -522,7 +522,7 @@ $('.bg-cover').css('background-image', 'url(/medias/banner/' + new Date().getDay
                 name: '文章篇数',
                 type: 'line',
                 color: ['#6772e5'],
-                data: [0,0,0,0,0,0,0,0,0,0,4,5,1],
+                data: [0,0,0,0,0,0,0,0,0,4,5,1,1],
                 markPoint: {
                     symbolSize: 45,
                     color: ['#fa755a','#3ecf8e','#82d3f4'],
@@ -564,7 +564,7 @@ $('.bg-cover').css('background-image', 'url(/medias/banner/' + new Date().getDay
                 type: 'pie',
                 radius: '50%',
                 color: ['#6772e5', '#ff9e0f', '#fa755a', '#3ecf8e', '#82d3f4', '#ab47bc', '#525f7f', '#f51c47', '#26A69A'],
-                data: [{"name":"Abinit","value":1},{"name":"Materials Studio","value":1},{"name":"Quantum ESPRESSO","value":2},{"name":"vasp","value":5},{"name":"phonopy","value":1},{"name":"EPW","value":1},{"name":"phono3py","value":1}],
+                data: [{"name":"vasp","value":6},{"name":"phonopy","value":1},{"name":"Materials Studio","value":1},{"name":"Quantum ESPRESSO","value":2},{"name":"phono3py","value":1},{"name":"Abinit","value":1},{"name":"EPW","value":1}],
                 itemStyle: {
                     emphasis: {
                         shadowBlur: 10,
@@ -588,7 +588,7 @@ $('.bg-cover').css('background-image', 'url(/medias/banner/' + new Date().getDay
         xAxis: [
             {
                 type: 'category',
-                data: ["band structure","Abinit","根号表面","PWSCF","vc-relax","quantum ESPRESSO","EPW","density of states","kpoints","phonopy"]
+                data: ["band structure","fatband","gnuplot","phonopy","phono3py","根号表面","PWSCF","vc-relax","kpoints","quantum ESPRESSO"]
             }
         ],
         yAxis: [
@@ -740,9 +740,19 @@ $('.bg-cover').css('background-image', 'url(/medias/banner/' + new Date().getDay
         <div class="tag-chips center-align">
             
             
-            <a href="/tags/Abinit/" target="_blank">
-                <span class="chip center-align waves-effect waves-light chip-default">Abinit</span>
+            <a href="/tags/fatband/" target="_blank">
+                <span class="chip center-align waves-effect waves-light chip-default">fatband</span>
             </a>
+            
+            
+            
+            <a href="/tags/gnuplot/" target="_blank">
+                <span class="chip center-align waves-effect waves-light chip-default">gnuplot</span>
+            </a>
+            
+            
+            
+            
             
             
             
@@ -770,6 +780,12 @@ $('.bg-cover').css('background-image', 'url(/medias/banner/' + new Date().getDay
             
             
             
+            <a href="/tags/kpoints/" target="_blank">
+                <span class="chip center-align waves-effect waves-light chip-default">kpoints</span>
+            </a>
+            
+            
+            
             <a href="/tags/quantum-ESPRESSO/" target="_blank">
                 <span class="chip center-align waves-effect waves-light chip-default">quantum ESPRESSO</span>
             </a>
@@ -784,13 +800,21 @@ $('.bg-cover').css('background-image', 'url(/medias/banner/' + new Date().getDay
             
             
             
-            <a href="/tags/kpoints/" target="_blank">
-                <span class="chip center-align waves-effect waves-light chip-default">kpoints</span>
+            <a href="/tags/phonon-spectrum/" target="_blank">
+                <span class="chip center-align waves-effect waves-light chip-default">phonon spectrum</span>
             </a>
             
             
             
+            <a href="/tags/optics/" target="_blank">
+                <span class="chip center-align waves-effect waves-light chip-default">optics</span>
+            </a>
             
+            
+            
+            <a href="/tags/Abinit/" target="_blank">
+                <span class="chip center-align waves-effect waves-light chip-default">Abinit</span>
+            </a>
             
             
             
@@ -802,18 +826,6 @@ $('.bg-cover').css('background-image', 'url(/medias/banner/' + new Date().getDay
             
             <a href="/tags/effective-mass/" target="_blank">
                 <span class="chip center-align waves-effect waves-light chip-default">effective mass</span>
-            </a>
-            
-            
-            
-            <a href="/tags/optics/" target="_blank">
-                <span class="chip center-align waves-effect waves-light chip-default">optics</span>
-            </a>
-            
-            
-            
-            <a href="/tags/phonon-spectrum/" target="_blank">
-                <span class="chip center-align waves-effect waves-light chip-default">phonon spectrum</span>
             </a>
             
             
@@ -839,7 +851,7 @@ $('.bg-cover').css('background-image', 'url(/medias/banner/' + new Date().getDay
             <br>
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">14.5k</span>&nbsp;字
+                class="white-color">14.8k</span>&nbsp;字
             
             
             
