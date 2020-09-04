@@ -1,0 +1,1042 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="QE和EPW软件的编译, 电-声子相互作用, 拓扑半金属, 第一性原理计算, 双钙钛矿氧化物">
+    <meta name="description" content="编译环境：Ubuntu18.04.2Intel编译器：parallel_studio_xe_2019_update4
+Intel编译器的安装与配置Intel编译器的申请&amp;emsp;&amp;emsp;使用学校邮箱在Intel官网可免费申请Intel">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>QE和EPW软件的编译 | Physics</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    <style type="text/css">
+        
+        code[class*="language-"], pre[class*="language-"] {
+            white-space: pre !important;
+        }
+        
+    </style>
+
+    <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
+<link rel="alternate" href="/atom.xml" title="Physics" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+
+
+<body>
+
+<header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">Physics</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fa fa-navicon"></i></a>
+<ul class="right nav-menu">
+    
+	<li class="hide-on-med-and-down nav-item" >
+		
+					  <a href="/" class="waves-effect waves-light">
+						
+						<i class="fa fa-home"></i>
+						
+						<span>首页</span>
+					</a>
+          
+        </li>
+    
+	<li class="hide-on-med-and-down nav-item" >
+		
+					  <a href="/tags" class="waves-effect waves-light">
+						
+						<i class="fa fa-tags"></i>
+						
+						<span>标签</span>
+					</a>
+          
+        </li>
+    
+	<li class="hide-on-med-and-down nav-item" >
+		
+					  <a href="/categories" class="waves-effect waves-light">
+						
+						<i class="fa fa-bookmark"></i>
+						
+						<span>分类</span>
+					</a>
+          
+        </li>
+    
+	<li class="hide-on-med-and-down nav-item" >
+		
+					  <a href="/archives" class="waves-effect waves-light">
+						
+						<i class="fa fa-archive"></i>
+						
+						<span>归档</span>
+					</a>
+          
+        </li>
+    
+	<li class="hide-on-med-and-down nav-item" >
+		
+					  <a href="/about" class="waves-effect waves-light">
+						
+						<i class="fa fa-user-circle-o"></i>
+						
+						<span>关于</span>
+					</a>
+          
+        </li>
+    
+	<li class="hide-on-med-and-down nav-item" >
+		
+					  <a href="/friends" class="waves-effect waves-light">
+						
+						<i class="fa fa-address-book"></i>
+						
+						<span>友情链接</span>
+					</a>
+          
+        </li>
+    
+    <li>
+        <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+            <i id="searchIcon" class="fa fa-search" title="搜索"></i>
+        </a>
+    </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">Physics</div>
+        <div class="logo-desc">
+            
+            纸上得来终觉浅，绝知此事要躬行！
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa fa-fw fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa fa-fw fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa fa-fw fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa fa-fw fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa fa-fw fa-user-circle-o"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa fa-fw fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/yh-phys/yh-phys.github.io" class="waves-effect waves-light" target="_blank">
+                <i class="fa fa-github-square fa-fw"></i>yh-phys
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/yh-phys/yh-phys.github.io" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="yh-phys" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+
+<script src="/libs/cryptojs/crypto-js.min.js"></script>
+<script>
+    (function() {
+        let pwd = '';
+        if (pwd && pwd.length > 0) {
+            if (pwd !== CryptoJS.SHA256(prompt('请输入访问本文章的密码')).toString(CryptoJS.enc.Hex)) {
+                alert('密码错误，将返回主页！');
+                location.href = '/';
+            }
+        }
+    })();
+</script>
+
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/image/Quantum_espresso_logo.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <div class="description center-align post-title">
+                        QE和EPW软件的编译
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 20px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/quantum-ESPRESSO/" target="_blank">
+                                <span class="chip bg-color">quantum ESPRESSO</span>
+                            </a>
+                        
+                            <a href="/tags/EPW/" target="_blank">
+                                <span class="chip bg-color">EPW</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fa fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/Quantum-ESPRESSO/" class="post-category" target="_blank">
+                                Quantum ESPRESSO
+                            </a>
+                        
+                            <a href="/categories/Quantum-ESPRESSO/EPW/" class="post-category" target="_blank">
+                                EPW
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                <div class="post-date info-break-policy">
+                    <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2019-09-25
+                </div>
+
+                
+                    
+                    <div class="info-break-policy">
+                        <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
+                        1.2k
+                    </div>
+                    
+
+                    
+                    <div class="info-break-policy">
+                        <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                        5 分
+                    </div>
+                    
+                
+				
+				
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="fa fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <p>编译环境：Ubuntu18.04.2<br>Intel编译器：parallel_studio_xe_2019_update4</p>
+<h2 id="Intel编译器的安装与配置"><a href="#Intel编译器的安装与配置" class="headerlink" title="Intel编译器的安装与配置"></a>Intel编译器的安装与配置</h2><h3 id="Intel编译器的申请"><a href="#Intel编译器的申请" class="headerlink" title="Intel编译器的申请"></a>Intel编译器的申请</h3><p>&emsp;&emsp;使用学校邮箱在<a href="https://software.intel.com/en-us/qualify-for-free-software/student#" target="_blank" rel="noopener">Intel官网</a>可免费申请Intel编译器，使用时间为一年，到期后可重复申请，然后将新申请的license复制到安装路径文件夹license中即可。</p>
+<pre class="line-numbers language-bash"><code class="language-bash">/opt/intel/license<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3 id="配置环境变量"><a href="#配置环境变量" class="headerlink" title="配置环境变量"></a>配置环境变量</h3><pre class="line-numbers language-bash"><code class="language-bash"><span class="token function">source</span> /opt/intel/bin/compilervars.sh intel64
+<span class="token function">source</span> /opt/intel/mkl/bin/mklvars.sh intel64<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>注意：普通用户配置环境变量需要依据自己的安装路径修改</p>
+<h2 id="二、QE的下载编译"><a href="#二、QE的下载编译" class="headerlink" title="二、QE的下载编译"></a>二、QE的下载编译</h2><h3 id="QE下载"><a href="#QE下载" class="headerlink" title="QE下载"></a>QE下载</h3><p>&emsp;&emsp;在<a href="https://github.com/QEF/q-e/releases">QE官网</a>下载最新版q-e-qe-6.4.1.tar以及补丁文件backports-6.4.1.diff。</p>
+<h3 id="赝势库的下载"><a href="#赝势库的下载" class="headerlink" title="赝势库的下载"></a>赝势库的下载</h3><p>&emsp;&emsp;一般情况下，为了计算结果的可靠性，在编译完软件时需要测试自带的算例，此时需要联网下载赝势库。考虑到大部分集群无法联网，需要借助于安装了Linux系统的主机下载赝势库。进入test-suite子目录，修改check_pseudo.sh文件，取消部分echo命令前的注释#号，以便及时查看下载进度，修改后的check_pseudo.sh文件如下：</p>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token shebang important">#!/bin/bash</span>
+<span class="token comment" spellcheck="true">#</span>
+<span class="token comment" spellcheck="true"># Copyright (C) 2001-2016 Quantum ESPRESSO group</span>
+<span class="token comment" spellcheck="true">#</span>
+<span class="token comment" spellcheck="true"># This program is free software; you can redistribute it and/or</span>
+<span class="token comment" spellcheck="true"># modify it under the terms of the GNU General Public License</span>
+<span class="token comment" spellcheck="true"># as published by the Free Software Foundation; either version 2</span>
+<span class="token comment" spellcheck="true"># of the License. See the file `License' in the root directory</span>
+<span class="token comment" spellcheck="true"># of the present distribution.</span>
+
+<span class="token function">source</span> <span class="token variable">${ESPRESSO_ROOT}</span>/test-suite/ENVIRONMENT
+
+<span class="token keyword">if</span> <span class="token function">test</span> <span class="token string">"<span class="token variable"><span class="token variable">`</span><span class="token function">which</span> curl<span class="token variable">`</span></span>"</span> <span class="token operator">=</span> <span class="token string">""</span> <span class="token punctuation">;</span> <span class="token keyword">then</span>
+   <span class="token keyword">if</span> <span class="token function">test</span> <span class="token string">"<span class="token variable"><span class="token variable">`</span><span class="token function">which</span> <span class="token function">wget</span><span class="token variable">`</span></span>"</span> <span class="token operator">=</span> <span class="token string">""</span> <span class="token punctuation">;</span> <span class="token keyword">then</span>
+      <span class="token keyword">echo</span> <span class="token string">"### wget or curl not found: will not be able to download missing PP ###"</span>
+   <span class="token keyword">else</span>
+      DOWNLOADER<span class="token operator">=</span><span class="token string">"wget -O"</span>
+       <span class="token keyword">echo</span> <span class="token string">"wget found"</span>
+   <span class="token keyword">fi</span>
+<span class="token keyword">else</span>
+   DOWNLOADER<span class="token operator">=</span><span class="token string">"curl -o"</span>
+    <span class="token keyword">echo</span> <span class="token string">"curl found"</span>
+<span class="token keyword">fi</span>
+
+inputs<span class="token operator">=</span>`find <span class="token variable">$1*</span> -type f -name <span class="token string">"*.in"</span> -not -name <span class="token string">"test.*"</span> -not -name <span class="token string">"benchmark.*"</span><span class="token variable"><span class="token variable">`</span>
+pp_files<span class="token operator">=</span><span class="token variable">`</span></span><span class="token keyword">for</span> x <span class="token keyword">in</span> <span class="token variable">${inputs}</span><span class="token punctuation">;</span> <span class="token keyword">do</span> <span class="token function">grep</span> UPF <span class="token variable">${x}</span> <span class="token operator">|</span> <span class="token function">awk</span> <span class="token string">'{print <span class="token variable">$3</span>}'</span><span class="token punctuation">;</span> done`
+
+<span class="token keyword">for</span> pp_file <span class="token keyword">in</span> <span class="token variable">${pp_files}</span> <span class="token punctuation">;</span> <span class="token keyword">do</span>
+<span class="token keyword">if</span> <span class="token operator">!</span> <span class="token function">test</span> -f <span class="token variable">${ESPRESSO_PSEUDO}</span>/<span class="token variable">${pp_file}</span> <span class="token punctuation">;</span> <span class="token keyword">then</span>
+    <span class="token keyword">echo</span> -n <span class="token string">"Downloading <span class="token variable">${pp_file}</span> to <span class="token variable">${ESPRESSO_PSEUDO}</span> ... "</span>
+    <span class="token variable">${DOWNLOADER}</span> <span class="token variable">${ESPRESSO_PSEUDO}</span>/<span class="token variable">${pp_file}</span> <span class="token variable">${NETWORK_PSEUDO}</span>/<span class="token variable">${pp_file}</span> 2<span class="token operator">></span> /dev/null
+    <span class="token keyword">if</span> <span class="token function">test</span> <span class="token variable">$?</span> <span class="token operator">!=</span> 0 <span class="token punctuation">;</span> <span class="token keyword">then</span>
+        <span class="token keyword">echo</span> <span class="token string">"Download of"</span> <span class="token variable">${pp_file}</span> <span class="token string">"FAILED, do it manually -- Testing aborted!"</span>
+        <span class="token keyword">exit</span> -1
+    <span class="token keyword">else</span>
+        <span class="token keyword">echo</span> <span class="token string">"done."</span>
+    <span class="token keyword">fi</span>
+<span class="token keyword">else</span>
+    <span class="token keyword">echo</span> <span class="token string">"No need to download <span class="token variable">${pp_file}</span>."</span>
+<span class="token keyword">fi</span>
+<span class="token keyword">done</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>重新打包后上传服务器开始编译。</p>
+<h3 id="编译具体步骤"><a href="#编译具体步骤" class="headerlink" title="编译具体步骤"></a>编译具体步骤</h3><ol>
+<li>将补丁文件backports-6.4.1.diff拷贝到QE主目录，进入QE主目录并执行如下命令为QE打补丁：<pre class="line-numbers language-bash"><code class="language-bash">patch -p1 --merge <span class="token operator">&lt;</span> backports-6.4.1.diff<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</li>
+<li>利用QE的configure实现对编译器和数学库的自动配置，执行命令：</li>
+</ol>
+<pre class="line-numbers language-bash"><code class="language-bash">./configure MPIF90<span class="token operator">=</span>mpiifort CC<span class="token operator">=</span>mpiicc F90<span class="token operator">=</span>ifort F77<span class="token operator">=</span>mpiifort -enable-parallel<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<ol start="3">
+<li>修改make.inc文件<pre class="line-numbers language-bash"><code class="language-bash">106 FFLAGS         <span class="token operator">=</span> -O3 -assume byterecl -g -traceback<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-bash"><code class="language-bash">132 BLAS_LIBS      <span class="token operator">=</span>   -L<span class="token variable">${MKLROOT}</span>/lib/intel64 -lmkl_scalapack_lp64 -lmkl_intel_lp64 -lmkl_sequential -lmkl_core -lmkl_blacs_intelmpi_lp64 -lpthread -lm -ldl<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-bash"><code class="language-bash">141 LAPACK_LIBS    <span class="token operator">=</span> -L<span class="token variable">${MKLROOT}</span>/lib/intel64 -lmkl_scalapack_lp64 -lmkl_intel_lp64 -lmkl_sequential -lmkl_core -lmkl_blacs_intelmpi_lp64 -lpthread -lm -ldl<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-bash"><code class="language-bash">144 SCALAPACK_LIBS <span class="token operator">=</span> -L<span class="token variable">${MKLROOT}</span>/lib/intel64 -lmkl_scalapack_lp64 -lmkl_intel_lp64 -lmkl_sequential -lmkl_core -lmkl_blacs_intelmpi_lp64 -lpthread -lm -ldl<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-bash"><code class="language-bash">149 FFT_LIBS       <span class="token operator">=</span> -L<span class="token variable">${MKLROOT}</span>/lib/intel64 -lmkl_scalapack_lp64 -lmkl_intel_lp64 -lmkl_sequential -lmkl_core -lmkl_blacs_intelmpi_lp64 -lpthread -lm -ldl<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-bash"><code class="language-bash">159 MPI_LIBS       <span class="token operator">=</span> -L/opt/intel/impi/2019.4.243/intel64/lib -lmpi<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</li>
+<li>编译</li>
+</ol>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token function">make</span> -j n all <span class="token comment" spellcheck="true">#n为并行编译时调用的核数</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>注意：并行编译时有时会遇到无法排除的错误，如果出现未知错误，建议使用单个核编译<br>5. 测试</p>
+<pre class="line-numbers language-bash"><code class="language-bash">To run Quantum ESPRESSO test-suite, <span class="token function">type</span> at the shell prompt:
+
+  <span class="token function">make</span> target
+
+where <span class="token operator">&lt;</span>target<span class="token operator">></span> identifies an action
+ run-tests                   <span class="token keyword">:</span> run-tests-serial <span class="token punctuation">(</span>default<span class="token punctuation">)</span>
+ run-tests-serial            <span class="token keyword">:</span> run all tests <span class="token keyword">in</span> SERIAL
+ run-tests-XX-serial         <span class="token keyword">:</span> run tests <span class="token keyword">for</span> XX<span class="token operator">=</span><span class="token punctuation">{</span>pw,cp<span class="token punctuation">}</span> only, as above
+ run-tests-parallel          <span class="token keyword">:</span> run all tests <span class="token keyword">in</span> PARALLEL <span class="token punctuation">(</span>4 MPI<span class="token punctuation">)</span>
+ run-tests-XX-parallel       <span class="token keyword">:</span> run tests <span class="token keyword">for</span> XX<span class="token operator">=</span><span class="token punctuation">{</span>pw,cp<span class="token punctuation">}</span> only, as above
+ run-custom-test testdir<span class="token operator">=</span>DIR <span class="token keyword">:</span> run <span class="token function">test</span> <span class="token keyword">in</span> DIR only <span class="token punctuation">(</span>serial<span class="token punctuation">)</span>
+ run-custom-test-parallel testdir<span class="token operator">=</span>DIR <span class="token keyword">:</span> run <span class="token function">test</span> <span class="token keyword">in</span> DIR only <span class="token punctuation">(</span>parallel 4 MPI<span class="token punctuation">)</span>
+ compare                     <span class="token keyword">:</span> compare last output with reference
+ clean                       <span class="token keyword">:</span> clean stdout/sderr of all tests
+
+For additional advanced commands and settings please manually inspect
+ENVIRONMENT and Makefile files<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>如果测试结果为全部通过，或个别结果的数值计算出现微小误差的情况则不影响对QE的使用。</p>
+<h2 id="Electron-phonon-Wannier-（EPW-的编译"><a href="#Electron-phonon-Wannier-（EPW-的编译" class="headerlink" title="Electron-phonon Wannier （EPW)的编译"></a>Electron-phonon Wannier （EPW)的编译</h2><h3 id="EPW简介"><a href="#EPW简介" class="headerlink" title="EPW简介"></a>EPW简介</h3><p>&emsp;&emsp;EPW是Electron-phonon Wannier的缩写，主要用于计算与电声相互作用相关的物理性质，主要包括：</p>
+<ol>
+<li>The total electron-phonon coupling strenght $\lambda$</li>
+<li>The anisotropic Eliashberg spectral function $\alpha^{2}F$</li>
+<li>The transport spectral function $\alpha^{2}F_{\rm tr}$</li>
+<li>The anisotropic superconducting gap  ${\Delta}_{n\rm k}$ within the Eliashberg theory</li>
+<li>The electron and phonon self-energies arising from electron-phonon interaction</li>
+<li>The phonon linewidths and lifetimes arising from electron-phonon interaction</li>
+<li>The electron linewidths and lifetimes arising from electron-phonon interaction</li>
+<li>The temperature-dependence of the carrier lifetimes</li>
+<li>The spectral functions needed for the calculation of ARPES spectra</li>
+<li>The electron and hole mobility $\mu$</li>
+</ol>
+<p>从EPW v4.1（26 April 2016）开始，EPW并入了Quantum-ESPRESSO软件，编译和计算都是基于QE基础上进行的，目前的最新版本是EPW v5.1。</p>
+<h3 id="EPW学习资料"><a href="#EPW学习资料" class="headerlink" title="EPW学习资料"></a>EPW学习资料</h3><ol>
+<li><a href="http://epw.org.uk/Documentation/Tutorial" target="_blank" rel="noopener">Tutorial</a></li>
+<li><a href="http://epw.org.uk/Documentation/School2018" target="_blank" rel="noopener">School on Electron-Phonon Physics from First Principles</a></li>
+<li><a href="https://www.youtube.com/playlist?list=PLGntAYRT8AVmQMyurFoncyOdHljqeGU_R" target="_blank" rel="noopener">Projects: Quantum Espresso Tutorial 2019</a></li>
+<li><a href="https://www.youtube.com/channel/UCr3qjMlMoPVtgcdlJUMUJJQ" target="_blank" rel="noopener">Samuel Poncé</a></li>
+</ol>
+<h3 id="EPW编译"><a href="#EPW编译" class="headerlink" title="EPW编译"></a>EPW编译</h3><ol>
+<li>下载<a href="http://www.wannier.org/" target="_blank" rel="noopener">Wannier90 (v3.0.0)</a>，并重命名为v3.0.0.tar.gz，然后拷贝到QE下的archive文件夹下。</li>
+<li>编译<pre class="line-numbers language-bash"><code class="language-bash"><span class="token function">make</span> epw<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</li>
+<li>测试<pre class="line-numbers language-bash"><code class="language-bash"><span class="token function">cd</span> test-suite
+<span class="token function">make</span> run-tests-epw-parallel<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+如果测试结果为全部通过，则可以使用EPW软件计算了。</li>
+</ol>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><ol>
+<li><a href="http://blog.sciencenet.cn/blog-2909108-1152511.html" target="_blank" rel="noopener">QE使用经验总结：（一）编译</a></li>
+<li><a href="https://www.youtube.com/playlist?list=PLGntAYRT8AVk9EV5Fm8qRboc3RCReTqGm" target="_blank" rel="noopener">Hands-on: Quantum Espresso Tutorial 2019</a></li>
+</ol>
+
+            </div>
+            <hr/>
+
+            
+
+            <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    <div class="social-share" data-disabled="qzone" data-wechat-qrcode-helper="<p>微信里点“发现”->“扫一扫”二维码便可查看分享。</p>"></div>
+    
+</div>
+
+<script src="/libs/share/js/social-share.min.js"></script>
+
+            
+
+
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2019/09/25/materials-studio-build/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="构建根号界面晶体模型">
+                        
+                        <span class="card-title">构建根号界面晶体模型</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            基于Materials Studio软件建立带有根号表面的晶体模型
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2019-09-25
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Materials-Studio/" class="post-category" target="_blank">
+                                    Materials Studio
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/根号表面/" target="_blank">
+                        <span class="chip bg-color">根号表面</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                本篇&nbsp;<i class="fa fa-dot-circle-o"></i>
+            </div>
+            <div class="card">
+                <a href="/2019/09/25/quantum-espresso-compile/">
+                    <div class="card-image">
+                        
+                        <img src="/image/Quantum_espresso_logo.jpg" class="responsive-img" alt="QE和EPW软件的编译">
+                        
+                        <span class="card-title">QE和EPW软件的编译</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            基于Intel2019编译器编译并行版Quantum ESPRESSO和EPW软件的方法说明
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-09-25
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Quantum-ESPRESSO/" class="post-category" target="_blank">
+                                    Quantum ESPRESSO
+                                </a>
+                            
+                            <a href="/categories/Quantum-ESPRESSO/EPW/" class="post-category" target="_blank">
+                                    EPW
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/quantum-ESPRESSO/" target="_blank">
+                        <span class="chip bg-color">quantum ESPRESSO</span>
+                    </a>
+                    
+                    <a href="/tags/EPW/" target="_blank">
+                        <span class="chip bg-color">EPW</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('30')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: Physics<br />'
+            + '作者: Yong He<br />'
+            + '链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () {bodyElement.removeChild(newdiv);}, 200);
+    });
+</script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="fa fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fa fa-list"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h2, h3, h4, h5, h6'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4, h5, h6').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).slideUp(500);
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).slideDown(500);
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+    
+
+</main>
+
+
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
+    });
+</script>
+
+<footer class="page-footer bg-color">
+    <div class="container row center-align">
+        <div class="col s12 m8 l8 copy-right">
+            本站由&nbsp;&copy;<a href="https://blinkfox.github.io/" target="_blank">Blinkfox</a>&nbsp;基于
+            <a href="https://hexo.io/" target="_blank">Hexo</a>&nbsp;的
+            <a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>&nbsp;主题搭建
+            <br>
+            
+            &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">16k</span>&nbsp;字
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="fa fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fa fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            <br>
+            <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+            <script>
+                var now = new Date();
+
+                function createtime() {
+                    var grt = new Date("09/25/2019 12:00:00");
+                    now.setTime(now.getTime() + 250);
+                    days = (now - grt) / 1000 / 60 / 60 / 24;
+                    dnum = Math.floor(days);
+                    hours = (now - grt) / 1000 / 60 / 60 - (24 * dnum);
+                    hnum = Math.floor(hours);
+                    if (String(hnum).length == 1) {
+                        hnum = "0" + hnum;
+                    }
+                    minutes = (now - grt) / 1000 / 60 - (24 * 60 * dnum) - (60 * hnum);
+                    mnum = Math.floor(minutes);
+                    if (String(mnum).length == 1) {
+                        mnum = "0" + mnum;
+                    }
+                    seconds = (now - grt) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+                    snum = Math.round(seconds);
+                    if (String(snum).length == 1) {
+                        snum = "0" + snum;
+                    }
+                    document.getElementById("timeDate").innerHTML = "本站已安全运行 " + dnum + " 天 ";
+                    document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+                }
+                setInterval("createtime()", 250);
+            </script>
+            
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/yh-phys" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fa fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:yong_master@mails.imnu.edu.cn" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fa fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=1406871290" class="tooltipped" data-tooltip="QQ联系我: 1406871290" data-position="top" data-delay="50">
+        <i class="fa fa-qq"></i>
+    </a>
+
+
+
+    <a href="http://blog.sciencenet.cn/u/heyong01040426" data-tooltip="关注我的微博: http://blog.sciencenet.cn/u/heyong01040426" data-position="top" data-delay="50">
+        <i class="fa fa-weibo"></i>
+    </a>
+
+
+
+    <a href="https://www.zhihu.com/people/yong_phys/" data-tooltip="关注我的知乎: https://www.zhihu.com/people/yong_phys/" data-position="top" data-delay="50">
+        <i class="fa fa-inverse">知</i>
+    </a>
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fa fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+<!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fa fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+<!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fa fa-angle-up"></i>
+    </a>
+</div>
+
+
+<script src="/libs/materialize/materialize.min.js"></script>
+<script src="/libs/masonry/masonry.pkgd.min.js"></script>
+<script src="/libs/aos/aos.js"></script>
+<script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+<script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+<script src="/js/matery.js"></script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+
+    <script src="/libs/others/clicklove.js"></script>
+
+
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+
+
+</body>
+</html>
