@@ -4,11 +4,11 @@
   
     
     <entry>
-      <title>拓扑绝缘体的前世今生</title>
-      <link href="2020/09/30/Topological-Insulators/"/>
-      <url>2020/09/30/Topological-Insulators/</url>
+      <title>拓扑绝缘体概述</title>
+      <link href="2020/12/21/Topological-Insulators/"/>
+      <url>2020/12/21/Topological-Insulators/</url>
       
-        <content type="html"><![CDATA[]]></content>
+        <content type="html"><![CDATA[<p>前言<br>&emsp;&emsp;很早之前就计划写一篇关于拓扑绝缘体发展历程的一个介绍，但是由于各种杂事缠身以及自己水平有限，一直没有动笔，最近打算静下心来，梳理一下自己看过的文献，大致以时间顺序为基础，介绍从1980年整数量子霍尔效应发现以来在拓扑绝缘体发展过程中展现出的经典工作，文中会增加一些自己的理解，如有错误之处请不吝赐教；下文中的每篇文献都会给出文献引用和超链接，可以方便的阅读原文；这篇文章可能需要很长时间写完……</p><p>正文</p><ul><li><p>Hall Effect<br>1879年，美国物理学家E. H. Hall研究金属的导电机制时发现了霍尔效应（<a href="https://doi.org/10.2307/2369245" target="_blank" rel="noopener">American Journal of Mathematics</a>）。霍尔效应指出当电流垂直于外磁场通过半导体时，载流子发生偏转，垂直于电流和磁场的方向会产生一附加电场，从而在半导体的两端产生电势差，这个电势差也被称为霍尔电势差，其<a href="https://en.wikipedia.org/wiki/Hall_effect" target="_blank" rel="noopener">示意图</a>如下：<br><img src="/image/Hall_Effect_Measurement_Setup_for_Electrons.png" alt="霍尔效应示意图"></p></li><li><p>Integer Quantum Hall Effect</p></li></ul>]]></content>
       
       
       <categories>
@@ -20,9 +20,9 @@
       
         <tags>
             
-            <tag> TKNN </tag>
-            
             <tag> Topological Insulators </tag>
+            
+            <tag> TKNN </tag>
             
         </tags>
       
