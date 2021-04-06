@@ -1,0 +1,1076 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="VASP计算二维材料的载流子迁移率, 电-声子相互作用, 拓扑半金属, 第一性原理计算, 双钙钛矿氧化物">
+    <meta name="description" content="纸上得来终觉浅，绝知此事要躬行！">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>VASP计算二维材料的载流子迁移率 | Physics</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery.min.js"></script>
+
+<link rel="alternate" href="/atom.xml" title="Physics" type="application/atom+xml">
+</head>
+
+
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">Physics</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">Physics</div>
+        <div class="logo-desc">
+            
+            纸上得来终觉浅，绝知此事要躬行！
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			留言板
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/yh-phys" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/yh-phys" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/14.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">VASP计算二维材料的载流子迁移率</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="container content">
+
+    
+    <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/mobility/">
+                                <span class="chip bg-color">mobility</span>
+                            </a>
+                        
+                            <a href="/tags/effective-mass/">
+                                <span class="chip bg-color">effective mass</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/vasp/" class="post-category">
+                                vasp
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2019-10-26
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2019-11-12
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    3.7k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    16 分
+                </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>&emsp;&emsp;载流子迁移率通常指半导体内部电子和空穴整体的运动快慢情况，是衡量半导体器件性能的重要物理量。2004年，石墨烯的成功剥离引起了研究人员对于二维材料性质探索的浓厚兴趣。石墨烯、黑磷等二维材料展现出的高载流子迁移率是其中的一个重要研究课题，科研人员在理论计算方面已经做了大量的工作。由于电子在运动过程中不仅受到外电场力的作用，还会不断的与晶格、杂质、缺陷等发生无规则的碰撞，大大增加了理论计算的难度。<br>&emsp;&emsp;目前计算载流子迁移率比较常用的理论是形变势理论和玻尔兹曼输运理论，前者没有考虑电子和声子（晶格振动）以及电子与电子之间的相互作用等因素，计算结果存在一定的误差，但笔者的计算结果与实验值在数量级上是吻合的；玻尔兹曼输运理论的一种计算考虑了电子-声子的相互作用，基于第一性原理计算和最大局域化wannier函数插值方法，借助于<a href="http://www.quantum-espresso.org/" target="_blank" rel="noopener">Quantum-ESPRESSO</a>和<a href="http://www.quantum-espresso.org/" target="_blank" rel="noopener">EPW</a>软件可以完成载流子迁移率计算。缺点是计算量太大，一般的课题组很难承受起高昂的计算费用，另外<a href="http://www.quantum-espresso.org/" target="_blank" rel="noopener">EPW</a>软件对于二维材料的计算存在部分问题，在其官方论坛也有讨论，计算过程在后续文章中会提到。<br>&emsp;&emsp;本文以形变势理论方法为基础，详细介绍了二维InSe的电子和空穴的有效质量与载流子迁移率的计算方法。</p>
+<h2 id="理论基础"><a href="#理论基础" class="headerlink" title="理论基础"></a>理论基础</h2><p>&emsp;&emsp;基于Bardeen和Shockley$^{[1]}$提出的形变势理论，二维材料载流子迁移率可以根据下式计算：</p>
+<p>$$\mu_{\rm 2D} = \frac{e\hbar^3C_{2D}}{k_BTm^{\ast}m_dE_1^2}$$</p>
+<p>其中，$m^{\ast}$是传输方向上的有效质量，$T$是温度，$k_B$是玻尔兹曼常数。$E_1$表示沿着传输方向上位于价带顶（VBM）的空穴或聚于导带底（CBM）的电子的形变势常数，由公式$E_1$=${\Delta}E/({\Delta}l/l_o)$确定，${\Delta}E$为在压缩或拉伸应变下CBM或VBM 的能量变化，$l_0$是传输方向上的晶格常数，${\Delta}l$是$l_0$的变形量。$m_d$是载流子的平均有效质量，由公式$m_d$=$\sqrt{m_x^{\ast}m_y^{\ast}}$定义。$C_{2D}$是均匀变形晶体的弹性模量，对于2D材料，弹性模量可以通过公式$C_{2D}=2[{\partial}^2E/{\partial}({\Delta}l/l_0)^2]/S_0$来计算，其中$E$是总能量，$S_0$是优化后的面积。<br>&emsp;&emsp;下面对公式中的单位（量纲）做一个简单换算，具体如下：</p>
+<ul>
+<li>$m_d=\sqrt{m_x^{\ast}m_y^{\ast}}$：（Kg）</li>
+<li>$E_1 = {\Delta}E/({\Delta}l/l_o)$：（J） 在VASP中${\Delta}E$的单位是eV，1eV=1.6$\times$10$^{-19}$J，此处需要换算</li>
+<li>$C_{2D} = 2[{\partial}^2E/{\partial}({\Delta}l/l_0)^2]/S_0$：（J/m$^2$) 其中$E$是总能（eV），$S_0$表示面积（Å$^2$）</li>
+<li>$e$：1.6$\times$10$^{-19}$ C</li>
+<li>$h$：6.626$\times$10$^{-34}$ J$\cdot$s</li>
+<li>$k_B$：1.38$\times$10$^{-23}$ J/K</li>
+<li>$m^{\ast}$：Kg<br>换算过程：<br><img src="/image/%E6%8D%A2%E7%AE%97%E8%BF%87%E7%A8%8B.png" alt="换算过程"></li>
+</ul>
+<h2 id="计算与数据处理工具"><a href="#计算与数据处理工具" class="headerlink" title="计算与数据处理工具"></a>计算与数据处理工具</h2><ul>
+<li>VASP.5.4.4软件 (可以手动控制优化晶格方向)</li>
+<li>OriginLab软件</li>
+<li>Excel</li>
+<li>Materials Studio软件</li>
+<li>正格矢到倒格矢转化脚本，来源于<a href="http://muchong.com/bbs/viewthread.php?tid=7149817&fpage=1" target="_blank" rel="noopener">小木虫</a><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#! /usr/bin/python</span></span><br><span class="line"><span class="comment"># This program reads in base vectors from a given file, calculates reciprocal vectors</span></span><br><span class="line"><span class="comment"># then writes to outfile in different units</span></span><br><span class="line"><span class="comment"># LinuxUsage: crecip.py infile outfile</span></span><br><span class="line"><span class="comment"># Note:  the infile must be in the form below:</span></span><br><span class="line"><span class="comment">#   inunit  ang/bohr</span></span><br><span class="line"><span class="comment">#   _begin_vectors</span></span><br><span class="line"><span class="comment">#     46.300000000   0.000000000   0.000000000</span></span><br><span class="line"><span class="comment">#      0.000000000  40.500000000   0.000000000</span></span><br><span class="line"><span class="comment">#      0.000000000   0.000000000  10.000000000</span></span><br><span class="line"><span class="comment">#   _end_vectors</span></span><br><span class="line"><span class="comment"># </span></span><br><span class="line"><span class="comment"># Note: LATTICE VECTORS ARE SPECIFIED IN ROWS !</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">GetInUnit</span><span class="params">( incontent )</span>:</span></span><br><span class="line">    inunit = <span class="string">""</span></span><br><span class="line">    <span class="keyword">for</span> line <span class="keyword">in</span> incontent:</span><br><span class="line">        <span class="keyword">if</span> line.find(<span class="string">"inunit"</span>) == <span class="number">0</span>:</span><br><span class="line">            inunit = line.split()[<span class="number">1</span>]</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">return</span> inunit</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">GetVectors</span><span class="params">( incontent )</span>:</span></span><br><span class="line">    indstart = <span class="number">0</span></span><br><span class="line">    indend = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> s <span class="keyword">in</span> incontent:</span><br><span class="line">        <span class="keyword">if</span> s.find(<span class="string">"_begin_vectors"</span>) != <span class="number">-1</span>:</span><br><span class="line">            indstart = incontent.index(s)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">if</span> s.find(<span class="string">"_end_vectors"</span>) != <span class="number">-1</span>:</span><br><span class="line">                indend = incontent.index(s)</span><br><span class="line">    result = []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range( indstart + <span class="number">1</span>, indend ):</span><br><span class="line">        line = incontent[i].split()</span><br><span class="line">        result.append( [ float(line[<span class="number">0</span>]), float(line[<span class="number">1</span>]), float(line[<span class="number">2</span>]) ] )</span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">Ang2Bohr</span><span class="params">( LattVecAng )</span>:</span></span><br><span class="line">    LattVecBohr = LattVecAng</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,<span class="number">3</span>):</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">0</span>,<span class="number">3</span>):</span><br><span class="line">            LattVecBohr[i][j] = LattVecAng[i][j] *  <span class="number">1.8897261246</span></span><br><span class="line">    <span class="keyword">return</span> LattVecBohr</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">DotProduct</span><span class="params">( v1, v2 )</span>:</span></span><br><span class="line">    dotproduct = <span class="number">0.0</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,<span class="number">3</span>):</span><br><span class="line">        dotproduct = dotproduct + v1[i] * v2[i]</span><br><span class="line">    <span class="keyword">return</span> dotproduct</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">CrossProduct</span><span class="params">( v1, v2 )</span>:</span></span><br><span class="line">    <span class="comment"># v3 = v1 WILL LEAD TO WRONG RESULT</span></span><br><span class="line">    v3 = []</span><br><span class="line">    v3.append( v1[<span class="number">1</span>] * v2[<span class="number">2</span>] - v1[<span class="number">2</span>] * v2[<span class="number">1</span>] )</span><br><span class="line">    v3.append( v1[<span class="number">2</span>] * v2[<span class="number">0</span>] - v1[<span class="number">0</span>] * v2[<span class="number">2</span>] )</span><br><span class="line">    v3.append( v1[<span class="number">0</span>] * v2[<span class="number">1</span>] - v1[<span class="number">1</span>] * v2[<span class="number">0</span>] )</span><br><span class="line">    <span class="keyword">return</span> v3</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">CalcRecVectors</span><span class="params">( lattvec )</span>:</span></span><br><span class="line">    pi = <span class="number">3.141592653589793</span></span><br><span class="line">    a1 = lattvec[<span class="number">0</span>]</span><br><span class="line">    a2 = lattvec[<span class="number">1</span>]</span><br><span class="line">    a3 = lattvec[<span class="number">2</span>]</span><br><span class="line">    b1 = CrossProduct( a2, a3 )</span><br><span class="line">    b2 = CrossProduct( a3, a1 )</span><br><span class="line">    b3 = CrossProduct( a1, a2 )</span><br><span class="line">    volume = DotProduct( a1, CrossProduct( a2, a3 ) )</span><br><span class="line">    RecVec = [ b1, b2, b3 ]</span><br><span class="line">    <span class="comment"># it follows the definition for b_j: a_i * b_j = 2pi * delta(i,j)</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,<span class="number">3</span>):</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">0</span>,<span class="number">3</span>):</span><br><span class="line">            RecVec[i][j] = RecVec[i][j] * <span class="number">2</span> * pi / volume</span><br><span class="line">    <span class="keyword">return</span> RecVec    </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">(argv = None)</span>:</span>  </span><br><span class="line">    argv = sys.argv</span><br><span class="line">    infilename  = argv[<span class="number">1</span>]</span><br><span class="line">    outfilename = argv[<span class="number">2</span>]    </span><br><span class="line">    pi = <span class="number">3.141592653589793</span></span><br><span class="line">    bohr2ang = <span class="number">0.5291772109253</span></span><br><span class="line">    ang2bohr = <span class="number">1.889726124546</span>    </span><br><span class="line">    infile  = open(infilename,<span class="string">"r"</span>)</span><br><span class="line">    incontent = infile.readlines()</span><br><span class="line">    infile.close()    </span><br><span class="line">    inunit = GetInUnit( incontent )</span><br><span class="line">    LattVectors = GetVectors( incontent )</span><br><span class="line">    <span class="comment"># convert units from ang to bohr</span></span><br><span class="line">    <span class="keyword">if</span> inunit == <span class="string">"ang"</span>:</span><br><span class="line">        LattVectors = Ang2Bohr( LattVectors )    </span><br><span class="line">    <span class="comment"># calculate reciprocal vectors in 1/bohr</span></span><br><span class="line">    RecVectors = CalcRecVectors( LattVectors )    </span><br><span class="line">    <span class="comment"># open outfile for output</span></span><br><span class="line">    ofile = open(outfilename,<span class="string">"w"</span>)    </span><br><span class="line">    <span class="comment"># output lattice vectors in bohr</span></span><br><span class="line">    ofile.write(<span class="string">"lattice vectors in bohr:\n"</span>)</span><br><span class="line">    <span class="keyword">for</span> vi <span class="keyword">in</span> LattVectors:</span><br><span class="line">        ofile.write(<span class="string">"%14.9f%14.9f%14.9f\n"</span> % (vi[<span class="number">0</span>], vi[<span class="number">1</span>], vi[<span class="number">2</span>]))</span><br><span class="line">    ofile.write(<span class="string">"\n"</span>)    </span><br><span class="line">    <span class="comment"># output lattice vectors in ang</span></span><br><span class="line">    convfac = bohr2ang</span><br><span class="line">    ofile.write(<span class="string">"lattice vectors in ang:\n"</span>)</span><br><span class="line">    <span class="keyword">for</span> vi <span class="keyword">in</span> LattVectors:</span><br><span class="line">        ofile.write(<span class="string">"%14.9f%14.9f%14.9f\n"</span> % (vi[<span class="number">0</span>]*convfac, vi[<span class="number">1</span>]*convfac, vi[<span class="number">2</span>]*convfac))</span><br><span class="line">    ofile.write(<span class="string">"\n"</span>)    </span><br><span class="line">    <span class="comment"># output reciprocal vectors in 1/bohr</span></span><br><span class="line">    ofile.write(<span class="string">"reciprocal vectors in 1/bohr:\n"</span>)</span><br><span class="line">    <span class="keyword">for</span> vi <span class="keyword">in</span> RecVectors:</span><br><span class="line">        ofile.write(<span class="string">"%14.9f%14.9f%14.9f\n"</span> % (vi[<span class="number">0</span>], vi[<span class="number">1</span>], vi[<span class="number">2</span>]))</span><br><span class="line">    ofile.write(<span class="string">"\n"</span>)    </span><br><span class="line">    <span class="comment"># output reciprocal vectors in 1/ang</span></span><br><span class="line">    convfac = ang2bohr</span><br><span class="line">    ofile.write(<span class="string">"reciprocal vectors in 1/ang:\n"</span>)</span><br><span class="line">    <span class="keyword">for</span> vi <span class="keyword">in</span> RecVectors:</span><br><span class="line">        ofile.write(<span class="string">"%14.9f%14.9f%14.9f\n"</span> % (vi[<span class="number">0</span>]*convfac, vi[<span class="number">1</span>]*convfac, vi[<span class="number">2</span>]*convfac))</span><br><span class="line">    ofile.write(<span class="string">"\n"</span>)    </span><br><span class="line">	<span class="comment"># output reciprocal vectors in 2pi/bohr</span></span><br><span class="line">    convfac = <span class="number">1.0</span>/(<span class="number">2.0</span>*pi)</span><br><span class="line">    ofile.write(<span class="string">"reciprocal vectors in 2pi/bohr:\n"</span>)</span><br><span class="line">    <span class="keyword">for</span> vi <span class="keyword">in</span> RecVectors:</span><br><span class="line">        ofile.write(<span class="string">"%14.9f%14.9f%14.9f\n"</span> % (vi[<span class="number">0</span>]*convfac, vi[<span class="number">1</span>]*convfac, vi[<span class="number">2</span>]*convfac))</span><br><span class="line">    ofile.write(<span class="string">"\n"</span>)</span><br><span class="line">    <span class="comment"># output reciprocal vectors in 2pi/ang</span></span><br><span class="line">    convfac = ang2bohr/(<span class="number">2.0</span>*pi)</span><br><span class="line">    ofile.write(<span class="string">"reciprocal vectors in 2pi/ang:\n"</span>)</span><br><span class="line">    <span class="keyword">for</span> vi <span class="keyword">in</span> RecVectors:</span><br><span class="line">        ofile.write(<span class="string">"%14.9f%14.9f%14.9f\n"</span> % (vi[<span class="number">0</span>]*convfac, vi[<span class="number">1</span>]*convfac, vi[<span class="number">2</span>]*convfac))    </span><br><span class="line">    <span class="comment"># close</span></span><br><span class="line">    ofile.close()    </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">   <span class="keyword">import</span> sys</span><br><span class="line">   sys.exit(main())</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="二维InSe有效质量计算过程"><a href="#二维InSe有效质量计算过程" class="headerlink" title="二维InSe有效质量计算过程"></a>二维InSe有效质量计算过程</h2><h3 id="建模"><a href="#建模" class="headerlink" title="建模"></a>建模</h3><p>&emsp;&emsp;由于计算过程中需要对二维InSe施加应变，但二维InSe原胞是六角结构，不容易施加应变。但是侯柱峰老师讲了对石墨烯原胞施加应变的方法，笔者认为虽然可行，但过于繁琐，故不采用此法。我们可以利用根号建模的方法讲六角结构InSe原胞变为方形结构的InSe超胞，然后施加应变可大大提高操作效率，但计算量的增加再可接受范围之内。下面给出关键的建模步骤，更多的根号建模部分可参考我的往期博客文章。</p>
+<ul>
+<li>切面并构建二维InSe原胞，同时调整晶格基矢，使其变为方形结构<br><img src="/image/2D-InSe-mobility.png" alt></li>
+</ul>
+<h3 id="能带计算"><a href="#能带计算" class="headerlink" title="能带计算"></a>能带计算</h3><h4 id="结构优化"><a href="#结构优化" class="headerlink" title="结构优化"></a>结构优化</h4><ul>
+<li><p>INCAR</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">SYSTEM = InSe             </span><br><span class="line">ISTART = 0       </span><br><span class="line">NWRITE = 2      </span><br><span class="line">PREC   = Accurate</span><br><span class="line">ENCUT  = 500</span><br><span class="line">GGA    = PE      </span><br><span class="line">NSW    = 200</span><br><span class="line">ISIF   = 3         </span><br><span class="line">ISYM   = 2        </span><br><span class="line">IBRION = 2      </span><br><span class="line">NELM   = 80        </span><br><span class="line">EDIFF  = 1E-05         </span><br><span class="line">EDIFFG = -0.01 </span><br><span class="line">ALGO   = Normal            </span><br><span class="line">LDIAG  = .TRUE.  </span><br><span class="line">LREAL  = .FALSE.          </span><br><span class="line">ISMEAR = 0         </span><br><span class="line">SIGMA  = 0.05 </span><br><span class="line">ICHARG = 2</span><br><span class="line">LWAVE  =  .FALSE.          </span><br><span class="line">LCHARG = .FALSE.</span><br><span class="line">NPAR   = 4</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>KPOINTS</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">Monkhorst Pack</span><br><span class="line">0</span><br><span class="line">Gamma</span><br><span class="line"> 11   7   1</span><br><span class="line">.0   .0   .0</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>POSCAR</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">Se   In</span><br><span class="line">  1.000</span><br><span class="line">       4.083622259999999      -0.000000000000001       0.000000000000000</span><br><span class="line">       0.000000000000000       7.073041233239241       0.000000000000000</span><br><span class="line">       0.000000000000000       0.000000000000000      25.377516849029359</span><br><span class="line">  Se   In</span><br><span class="line">  4   4</span><br><span class="line">Direct</span><br><span class="line">  0.5000005000000000   0.1666665000000000   0.5271404971815050   !Se</span><br><span class="line">  0.0000004999999997   0.6666665000000004   0.5271404971815050   !Se</span><br><span class="line">  0.5000005000000000   0.1666665000000000   0.3152396685456632   !Se</span><br><span class="line">  0.0000004999999997   0.6666665000000004   0.3152396685456632   !Se</span><br><span class="line">  0.4999995000000003   0.8333335000000002   0.4767849697227853   !In</span><br><span class="line"> -0.0000005000000000   0.3333335000000000   0.4767849697227853   !In</span><br><span class="line">  0.4999995000000003   0.8333335000000002   0.3655951960043828   !In</span><br><span class="line"> -0.0000005000000000   0.3333335000000000   0.3655951960043828   !In</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>OPTCELL</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">100</span><br><span class="line">010</span><br><span class="line">000</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>POTCAR</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cat Se/POTCAR In_d/POTCAR &gt; POTCAR</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h4 id="静态自洽"><a href="#静态自洽" class="headerlink" title="静态自洽"></a>静态自洽</h4><ul>
+<li><p>INCAR</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">SYSTEM = InSe             </span><br><span class="line">ISTART = 0       </span><br><span class="line">NWRITE = 2      </span><br><span class="line">PREC   = Accurate</span><br><span class="line">ENCUT  = 500</span><br><span class="line">GGA    = PE      </span><br><span class="line">NSW    = 0</span><br><span class="line">ISIF   = 2         </span><br><span class="line">ISYM   = 2       </span><br><span class="line">IBRION = -1      </span><br><span class="line">NELM   = 80        </span><br><span class="line">EDIFF  = 1E-05         </span><br><span class="line">EDIFFG = -0.01 </span><br><span class="line">ALGO   = Normal            </span><br><span class="line">LDIAG  = .TRUE.  </span><br><span class="line">LREAL  = .FALSE.          </span><br><span class="line">ISMEAR = 0         </span><br><span class="line">SIGMA  = 0.05 </span><br><span class="line">ICHARG = 2</span><br><span class="line">NPAR   = 4</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>KPOINTS</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">Monkhorst Pack</span><br><span class="line">0</span><br><span class="line">Gamma</span><br><span class="line"> 21   13   1</span><br><span class="line">.0   .0   .0</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>POSCAR</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cp CONTCAR scf/POSCAR</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h4 id="能带计算-1"><a href="#能带计算-1" class="headerlink" title="能带计算"></a>能带计算</h4><ul>
+<li><p>INCAR</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">SYSTEM = InSe             </span><br><span class="line">ISTART = 1       </span><br><span class="line">NWRITE = 2      </span><br><span class="line">PREC   = Accurate</span><br><span class="line">ENCUT  = 500</span><br><span class="line">GGA    = PE      </span><br><span class="line">NSW    = 0</span><br><span class="line">ISIF   = 2         </span><br><span class="line">ISYM   = 2       </span><br><span class="line">IBRION = -1      </span><br><span class="line">NELM   = 80        </span><br><span class="line">EDIFF  = 1E-05         </span><br><span class="line">EDIFFG = -0.01 </span><br><span class="line">ALGO   = Normal            </span><br><span class="line">LDIAG  = .TRUE.  </span><br><span class="line">LREAL  = .FALSE.          </span><br><span class="line">ISMEAR = 0         </span><br><span class="line">SIGMA  = 0.05 </span><br><span class="line">ICHARG = 2</span><br><span class="line">LORBIT = 11</span><br><span class="line">LWAVE  =  .FALSE.          </span><br><span class="line">LCHARG = .FALSE.</span><br><span class="line">NPAR   = 4</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>KPOINTS</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">k-points along high symmetry lines</span><br><span class="line">  80</span><br><span class="line">Line-mode</span><br><span class="line">Rec</span><br><span class="line">   0          0.5       0       !Y</span><br><span class="line">   0          0         0       !gamma</span><br><span class="line"></span><br><span class="line">   0          0         0       !gamma</span><br><span class="line">   0.5        0         0       !X</span><br><span class="line"></span><br><span class="line">   0.5        0         0       !X</span><br><span class="line">   0.5        0.5       0       !S</span><br><span class="line"></span><br><span class="line">   0.5        0.5       0       !S</span><br><span class="line">   0          0.5       0       !Y</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="有效质量计算"><a href="#有效质量计算" class="headerlink" title="有效质量计算"></a>有效质量计算</h3><h4 id="计算说明"><a href="#计算说明" class="headerlink" title="计算说明"></a>计算说明</h4><p>&emsp;&emsp;对于包含了晶格周期性的有效质量的表达式，表示为如下表cp ./CHGCAR ./band/达式：<br><img src="/image/%E6%9C%89%E6%95%88%E8%B4%A8%E9%87%8F%E8%AE%A1%E7%AE%97%E5%85%AC%E5%BC%8F.png" alt="有效质量计算公cp ./CHGCAR ./band/式"><br>在带入物理量进行cp ./CHGCAR ./band/计算时，涉及单位制问题。一般写输入文件时，长度单位为Å；而程序输出的能带结构中，能量单位为eV，计算起来比较繁琐。<br>&emsp;&emsp;原子单位制有两种，一种为Hartree原子单位制，另一种为Rydberg单位制。这两种单位制的区别在于，Hartree单位制下基本物理量简单，电子电荷和质量都为1；而Rydberg单位制下薛定谔方程简单，系数为1。Hartree单位制下，一个长度单位等于1$\rm L_{bohr}$=0.5292Å，一个能量单位1$\rm E_{Hartree}$=27.21eV，约化普朗克常数$\hbar=1$。这样有效质量表达式中的约化普朗克常数就没了。</p>
+<h4 id="根据原胞基矢和正倒格子基矢间对应关系，算出倒格子基矢"><a href="#根据原胞基矢和正倒格子基矢间对应关系，算出倒格子基矢" class="headerlink" title="根据原胞基矢和正倒格子基矢间对应关系，算出倒格子基矢"></a>根据原胞基矢和正倒格子基矢间对应关系，算出倒格子基矢</h4><p><img src="/image/emass-1.png" alt></p>
+<h4 id="将VASP计算band时的k点坐标（分数坐标）转变为笛卡尔坐标"><a href="#将VASP计算band时的k点坐标（分数坐标）转变为笛卡尔坐标" class="headerlink" title="将VASP计算band时的k点坐标（分数坐标）转变为笛卡尔坐标"></a>将VASP计算band时的k点坐标（分数坐标）转变为笛卡尔坐标</h4><p><img src="/image/emass-2.png" alt></p>
+<h4 id="根据两点间的距离公式，计算出各K点之间的距离"><a href="#根据两点间的距离公式，计算出各K点之间的距离" class="headerlink" title="根据两点间的距离公式，计算出各K点之间的距离"></a>根据两点间的距离公式，计算出各K点之间的距离</h4><p><img src="/image/emass-3.png" alt></p>
+<h4 id="求每个K点的位置值"><a href="#求每个K点的位置值" class="headerlink" title="求每个K点的位置值"></a>求每个K点的位置值</h4><p>&emsp;&emsp;根据VASP计算能带时各高对称点间均匀撒点，求出每个点的位置值，第一个点设为0，本例中为80个点，在excel中进行操作。<br>&emsp;&emsp;因计算时均匀撒点80个，故有79个小间隔，对于|$\rm Y{\Gamma}$|来说，每个小间隔为0.002975210683544，故1-80个点的坐标值都可算出，以此类推，后面的点的坐标在前面点的基础上加上间隔即可。（注意：在80个点结束处和81个点开始处的值是一样的，后面的点类似。）<br><img src="/image/emass-4.png" alt></p>
+<h4 id="画出价带顶和导带底的能带"><a href="#画出价带顶和导带底的能带" class="headerlink" title="画出价带顶和导带底的能带"></a>画出价带顶和导带底的能带</h4><p>&emsp;&emsp;在origin中找出能带数据的价带顶（VBM）和导带底（CBM）的数据，把上面计算得到的K点路径做为X轴，VBM和CBM作为Y轴，在origin中画图如下：<br><img src="/image/emass-5.png" alt></p>
+<h4 id="计算有效质量（以x方向电子的有效质量为例）"><a href="#计算有效质量（以x方向电子的有效质量为例）" class="headerlink" title="计算有效质量（以x方向电子的有效质量为例）"></a>计算有效质量（以x方向电子的有效质量为例）</h4><p>&emsp;&emsp;首先换算能量单位，由eV换算为原子单位制下的能量CBM/27.21然后选取$\Gamma$-X方向上以Γ开始的4-8个点的数据画能带图，如下:<br><img src="/image/emass-6.png" alt><br>用$y=a+bx+cx^2$函数拟合，操作如下：<br><img src="/image/emass-7.png" alt><br><img src="/image/emass-8.png" alt><br><img src="/image/emass-9.png" alt><br>有效质量为$\frac{1}{2c}$，其中C=2.69188，算得有效质量为0.19 ，为电子沿x方向的质量。文献计算结果为0.19，符合一致。</p>
+<h2 id="二维InSe载流子迁移率计算过程"><a href="#二维InSe载流子迁移率计算过程" class="headerlink" title="二维InSe载流子迁移率计算过程"></a>二维InSe载流子迁移率计算过程</h2><p>&emsp;&emsp;本文载流子迁移率的计算依据的是形变势理论，因此需要对二维InSe的x方向和y方向施加应变，施加应变的范围是-2%~2%。为了计算的准确性，计算过程中考虑了泊松效应，即对x轴施加应变时，固定x轴和z轴，优化y方向的晶格常数；对y轴施加应变时，固定y轴和z轴，优化x方向的晶格常数。</p>
+<h3 id="能带计算过程"><a href="#能带计算过程" class="headerlink" title="能带计算过程"></a>能带计算过程</h3><h4 id="准备输入文件"><a href="#准备输入文件" class="headerlink" title="准备输入文件"></a>准备输入文件</h4><ul>
+<li>首先建立mobility文件夹，然后在该文件夹下建立初始文件夹，命名为IS-x和IS-y，其结构目录如下：<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> tree mobility</span></span><br><span class="line">mobility</span><br><span class="line">├── IS-x</span><br><span class="line">│   ├── 2_scf</span><br><span class="line">│   │   ├── band</span><br><span class="line">│   │   │   ├── INCAR</span><br><span class="line">│   │   │   ├── KPOINTS</span><br><span class="line">│   │   │   └── POTCAR</span><br><span class="line">│   │   ├── INCAR</span><br><span class="line">│   │   ├── KPOINTS</span><br><span class="line">│   │   └── POTCAR</span><br><span class="line">│   ├── INCAR</span><br><span class="line">│   ├── KPOINTS</span><br><span class="line">│   ├── OPTCELL</span><br><span class="line">│   ├── pbs</span><br><span class="line">│   ├── POSCAR</span><br><span class="line">│   └── POTCAR</span><br><span class="line">├── IS-y</span><br><span class="line">│   ├── 2_scf</span><br><span class="line">│   │   ├── band</span><br><span class="line">│   │   │   ├── INCAR</span><br><span class="line">│   │   │   ├── KPOINTS</span><br><span class="line">│   │   │   └── POTCAR</span><br><span class="line">│   │   ├── INCAR</span><br><span class="line">│   │   ├── KPOINTS</span><br><span class="line">│   │   └── POTCAR</span><br><span class="line">│   ├── INCAR</span><br><span class="line">│   ├── KPOINTS</span><br><span class="line">│   ├── OPTCELL</span><br><span class="line">│   ├── pbs</span><br><span class="line">│   ├── POSCAR</span><br><span class="line">│   └── POTCAR</span><br><span class="line">└── mobility.sh</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>说明：</p>
+<ul>
+<li><p>pbs文件：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"><span class="meta">#</span><span class="bash">PBS -N mobility</span></span><br><span class="line"><span class="meta">#</span><span class="bash">PBS -l nodes=1:ppn=16</span></span><br><span class="line"><span class="meta">#</span><span class="bash">PBS -m abe</span></span><br><span class="line"><span class="meta">#</span><span class="bash">PBS -j n</span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">#PBS -o job.log</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">#PBS -e job.err</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">PBS -l walltime=120:00:00</span></span><br><span class="line">cd $PBS_O_WORKDIR</span><br><span class="line">date "+01 Today's date is: %D. The time execution %T" &gt;&gt; time.info</span><br><span class="line">mpirun -np 16 /your-path/vasp.5.4.4/build/std/vasp  &gt; log</span><br><span class="line">date "+02 Today's date is: %D. The time finish %T" &gt;&gt; time.info</span><br><span class="line">cp ./CONTCAR ./2_scf/POSCAR</span><br><span class="line">cd ./2_scf/</span><br><span class="line">date "+01 Today's date is: %D. The time execution %T" &gt;&gt; time.info</span><br><span class="line">mpirun /your-path/vasp.5.4.4/build/std/vasp  &gt; log</span><br><span class="line">date "+02 Today's date is: %D. The time finish %T" &gt;&gt; time.info</span><br><span class="line">cp ./CONTCAR ./band/POSCAR</span><br><span class="line">cp ./WAVECAR ./band/</span><br><span class="line">cd ./band/</span><br><span class="line">date "+01 Today's date is: %D. The time execution %T" &gt;&gt; time.info</span><br><span class="line">mpirun -np 16 /your-path/vasp.5.4.4/build/std/vasp  &gt; log</span><br><span class="line">date "+02 Today's date is: %D. The time finish %T" &gt;&gt; time.info</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>OPTCELL文件</p>
+</li>
+</ul>
+<p>—X 方向—</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">000</span><br><span class="line">010</span><br><span class="line">000</span><br></pre></td></tr></table></figure>
+
+<p>—Y 方向—</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">100</span><br><span class="line">000</span><br><span class="line">000</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>自洽计算时INCAR文件中加入计算真空能级的命令</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">LVHAR = .TRUE.</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>mobility.sh文件</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"><span class="meta">#</span><span class="bash">3 November, 2018</span></span><br><span class="line"><span class="meta">#</span><span class="bash">To use it: bash mobility.sh</span></span><br><span class="line">mkdir mobility-x</span><br><span class="line">cd mobility-x</span><br><span class="line">x=4.083622259999999                           #"x" stands for the lattice constant in x direction</span><br><span class="line">for i in $(seq 0.98 0.005 1.02)                #"i" defines the range of strain</span><br><span class="line">do</span><br><span class="line">cp -r ../IS-x ./$i                               #"IS-x" stands for the origin file </span><br><span class="line">sed -i "3s/$x/$(echo "$x*$i"|bc)/g" $i/POSCAR</span><br><span class="line">cd $i</span><br><span class="line">qsub ./pbs</span><br><span class="line">cd $OLDPWD</span><br><span class="line">done</span><br><span class="line">cd ../</span><br><span class="line">mkdir mobility-y</span><br><span class="line">cd mobility-y</span><br><span class="line">y=7.073041233239241                            #"y" stands for the lattice constant in y direction</span><br><span class="line">for j in $(seq 0.98 0.005 1.02)                #"j" defines the range of strain</span><br><span class="line">do</span><br><span class="line">cp -r ../IS-y ./$j                               #"IS-y" stands for the origin file </span><br><span class="line">sed -i "4s/$y/$(echo "$y*$j"|bc)/g" $j/POSCAR</span><br><span class="line">cd $j</span><br><span class="line">qsub ./pbs</span><br><span class="line">cd $OLDPWD</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>Note：计算过程中需要根据自己的体系修改x和y方向的晶格常数值</p>
+<ul>
+<li>其余文件与前面计算能带过程的输入文件相同，在mobility文件夹下输入bash mobility.sh文件即可完成全部计算</li>
+</ul>
+<h3 id="数据处理（以x方向为例）"><a href="#数据处理（以x方向为例）" class="headerlink" title="数据处理（以x方向为例）"></a>数据处理（以x方向为例）</h3><h4 id="计算形变势常数-E-1"><a href="#计算形变势常数-E-1" class="headerlink" title="计算形变势常数$E_1$"></a>计算形变势常数$E_1$</h4><ul>
+<li>以真空能级为参考，确定VBM和CBM的位置。思路是读取能带计算结果中的最高占据态VBM和最低非占据态CBM（未扣除费米能级）的结果，然后减去真空能级就可得到我们需要的结果。</li>
+<li>对得到的数据以应变量为x轴（-0.02~0.02），VBM和CBM为y轴画图，然后在origin中做线性拟合，即可得到形变势常数，最终结果如下：<br><img src="/image/mobility-1.png" alt="形变势常数"><h4 id="计算弹性模量-C-2D-（以x方向为例）"><a href="#计算弹性模量-C-2D-（以x方向为例）" class="headerlink" title="计算弹性模量$C_{2D}$（以x方向为例）"></a>计算弹性模量$C_{2D}$（以x方向为例）</h4></li>
+<li>读取每个应变下的体系总能量，然后画图。</li>
+<li>对其做二次函数拟合，然后带入$C_{2D}$的计算公式，并对单位做换算后，得到的结果如下：<br><img src="/image/mobility-2.png" alt><h4 id="计算迁移率"><a href="#计算迁移率" class="headerlink" title="计算迁移率"></a>计算迁移率</h4>&emsp;&emsp;现已得到有效质量、形变势常数和弹性模量，依据载流子迁移率计算公式，并注意单位换算，即可得到载流子的迁移率具体数值。计算结果可参考我的<a href="https://pubs.acs.org/doi/abs/10.1021/acs.jpcc.9b01175" target="_blank" rel="noopener">JPCC</a>文章，如下：<br><img src="/image/mobility-3.png" alt="迁移率计算结果"></li>
+</ul>
+<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>&emsp;&emsp;因时间关系，本文写作比较仓促，文中一些数据处理的细节没有详细给出，并且可能存在一些小的错误，欢迎大家阅读过程中积极指出，以便在后续更正过程中改正。另外，本文公式较多，但mathjax环境对公式编辑不是很友好，排版过程中公式很容易乱，故而部分公式以插图的形式放入了本文中，看起来版面搅乱，后续会想办法处理。</p>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p>[1] Bardeen J, Shockley W. Deformation Potentials and Mobilities in Non-Polar Crystals[J]. Physical Review, 2008, 80(1):72-80.</p>
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">Yong He</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://github.com/yh-phys/2019/10/26/vasp-2d-mobility/">https://github.com/yh-phys/2019/10/26/vasp-2d-mobility/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">Yong He</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/mobility/">
+                                    <span class="chip bg-color">mobility</span>
+                                </a>
+                            
+                                <a href="/tags/effective-mass/">
+                                    <span class="chip bg-color">effective mass</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2019/11/29/abinit-install/">
+                    <div class="card-image">
+                        
+                        <img src="/image/abinit_logo.png" class="responsive-img" alt="Abinit的编译教程">
+                        
+                        <span class="card-title">Abinit的编译教程</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            基于Intel2015+impi编译器编译并行版Abinit软件的方法说明
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2019-11-29
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Abinit/" class="post-category">
+                                    Abinit
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Abinit/">
+                        <span class="chip bg-color">Abinit</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2019/10/12/vasp-optics/">
+                    <div class="card-image">
+                        
+                        <img src="/image/2D_InSe-absorption.png" class="responsive-img" alt="vasp计算光学性质">
+                        
+                        <span class="card-title">vasp计算光学性质</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            以单层InSe为例，详细介绍了光学性质的计算过程
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-10-12
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/vasp/" class="post-category">
+                                    vasp
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/optics/">
+                        <span class="chip bg-color">optics</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+
+    
+
+</main>
+
+
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
+    });
+</script>
+
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-lrc p {
+        
+        display: none;
+        
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        
+        display: none;
+        
+        font-size: 15px;
+        color: #42b983;
+    }
+
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="netease"
+                   type="song"
+                   id="135768"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="/libs/aplayer/APlayer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+
+    
+    <div class="container row center-align" style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2019-2021</span>
+            
+            <span id="year">2019</span>
+            <a href="/about" target="_blank">Yong He</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">15.7k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/yh-phys" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:yong_master@mails.imnu.edu.cn" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=1406871290" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 1406871290" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+    <a href="http://blog.sciencenet.cn/u/heyong01040426" class="tooltipped" target="_blank" data-tooltip="关注我的微博: http://blog.sciencenet.cn/u/heyong01040426" data-position="top" data-delay="50">
+        <i class="fab fa-weibo"></i>
+    </a>
+
+
+
+    <a href="https://www.zhihu.com/people/yong_phys/" class="tooltipped" target="_blank" data-tooltip="关注我的知乎: https://www.zhihu.com/people/yong_phys/" data-position="top" data-delay="50">
+        <i class="fab fa-zhihu1">知</i>
+    </a>
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+	
+    
+
+    
+    
+    <script type="text/javascript" size="150" alpha='0.6'
+        zIndex="-1" src="/libs/background/ribbon-refresh.min.js" async="async"></script>
+    
+
+    
+    <script type="text/javascript" src="/libs/background/ribbon-dynamic.js" async="async"></script>
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>

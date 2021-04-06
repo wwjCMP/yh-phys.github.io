@@ -5,7 +5,7 @@
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
     <meta name="keywords" content="VASP计算能带和态密度, 电-声子相互作用, 拓扑半金属, 第一性原理计算, 双钙钛矿氧化物">
-    <meta name="description" content="前言&amp;emsp;&amp;emsp;本文以二维InSe材料为例，详细介绍了二维材料的结构优化、静态自洽，能带计算和态密度计算的计算过程和注意事项。&amp;emsp;&amp;emsp;为了对二维材料的晶格常数进行充分优化，且不对真空层厚度做优化，需要修改vasp">
+    <meta name="description" content="纸上得来终觉浅，绝知此事要躬行！">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -13,33 +13,30 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
     <title>VASP计算能带和态密度 | Physics</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
-    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
     <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
     <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
     <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
     <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
     <link rel="stylesheet" type="text/css" href="/css/matery.css">
     <link rel="stylesheet" type="text/css" href="/css/my.css">
-    <style type="text/css">
-        
-        code[class*="language-"], pre[class*="language-"] {
-            white-space: pre !important;
-        }
-        
-    </style>
 
-    <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
+    <script src="/libs/jquery/jquery.min.js"></script>
+
 <link rel="alternate" href="/atom.xml" title="Physics" type="application/atom+xml">
-<link rel="stylesheet" href="/css/prism.css" type="text/css">
-<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+</head>
+
+
 
 
 <body>
-
-<header class="navbar-fixed">
+    <header class="navbar-fixed">
     <nav id="headNav" class="bg-color nav-transparent">
         <div id="navContainer" class="nav-wrapper container">
             <div class="brand-logo">
@@ -52,81 +49,93 @@
             </div>
             
 
-<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fa fa-navicon"></i></a>
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
 <ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
     
-	<li class="hide-on-med-and-down nav-item" >
-		
-					  <a href="/" class="waves-effect waves-light">
-						
-						<i class="fa fa-home"></i>
-						
-						<span>首页</span>
-					</a>
-          
-        </li>
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
     
-	<li class="hide-on-med-and-down nav-item" >
-		
-					  <a href="/tags" class="waves-effect waves-light">
-						
-						<i class="fa fa-tags"></i>
-						
-						<span>标签</span>
-					</a>
-          
-        </li>
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
     
-	<li class="hide-on-med-and-down nav-item" >
-		
-					  <a href="/categories" class="waves-effect waves-light">
-						
-						<i class="fa fa-bookmark"></i>
-						
-						<span>分类</span>
-					</a>
-          
-        </li>
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
     
-	<li class="hide-on-med-and-down nav-item" >
-		
-					  <a href="/archives" class="waves-effect waves-light">
-						
-						<i class="fa fa-archive"></i>
-						
-						<span>归档</span>
-					</a>
-          
-        </li>
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
     
-	<li class="hide-on-med-and-down nav-item" >
-		
-					  <a href="/about" class="waves-effect waves-light">
-						
-						<i class="fa fa-user-circle-o"></i>
-						
-						<span>关于</span>
-					</a>
-          
-        </li>
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
     
-	<li class="hide-on-med-and-down nav-item" >
-		
-					  <a href="/friends" class="waves-effect waves-light">
-						
-						<i class="fa fa-address-book"></i>
-						
-						<span>友情链接</span>
-					</a>
-          
-        </li>
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
     
-    <li>
-        <a href="#searchModal" class="modal-trigger waves-effect waves-light">
-            <i id="searchIcon" class="fa fa-search" title="搜索"></i>
-        </a>
-    </li>
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
 </ul>
+
 
 <div id="mobile-nav" class="side-nav sidenav">
 
@@ -150,7 +159,7 @@
 	  
 		<a href="/" class="waves-effect waves-light">
 			
-			    <i class="fa fa-fw fa-home"></i>
+			    <i class="fa-fw fas fa-home"></i>
 			
 			首页
 		</a>
@@ -161,7 +170,7 @@
 	  
 		<a href="/tags" class="waves-effect waves-light">
 			
-			    <i class="fa fa-fw fa-tags"></i>
+			    <i class="fa-fw fas fa-tags"></i>
 			
 			标签
 		</a>
@@ -172,7 +181,7 @@
 	  
 		<a href="/categories" class="waves-effect waves-light">
 			
-			    <i class="fa fa-fw fa-bookmark"></i>
+			    <i class="fa-fw fas fa-bookmark"></i>
 			
 			分类
 		</a>
@@ -183,7 +192,7 @@
 	  
 		<a href="/archives" class="waves-effect waves-light">
 			
-			    <i class="fa fa-fw fa-archive"></i>
+			    <i class="fa-fw fas fa-archive"></i>
 			
 			归档
 		</a>
@@ -194,7 +203,7 @@
 	  
 		<a href="/about" class="waves-effect waves-light">
 			
-			    <i class="fa fa-fw fa-user-circle-o"></i>
+			    <i class="fa-fw fas fa-user-circle"></i>
 			
 			关于
 		</a>
@@ -203,9 +212,20 @@
         
         <li class="m-nav-item">
 	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			留言板
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
 		<a href="/friends" class="waves-effect waves-light">
 			
-			    <i class="fa fa-fw fa-address-book"></i>
+			    <i class="fa-fw fas fa-address-book"></i>
 			
 			友情链接
 		</a>
@@ -215,8 +235,8 @@
         
         <li><div class="divider"></div></li>
         <li>
-            <a href="https://github.com/yh-phys/yh-phys.github.io" class="waves-effect waves-light" target="_blank">
-                <i class="fa fa-github-square fa-fw"></i>yh-phys
+            <a href="https://github.com/yh-phys" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Fork Me
             </a>
         </li>
         
@@ -272,8 +292,8 @@
     }
 </style>
 
-<a href="https://github.com/yh-phys/yh-phys.github.io" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
-   data-tooltip="yh-phys" data-position="left" data-delay="50">
+<a href="https://github.com/yh-phys" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
     <svg viewBox="0 0 250 250" aria-hidden="true">
         <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
         <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
@@ -287,31 +307,16 @@
 
 </header>
 
-
-<script src="/libs/cryptojs/crypto-js.min.js"></script>
-<script>
-    (function() {
-        let pwd = '';
-        if (pwd && pwd.length > 0) {
-            if (pwd !== CryptoJS.SHA256(prompt('请输入访问本文章的密码')).toString(CryptoJS.enc.Hex)) {
-                alert('密码错误，将返回主页！');
-                location.href = '/';
-            }
-        }
-    })();
-</script>
-
+    
 
 
 
 <div class="bg-cover pd-header post-cover" style="background-image: url('/image/LDOS.png')">
-    <div class="container">
+    <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <div class="description center-align post-title">
-                        VASP计算能带和态密度
-                    </div>
+                    <h1 class="description center-align post-title">VASP计算能带和态密度</h1>
                 </div>
             </div>
         </div>
@@ -320,99 +325,11 @@
 
 
 
-<main class="post-container content">
+
+<main class="container content">
 
     
-    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
-<style>
-    #articleContent h1::before,
-    #articleContent h2::before,
-    #articleContent h3::before,
-    #articleContent h4::before,
-    #articleContent h5::before,
-    #articleContent h6::before {
-        display: block;
-        content: " ";
-        height: 100px;
-        margin-top: -100px;
-        visibility: hidden;
-    }
-
-    #articleContent :focus {
-        outline: none;
-    }
-
-    .toc-fixed {
-        position: fixed;
-        top: 64px;
-    }
-
-    .toc-widget {
-        padding-left: 20px;
-    }
-
-    .toc-widget .toc-title {
-        margin: 35px 0 15px 0;
-        padding-left: 17px;
-        font-size: 1.5rem;
-        font-weight: bold;
-        line-height: 1.5rem;
-    }
-
-    .toc-widget ol {
-        padding: 0;
-        list-style: none;
-    }
-
-    #toc-content ol {
-        padding-left: 10px;
-    }
-
-    #toc-content ol li {
-        padding-left: 10px;
-    }
-
-    #toc-content .toc-link:hover {
-        color: #42b983;
-        font-weight: 700;
-        text-decoration: underline;
-    }
-
-    #toc-content .toc-link::before {
-        background-color: transparent;
-        max-height: 25px;
-    }
-
-    #toc-content .is-active-link {
-        color: #42b983;
-    }
-
-    #toc-content .is-active-link::before {
-        background-color: #42b983;
-    }
-
-    #floating-toc-btn {
-        position: fixed;
-        right: 20px;
-        bottom: 76px;
-        padding-top: 15px;
-        margin-bottom: 0;
-        z-index: 998;
-    }
-
-    #floating-toc-btn .btn-floating {
-        width: 48px;
-        height: 48px;
-    }
-
-    #floating-toc-btn .btn-floating i {
-        line-height: 48px;
-        font-size: 1.4rem;
-    }
-</style>
-<div class="row">
-    <div id="main-content" class="col s12 m12 l9">
-        <!-- 文章内容详情 -->
+    <!-- 文章内容详情 -->
 <div id="artDetail">
     <div class="card">
         <div class="card-content article-info">
@@ -421,11 +338,11 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/band-structure/" target="_blank">
+                            <a href="/tags/band-structure/">
                                 <span class="chip bg-color">band structure</span>
                             </a>
                         
-                            <a href="/tags/density-of-states/" target="_blank">
+                            <a href="/tags/density-of-states/">
                                 <span class="chip bg-color">density of states</span>
                             </a>
                         
@@ -435,9 +352,9 @@
                 <div class="col s5 right-align">
                     
                     <div class="post-cate">
-                        <i class="fa fa-bookmark fa-fw icon-category"></i>
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/vasp/" class="post-category" target="_blank">
+                            <a href="/categories/vasp/" class="post-category">
                                 vasp
                             </a>
                         
@@ -447,435 +364,256 @@
             </div>
 
             <div class="post-info">
+                
                 <div class="post-date info-break-policy">
-                    <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
                     2019-10-04
                 </div>
+                
 
                 
-                    
-                    <div class="info-break-policy">
-                        <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        2.8k
-                    </div>
-                    
-
-                    
-                    <div class="info-break-policy">
-                        <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                        13 分
-                    </div>
-                    
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2019-10-11
+                </div>
                 
-				
-				
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    2.7k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    12 分
+                </div>
+                
+
+                
                     <div id="busuanzi_container_page_pv" class="info-break-policy">
-                        <i class="fa fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
                         <span id="busuanzi_value_page_pv"></span>
                     </div>
 				
             </div>
         </div>
         <hr class="clearfix">
+
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
+
+        
+
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>&emsp;&emsp;本文以二维InSe材料为例，详细介绍了二维材料的结构优化、静态自洽，能带计算和态密度计算的计算过程和注意事项。<br>&emsp;&emsp;为了对二维材料的晶格常数进行充分优化，且不对真空层厚度做优化，需要修改vasp安装包～/vasp.5.4.4/src/constr_cell_relax.F源文件，修改的具体说明可以参考清华大学刘锦程博士的<a href="http://blog.wangruixing.cn/2019/05/05/constr/" target="_blank" rel="noopener">博文</a>，编译时直接覆盖掉原文件即可，新的constr_cell_relax.F文件如下：</p>
-<pre><code>!-----------------------------------------------------------------------
-!
-! At present, VASP does not allow to relax the cellshape selectively
-! i.e. for instance only cell relaxation in x direction.
-! To be more precisse, this behaviour can not be achived via the INCAR
-! or POSCAR file.
-! However, it is possible to set selected components of the stress tensor
-! to zero.
-! The most conveninent position to do this is the routines 
-! CONSTR_CELL_RELAX  (constraint cell relaxation).
-! FCELL contains the forces on the basis vectors.
-! These forces are used to modify the basis vectors according
-! to the following equations:
-!
-!      A_OLD(1:3,1:3)=A(1:3,1:3) ! F90 style 
-!      DO J=1,3
-!      DO I=1,3
-!      DO K=1,3
-!        A(I,J)=A(I,J) + FCELL(I,K)*A_OLD(K,J)*STEP_SIZE
-!      ENDDO
-!      ENDDO
-!      ENDDO
-! where A holds the basis vectors (in cartesian coordinates).
-!
-!-----------------------------------------------------------------------
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">!-----------------------------------------------------------------------</span><br><span class="line">!</span><br><span class="line">! At present, VASP does not allow to relax the cellshape selectively</span><br><span class="line">! i.e. for instance only cell relaxation in x direction.</span><br><span class="line">! To be more precisse, this behaviour can not be achived via the INCAR</span><br><span class="line">! or POSCAR file.</span><br><span class="line">! However, it is possible to set selected components of the stress tensor</span><br><span class="line">! to zero.</span><br><span class="line">! The most conveninent position to do this is the routines </span><br><span class="line">! CONSTR_CELL_RELAX  (constraint cell relaxation).</span><br><span class="line">! FCELL contains the forces on the basis vectors.</span><br><span class="line">! These forces are used to modify the basis vectors according</span><br><span class="line">! to the following equations:</span><br><span class="line">!</span><br><span class="line">!      A_OLD(1:3,1:3)=A(1:3,1:3) ! F90 style </span><br><span class="line">!      DO J=1,3</span><br><span class="line">!      DO I=1,3</span><br><span class="line">!      DO K=1,3</span><br><span class="line">!        A(I,J)=A(I,J) + FCELL(I,K)*A_OLD(K,J)*STEP_SIZE</span><br><span class="line">!      ENDDO</span><br><span class="line">!      ENDDO</span><br><span class="line">!      ENDDO</span><br><span class="line">! where A holds the basis vectors (in cartesian coordinates).</span><br><span class="line">!</span><br><span class="line">!-----------------------------------------------------------------------</span><br><span class="line"></span><br><span class="line">      SUBROUTINE CONSTR_CELL_RELAX(FCELL)</span><br><span class="line">      USE prec</span><br><span class="line">      REAL(q) FCELL(3,3)</span><br><span class="line"></span><br><span class="line">!     just one simple example</span><br><span class="line">!     relaxation in x directions only</span><br><span class="line">!      SAVE=FCELL(1,1)</span><br><span class="line">!      FCELL=0   ! F90 style: set the whole array to zero</span><br><span class="line">!      FCELL(1,1)=SAVE</span><br><span class="line">!     relaxation in z direction only</span><br><span class="line">!      SAVE=FCELL(3,3)</span><br><span class="line">!      FCELL=0   ! F90 style: set the whole array to zero</span><br><span class="line">!      FCELL(3,3)=SAVE</span><br><span class="line"></span><br><span class="line">      LOGICAL FILFLG</span><br><span class="line">      INTEGER ICELL(3,3)</span><br><span class="line">      INQUIRE(FILE=&apos;OPTCELL&apos;,EXIST=FILFLG)</span><br><span class="line">      IF (FILFLG) THEN</span><br><span class="line">         OPEN(67,FILE=&apos;OPTCELL&apos;,FORM=&apos;FORMATTED&apos;,STATUS=&apos;OLD&apos;)</span><br><span class="line">         DO J=1,3</span><br><span class="line">            READ(67,&quot;(3I1)&quot;) (ICELL(I,J),I=1,3)</span><br><span class="line">         ENDDO</span><br><span class="line">         CLOSE(67)</span><br><span class="line">         DO J=1,3</span><br><span class="line">         DO I=1,3</span><br><span class="line">            IF (ICELL(I,J)==0) FCELL(I,J)=0.0</span><br><span class="line">         ENDDO</span><br><span class="line">         ENDDO</span><br><span class="line">      ENDIF</span><br><span class="line"></span><br><span class="line">      RETURN</span><br><span class="line">      END SUBROUTINE</span><br></pre></td></tr></table></figure>
 
-      SUBROUTINE CONSTR_CELL_RELAX(FCELL)
-      USE prec
-      REAL(q) FCELL(3,3)
+<p>使用方法：在INCAR中设置ISIF = 3，同时在计算目录下新建OPTCELL文件，该文件为3$\times$3矩阵，在对称性满足的情况下可以对体系的9个自由度做弛豫。例如对于正交的二维材料，OPTCELL文件可写为：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">100  # 优化x方向</span><br><span class="line">010  # 优化y方向</span><br><span class="line">000  # 不优化z方向</span><br></pre></td></tr></table></figure>
 
-!     just one simple example
-!     relaxation in x directions only
-!      SAVE=FCELL(1,1)
-!      FCELL=0   ! F90 style: set the whole array to zero
-!      FCELL(1,1)=SAVE
-!     relaxation in z direction only
-!      SAVE=FCELL(3,3)
-!      FCELL=0   ! F90 style: set the whole array to zero
-!      FCELL(3,3)=SAVE
+<h2 id="结构优化"><a href="#结构优化" class="headerlink" title="结构优化"></a>结构优化</h2><h3 id="输入文件"><a href="#输入文件" class="headerlink" title="输入文件"></a>输入文件</h3><h4 id="INCAR"><a href="#INCAR" class="headerlink" title="INCAR"></a>INCAR</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">SYSTEM = 2D_InSe</span><br><span class="line">ISTART = 0</span><br><span class="line">NWRITE = 2   </span><br><span class="line">PREC   = Accurate</span><br><span class="line">ENCUT  = 500</span><br><span class="line">GGA    = PE</span><br><span class="line">NSW    = 200</span><br><span class="line">ISIF   = 3</span><br><span class="line">ISYM   = 2</span><br><span class="line">NBLOCK = 1   </span><br><span class="line">KBLOCK = 1</span><br><span class="line">IBRION = 2</span><br><span class="line">NELM   = 80     </span><br><span class="line">EDIFF  = 1E-05</span><br><span class="line">EDIFFG = -0.01 </span><br><span class="line">ALGO   = Normal</span><br><span class="line">LDIAG  = .TRUE.</span><br><span class="line">LREAL  = .FALSE.</span><br><span class="line">ISMEAR = 0</span><br><span class="line">SIGMA  = 0.02</span><br><span class="line">ICHARG = 2</span><br><span class="line">LPLANE = .TRUE.</span><br><span class="line">NPAR   = 4</span><br><span class="line">LSCALU = .FALSE.</span><br><span class="line">NSIM   = 4</span><br><span class="line">LWAVE  = .FALSE.</span><br><span class="line">LCHARG = .FALSE.</span><br><span class="line">ICORELEVEL =  1</span><br></pre></td></tr></table></figure>
 
-      LOGICAL FILFLG
-      INTEGER ICELL(3,3)
-      INQUIRE(FILE=&#39;OPTCELL&#39;,EXIST=FILFLG)
-      IF (FILFLG) THEN
-         OPEN(67,FILE=&#39;OPTCELL&#39;,FORM=&#39;FORMATTED&#39;,STATUS=&#39;OLD&#39;)
-         DO J=1,3
-            READ(67,&quot;(3I1)&quot;) (ICELL(I,J),I=1,3)
-         ENDDO
-         CLOSE(67)
-         DO J=1,3
-         DO I=1,3
-            IF (ICELL(I,J)==0) FCELL(I,J)=0.0
-         ENDDO
-         ENDDO
-      ENDIF
+<h4 id="POSCAR"><a href="#POSCAR" class="headerlink" title="POSCAR"></a>POSCAR</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">2D_InSe</span><br><span class="line">1.0</span><br><span class="line">        4.0836000443         0.0000000000         0.0000000000</span><br><span class="line">       -2.0418000221         3.5365013772         0.0000000000</span><br><span class="line">        0.0000000000         0.0000000000        25.3775005341</span><br><span class="line">   In   Se</span><br><span class="line">    2    2</span><br><span class="line">Direct</span><br><span class="line">     0.666670026         0.333330010         0.589979992</span><br><span class="line">     0.666670026         0.333330010         0.478789968</span><br><span class="line">     0.333329978         0.666669998         0.428439986</span><br><span class="line">     0.333329978         0.666669998         0.640340007</span><br></pre></td></tr></table></figure>
 
-      RETURN
-      END SUBROUTINE</code></pre><p>使用方法：在INCAR中设置ISIF = 3，同时在计算目录下新建OPTCELL文件，该文件为3$\times$3矩阵，在对称性满足的情况下可以对体系的9个自由度做弛豫。例如对于正交的二维材料，OPTCELL文件可写为：</p>
-<pre><code>100  # 优化x方向
-010  # 优化y方向
-000  # 不优化z方向</code></pre><h2 id="结构优化"><a href="#结构优化" class="headerlink" title="结构优化"></a>结构优化</h2><h3 id="输入文件"><a href="#输入文件" class="headerlink" title="输入文件"></a>输入文件</h3><h4 id="INCAR"><a href="#INCAR" class="headerlink" title="INCAR"></a>INCAR</h4><pre><code>   SYSTEM = 2D_InSe
-   ISTART = 0
-   NWRITE = 2   
-   PREC   = Accurate
-   ENCUT  = 500
-   GGA    = PE
-   NSW    = 200
-   ISIF   = 3
-   ISYM   = 2
-   NBLOCK = 1   
-   KBLOCK = 1
-   IBRION = 2
-   NELM   = 80     
-   EDIFF  = 1E-05
-   EDIFFG = -0.01 
-   ALGO   = Normal
-   LDIAG  = .TRUE.
-   LREAL  = .FALSE.
-   ISMEAR = 0
-   SIGMA  = 0.02
-   ICHARG = 2
-   LPLANE = .TRUE.
-   NPAR   = 4
-   LSCALU = .FALSE.
-   NSIM   = 4
-   LWAVE  = .FALSE.
-   LCHARG = .FALSE.
-   ICORELEVEL =  1</code></pre><h4 id="POSCAR"><a href="#POSCAR" class="headerlink" title="POSCAR"></a>POSCAR</h4><pre><code>2D_InSe
-1.0
-        4.0836000443         0.0000000000         0.0000000000
-       -2.0418000221         3.5365013772         0.0000000000
-        0.0000000000         0.0000000000        25.3775005341
-   In   Se
-    2    2
-Direct
-     0.666670026         0.333330010         0.589979992
-     0.666670026         0.333330010         0.478789968
-     0.333329978         0.666669998         0.428439986
-     0.333329978         0.666669998         0.640340007</code></pre><h4 id="KPOINTS"><a href="#KPOINTS" class="headerlink" title="KPOINTS"></a>KPOINTS</h4><pre><code>Monkhorst Pack of Gamma centered
-0
-Gamma
- 13    13    1
- 0.0   0.0   0.0</code></pre><h4 id="POTCAR"><a href="#POTCAR" class="headerlink" title="POTCAR"></a>POTCAR</h4><pre><code>cat In_d/POTCAR Se/POTCAR &gt; POTCAR</code></pre><h4 id="OPTCELL"><a href="#OPTCELL" class="headerlink" title="OPTCELL"></a>OPTCELL</h4><pre><code>100
-110
-000</code></pre><h3 id="结果分析"><a href="#结果分析" class="headerlink" title="结果分析"></a>结果分析</h3><ul>
-<li>判断是否达到收敛精度<pre class="line-numbers language-bash"><code class="language-bash"><span class="token function">grep</span> <span class="token string">"reached required accuracy"</span> log<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<pre><code>reached required accuracy - stopping structural energy minimisation</code></pre></li>
-<li>产看体系总能<pre class="line-numbers language-bash"><code class="language-bash"><span class="token function">grep</span> TOTEN OUTCAR <span class="token operator">|</span> <span class="token function">tail</span> -n 1<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<pre><code>free  energy   TOTEN  =       -14.21463638 eV</code></pre></li>
+<h4 id="KPOINTS"><a href="#KPOINTS" class="headerlink" title="KPOINTS"></a>KPOINTS</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Monkhorst Pack of Gamma centered</span><br><span class="line">0</span><br><span class="line">Gamma</span><br><span class="line"> 13    13    1</span><br><span class="line"> 0.0   0.0   0.0</span><br></pre></td></tr></table></figure>
+
+<h4 id="POTCAR"><a href="#POTCAR" class="headerlink" title="POTCAR"></a>POTCAR</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cat In_d/POTCAR Se/POTCAR &gt; POTCAR</span><br></pre></td></tr></table></figure>
+
+<h4 id="OPTCELL"><a href="#OPTCELL" class="headerlink" title="OPTCELL"></a>OPTCELL</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">100</span><br><span class="line">110</span><br><span class="line">000</span><br></pre></td></tr></table></figure>
+
+<h3 id="结果分析"><a href="#结果分析" class="headerlink" title="结果分析"></a>结果分析</h3><ul>
+<li>判断是否达到收敛精度<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">grep <span class="string">"reached required accuracy"</span> <span class="built_in">log</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">reached required accuracy - stopping structural energy minimisation</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>产看体系总能<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">grep TOTEN OUTCAR | tail -n 1</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">free  energy   TOTEN  =       -14.21463638 eV</span><br></pre></td></tr></table></figure>
+
+<ul>
 <li>对比优化前后晶格常数的变化</li>
 </ul>
 <p>—优化前—</p>
-<pre><code>4.0836000443         0.0000000000         0.0000000000
--2.0418000221         3.5365013772         0.0000000000
-0.0000000000         0.0000000000        25.3775005341</code></pre><p>—优化后—</p>
-<pre><code>4.0830388054550770    0.0000000000000000    0.0000000000000000
--2.0415069539304227    3.5360297046777429    0.0000000000000000
-0.0000000000000000    0.0000000000000000   25.3775005341000011</code></pre><p><font color="blue"> 分析：对比发现优化后a轴和b轴方向的晶格常数略微发生了变化，而c轴方向的真空层厚度并没有发生变化，说明使用固定基矢的方法是可以对二维材料做充分优化的 </font></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">4.0836000443         0.0000000000         0.0000000000</span><br><span class="line">-2.0418000221         3.5365013772         0.0000000000</span><br><span class="line">0.0000000000         0.0000000000        25.3775005341</span><br></pre></td></tr></table></figure>
+
+<p>—优化后—</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">4.0830388054550770    0.0000000000000000    0.0000000000000000</span><br><span class="line">-2.0415069539304227    3.5360297046777429    0.0000000000000000</span><br><span class="line">0.0000000000000000    0.0000000000000000   25.3775005341000011</span><br></pre></td></tr></table></figure>
+
+<p><font color="blue"> 分析：对比发现优化后a轴和b轴方向的晶格常数略微发生了变化，而c轴方向的真空层厚度并没有发生变化，说明使用固定基矢的方法是可以对二维材料做充分优化的 </font></p>
 <ul>
 <li>现使用只优化原子位置、不优化晶格常数（ISIF=2）的方法对二维InSe重新进行优化，对比体系总能变化情况</li>
 </ul>
 <p>—ISIF=3—</p>
-<pre><code>free  energy   TOTEN  =       -14.21463638 eV</code></pre><p>—ISIF=2—</p>
-<pre><code>free  energy   TOTEN  =       -14.21464001 eV</code></pre><p><font color="blue"> 分析：对比发现，两个总能几乎没有差别，说明对于初始结构比较好的体系来说，两种优化方式基本没有差别；但是对于初始结构不是很好的体系，这两种优化方法应该是有差别的，本人推荐使用固定基矢的方法充分优化二维材料晶格；另外，对于材料施加应变，且需要考虑泊松效应时，固定基矢优化是非常好的方式 </font></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">free  energy   TOTEN  =       -14.21463638 eV</span><br></pre></td></tr></table></figure>
+
+<p>—ISIF=2—</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">free  energy   TOTEN  =       -14.21464001 eV</span><br></pre></td></tr></table></figure>
+
+<p><font color="blue"> 分析：对比发现，两个总能几乎没有差别，说明对于初始结构比较好的体系来说，两种优化方式基本没有差别；但是对于初始结构不是很好的体系，这两种优化方法应该是有差别的，本人推荐使用固定基矢的方法充分优化二维材料晶格；另外，对于材料施加应变，且需要考虑泊松效应时，固定基矢优化是非常好的方式 </font></p>
 <h2 id="截断能和k网格点收敛性测试"><a href="#截断能和k网格点收敛性测试" class="headerlink" title="截断能和k网格点收敛性测试"></a>截断能和k网格点收敛性测试</h2><p>&emsp;&emsp;在第一性原理计算过程中，截断能和k网格点的选取非常重要，选的太小容易造成体系没有达到最低能量状态，选的太大会耗费大量计算资源，尤其对于计算资源比较紧张的课题组，大量浪费计算资源会引起同学和导师的不满。在实际计算中对于截断能和k点选取的方法，一是参考已发表的论文值，这样有一定的说服力；二是需要自己去测试，一般保证体系总能变化范围在0.01~0.02 eV之间，就可认为截断能和k点达到了我们的计算要求。</p>
 <h3 id="二维InSe的截断能测试"><a href="#二维InSe的截断能测试" class="headerlink" title="二维InSe的截断能测试"></a>二维InSe的截断能测试</h3><p>&emsp;&emsp;首先对二维InSe的截断能做测试，测试范围是400-900 eV，能量间隔为50 eV。</p>
 <h4 id="输入文件-1"><a href="#输入文件-1" class="headerlink" title="输入文件"></a>输入文件</h4><p>&emsp;&emsp;在这一系列计算中，只需对INCAR文件做修改，其他文件无需修改；且计算完成后自动将体系总能随截断能的变化写入toten_vs_encut.dat文件，只需画图即可。实现方法是将INCAR以及一系列操作命令写入提交任务的脚本文件中。计算文件夹中包括：</p>
-<pre><code>KPOINTS POSCAR OPTCELL POTCAR vasp5.4.4.job</code></pre><p>—vasp5.4.4.job—</p>
-<pre class="line-numbers language-bash"><code class="language-bash"><span class="token shebang important">#!/bin/bash</span>
-<span class="token comment" spellcheck="true">#PBS -N 2D_InSe</span>
-<span class="token comment" spellcheck="true">#PBS -l nodes=1:ppn=16</span>
-<span class="token comment" spellcheck="true">#PBS -m abe</span>
-<span class="token comment" spellcheck="true">#PBS -j n</span>
-<span class="token comment" spellcheck="true">##PBS -o job.log</span>
-<span class="token comment" spellcheck="true">##PBS -e job.err</span>
-<span class="token comment" spellcheck="true">#PBS -l walltime=250:00:00</span>
-<span class="token function">cd</span> <span class="token variable">$PBS_O_WORKDIR</span>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">KPOINTS POSCAR OPTCELL POTCAR vasp5.4.4.job</span><br></pre></td></tr></table></figure>
 
-<span class="token function">touch</span> toten_vs_encut.dat
+<p>—vasp5.4.4.job—</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="comment">#PBS -N 2D_InSe</span></span><br><span class="line"><span class="comment">#PBS -l nodes=1:ppn=16</span></span><br><span class="line"><span class="comment">#PBS -m abe</span></span><br><span class="line"><span class="comment">#PBS -j n</span></span><br><span class="line"><span class="comment">##PBS -o job.log</span></span><br><span class="line"><span class="comment">##PBS -e job.err</span></span><br><span class="line"><span class="comment">#PBS -l walltime=250:00:00</span></span><br><span class="line"><span class="built_in">cd</span> <span class="variable">$PBS_O_WORKDIR</span></span><br><span class="line"></span><br><span class="line">touch toten_vs_encut.dat</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> ENCUT <span class="keyword">in</span> $(seq 400 50 800); <span class="keyword">do</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># generate INCAR</span></span><br><span class="line">cat &gt; INCAR &lt;&lt; EOF</span><br><span class="line">SYSTEM = 2D_InSe</span><br><span class="line">ISTART = 0</span><br><span class="line">NWRITE = 2   </span><br><span class="line">PREC   = Accurate</span><br><span class="line">ENCUT  = <span class="variable">$ENCUT</span></span><br><span class="line">GGA    = PE </span><br><span class="line">NSW    = 200</span><br><span class="line">ISIF   = 3</span><br><span class="line">ISYM   = 2</span><br><span class="line">NBLOCK = 1   </span><br><span class="line">KBLOCK = 1</span><br><span class="line">IBRION = 2</span><br><span class="line">NELM   = 80   </span><br><span class="line">EDIFF  = 1E-05</span><br><span class="line">EDIFFG = -0.01 </span><br><span class="line">ALGO   = Normal</span><br><span class="line">LDIAG  = .TRUE.</span><br><span class="line">LREAL  = .FALSE.</span><br><span class="line">ISMEAR = 0</span><br><span class="line">SIGMA  = 0.02</span><br><span class="line">ICHARG = 2</span><br><span class="line">LPLANE = .TRUE.</span><br><span class="line">NPAR   = 4</span><br><span class="line">LSCALU = .FALSE.</span><br><span class="line">NSIM   = 4</span><br><span class="line">LWAVE  = .FALSE.</span><br><span class="line">LCHARG = .FALSE.</span><br><span class="line">ICORELEVEL =  1</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">date <span class="string">"+01 Today's date is: %D. The time execution %T"</span> &gt;&gt; time.info</span><br><span class="line">mpirun -np 16 /your direction/vasp.5.4.4/bin/vasp_std  &gt; <span class="built_in">log</span></span><br><span class="line">date <span class="string">"+02 Today's date is: %D. The time finish %T"</span> &gt;&gt; time.info</span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> -e <span class="string">"<span class="variable">$ENCUT</span> \c"</span> &gt;&gt; toten_vs_encut.dat</span><br><span class="line">grep TOTEN OUTCAR | tail -n 1 | \</span><br><span class="line">      awk <span class="string">'/TOTEN/&#123;print $(NF-1)&#125;'</span> &gt;&gt; toten_vs_encut.dat</span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
 
-<span class="token keyword">for</span> ENCUT <span class="token keyword">in</span> <span class="token variable"><span class="token variable">$(</span><span class="token function">seq</span> 400 50 800<span class="token variable">)</span></span><span class="token punctuation">;</span> <span class="token keyword">do</span>
-
-<span class="token comment" spellcheck="true"># generate INCAR</span>
-<span class="token function">cat</span> <span class="token operator">></span> INCAR <span class="token operator">&lt;&lt;</span> <span class="token string">EOF
-SYSTEM = 2D_InSe
-ISTART = 0
-NWRITE = 2   
-PREC   = Accurate
-ENCUT  = <span class="token variable">$ENCUT</span>
-GGA    = PE 
-NSW    = 200
-ISIF   = 3
-ISYM   = 2
-NBLOCK = 1   
-KBLOCK = 1
-IBRION = 2
-NELM   = 80   
-EDIFF  = 1E-05
-EDIFFG = -0.01 
-ALGO   = Normal
-LDIAG  = .TRUE.
-LREAL  = .FALSE.
-ISMEAR = 0
-SIGMA  = 0.02
-ICHARG = 2
-LPLANE = .TRUE.
-NPAR   = 4
-LSCALU = .FALSE.
-NSIM   = 4
-LWAVE  = .FALSE.
-LCHARG = .FALSE.
-ICORELEVEL =  1
-EOF</span>
-
-<span class="token function">date</span> <span class="token string">"+01 Today's date is: %D. The time execution %T"</span> <span class="token operator">>></span> time.info
-mpirun -np 16 /your direction/vasp.5.4.4/bin/vasp_std  <span class="token operator">></span> log
-<span class="token function">date</span> <span class="token string">"+02 Today's date is: %D. The time finish %T"</span> <span class="token operator">>></span> time.info
-
-<span class="token keyword">echo</span> -e <span class="token string">"<span class="token variable">$ENCUT</span> \c"</span> <span class="token operator">>></span> toten_vs_encut.dat
-<span class="token function">grep</span> TOTEN OUTCAR <span class="token operator">|</span> <span class="token function">tail</span> -n 1 <span class="token operator">|</span> \
-      <span class="token function">awk</span> <span class="token string">'/TOTEN/{print <span class="token variable"><span class="token variable">$(</span>NF-1<span class="token variable">)</span></span>}'</span> <span class="token operator">>></span> toten_vs_encut.dat
-<span class="token keyword">done</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h4 id="计算结果"><a href="#计算结果" class="headerlink" title="计算结果"></a>计算结果</h4><p>—toten_vs_encut.dat—</p>
-<pre><code>400 -14.21435689
-450 -14.21513620
-500 -14.21463059
-550 -14.21432926
-600 -14.21451881
-650 -14.21462419
-700 -14.21461680
-750 -14.21457254
-800 -14.21462319</code></pre><p><img src="/image/encut.png" alt="encut"><br>—encut.gnu—</p>
-<pre><code>set term post eps color enh solid 
-datafile=&#39;toten_vs_encut.dat&#39;
-set output &#39;encut.eps&#39;
-set title &#39;toten\_vs\_encut&#39; font &#39;Times_New_Roman,24&#39;
-set xlabel &#39;encut&#39; font &#39;Times_New_Roman,18&#39;
-set ylabel &#39;TOTEN&#39; font &#39;Times_New_Roman,18&#39;
-plot datafile  with linespoints lt 7 lw 4 pt 9 pointsize 2
-set output</code></pre><h3 id="二维InSe的k点测试"><a href="#二维InSe的k点测试" class="headerlink" title="二维InSe的k点测试"></a>二维InSe的k点测试</h3><h4 id="输入文件-2"><a href="#输入文件-2" class="headerlink" title="输入文件"></a>输入文件</h4><p>&emsp;&emsp;在这一系列计算中，只需对KPOINTS文件做修改，其他文件无需修改；且计算完成后自动将体系总能随k点的变化写入toten_vs_kpoints.dat文件，只需画图即可。实现方法是将kpoints以及一系列操作命令写入提交任务的脚本文件中。计算文件夹中包括：</p>
-<pre><code>INCAR POSCAR OPTCELL POTCAR vasp5.4.4.job</code></pre><p>—vasp5.4.4.job—</p>
-<pre class="line-numbers language-bash"><code class="language-bash"><span class="token shebang important">#!/bin/bash</span>
-<span class="token comment" spellcheck="true">#PBS -N 2D_InSe</span>
-<span class="token comment" spellcheck="true">#PBS -l nodes=1:ppn=16</span>
-<span class="token comment" spellcheck="true">#PBS -m abe</span>
-<span class="token comment" spellcheck="true">#PBS -j n</span>
-<span class="token comment" spellcheck="true">##PBS -o job.log</span>
-<span class="token comment" spellcheck="true">##PBS -e job.err</span>
-<span class="token comment" spellcheck="true">#PBS -l walltime=250:00:00</span>
-<span class="token function">cd</span> <span class="token variable">$PBS_O_WORKDIR</span>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">400 -14.21435689</span><br><span class="line">450 -14.21513620</span><br><span class="line">500 -14.21463059</span><br><span class="line">550 -14.21432926</span><br><span class="line">600 -14.21451881</span><br><span class="line">650 -14.21462419</span><br><span class="line">700 -14.21461680</span><br><span class="line">750 -14.21457254</span><br><span class="line">800 -14.21462319</span><br></pre></td></tr></table></figure>
 
+<p><img src="/image/encut.png" alt="encut"><br>—encut.gnu—</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">set term post eps color enh solid </span><br><span class="line">datafile=&apos;toten_vs_encut.dat&apos;</span><br><span class="line">set output &apos;encut.eps&apos;</span><br><span class="line">set title &apos;toten\_vs\_encut&apos; font &apos;Times_New_Roman,24&apos;</span><br><span class="line">set xlabel &apos;encut&apos; font &apos;Times_New_Roman,18&apos;</span><br><span class="line">set ylabel &apos;TOTEN&apos; font &apos;Times_New_Roman,18&apos;</span><br><span class="line">plot datafile  with linespoints lt 7 lw 4 pt 9 pointsize 2</span><br><span class="line">set output</span><br></pre></td></tr></table></figure>
 
-<span class="token function">touch</span> toten_vs_kpoints.dat
+<h3 id="二维InSe的k点测试"><a href="#二维InSe的k点测试" class="headerlink" title="二维InSe的k点测试"></a>二维InSe的k点测试</h3><h4 id="输入文件-2"><a href="#输入文件-2" class="headerlink" title="输入文件"></a>输入文件</h4><p>&emsp;&emsp;在这一系列计算中，只需对KPOINTS文件做修改，其他文件无需修改；且计算完成后自动将体系总能随k点的变化写入toten_vs_kpoints.dat文件，只需画图即可。实现方法是将kpoints以及一系列操作命令写入提交任务的脚本文件中。计算文件夹中包括：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">INCAR POSCAR OPTCELL POTCAR vasp5.4.4.job</span><br></pre></td></tr></table></figure>
 
-<span class="token keyword">for</span> KPOINTS <span class="token keyword">in</span> <span class="token variable"><span class="token variable">$(</span><span class="token function">seq</span> 5 2 29<span class="token variable">)</span></span><span class="token punctuation">;</span> <span class="token keyword">do</span>
+<p>—vasp5.4.4.job—</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="comment">#PBS -N 2D_InSe</span></span><br><span class="line"><span class="comment">#PBS -l nodes=1:ppn=16</span></span><br><span class="line"><span class="comment">#PBS -m abe</span></span><br><span class="line"><span class="comment">#PBS -j n</span></span><br><span class="line"><span class="comment">##PBS -o job.log</span></span><br><span class="line"><span class="comment">##PBS -e job.err</span></span><br><span class="line"><span class="comment">#PBS -l walltime=250:00:00</span></span><br><span class="line"><span class="built_in">cd</span> <span class="variable">$PBS_O_WORKDIR</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">touch toten_vs_kpoints.dat</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> KPOINTS <span class="keyword">in</span> $(seq 5 2 29); <span class="keyword">do</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># generate KPOINTS</span></span><br><span class="line">cat &gt; KPOINTS &lt;&lt; EOF</span><br><span class="line">Monkhorst Pack of Gamma centered</span><br><span class="line">0</span><br><span class="line">Gamma</span><br><span class="line"> <span class="variable">$KPOINTS</span>    <span class="variable">$KPOINTS</span>    1</span><br><span class="line"> 0.0   0.0   0.0</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">date <span class="string">"+01 Today's date is: %D. The time execution %T"</span> &gt;&gt; time.info</span><br><span class="line">mpirun -np 16 /your direction/vasp.5.4.4/bin/vasp_std  &gt; <span class="built_in">log</span></span><br><span class="line">date <span class="string">"+02 Today's date is: %D. The time finish %T"</span> &gt;&gt; time.info</span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> -e <span class="string">"<span class="variable">$KPOINTS</span> \c"</span> &gt;&gt; toten_vs_kpoints.dat</span><br><span class="line">grep TOTEN OUTCAR | tail -n 1 | \</span><br><span class="line">      awk <span class="string">'/TOTEN/&#123;print $(NF-1)&#125;'</span> &gt;&gt; toten_vs_kpoints.dat</span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
 
-<span class="token comment" spellcheck="true"># generate KPOINTS</span>
-<span class="token function">cat</span> <span class="token operator">></span> KPOINTS <span class="token operator">&lt;&lt;</span> <span class="token string">EOF
-Monkhorst Pack of Gamma centered
-0
-Gamma
- <span class="token variable">$KPOINTS</span>    <span class="token variable">$KPOINTS</span>    1
- 0.0   0.0   0.0
-EOF</span>
-
-<span class="token function">date</span> <span class="token string">"+01 Today's date is: %D. The time execution %T"</span> <span class="token operator">>></span> time.info
-mpirun -np 16 /your direction/vasp.5.4.4/bin/vasp_std  <span class="token operator">></span> log
-<span class="token function">date</span> <span class="token string">"+02 Today's date is: %D. The time finish %T"</span> <span class="token operator">>></span> time.info
-
-<span class="token keyword">echo</span> -e <span class="token string">"<span class="token variable">$KPOINTS</span> \c"</span> <span class="token operator">>></span> toten_vs_kpoints.dat
-<span class="token function">grep</span> TOTEN OUTCAR <span class="token operator">|</span> <span class="token function">tail</span> -n 1 <span class="token operator">|</span> \
-      <span class="token function">awk</span> <span class="token string">'/TOTEN/{print <span class="token variable"><span class="token variable">$(</span>NF-1<span class="token variable">)</span></span>}'</span> <span class="token operator">>></span> toten_vs_kpoints.dat
-<span class="token keyword">done</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h4 id="计算结果-1"><a href="#计算结果-1" class="headerlink" title="计算结果"></a>计算结果</h4><p>—toten_vs_kpoints.dat—</p>
-<pre><code>5 -14.19602773
-7 -14.21266556
-9 -14.21439462
-11 -14.21461257
-13 -14.21463638
-15 -14.21464405
-17 -14.21464831
-19 -14.21464821
-21 -14.21464741
-23 -14.21465053
-25 -14.21464752
-27 -14.21464720
-29 -14.21464820</code></pre><p><img src="/image/kpoints.png" alt="kpoints"><br>—kpoints.gnu—</p>
-<pre><code>set term post eps color enh solid 
-datafile=&#39;toten_vs_kpoints.dat&#39;
-set output &#39;kpoints.eps&#39;
-set title &#39;toten\_vs\_kpoints&#39; font &#39;Times_New_Roman,24&#39;
-set xlabel &#39;kpoints&#39; font &#39;Times_New_Roman,18&#39;
-set ylabel &#39;TOTEN&#39; font &#39;Times_New_Roman,18&#39;
-plot datafile  with linespoints lt 7 lw 4 pt 9 pointsize 2
-set output</code></pre><h3 id="整体分析"><a href="#整体分析" class="headerlink" title="整体分析"></a>整体分析</h3><p>&emsp;&emsp;整体分析发现，对于二维InSe的截断能和k点取值分别为500 eV和13$\times$13$\times$1已经足够精确;与<a href="https://pubs.rsc.org/en/content/articlelanding/2018/NR/C8NR03172J#!divAbstract" target="_blank" rel="noopener">Meng Wu</a>等人报道的计算细节基本一致，说明测试是合理的。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">5 -14.19602773</span><br><span class="line">7 -14.21266556</span><br><span class="line">9 -14.21439462</span><br><span class="line">11 -14.21461257</span><br><span class="line">13 -14.21463638</span><br><span class="line">15 -14.21464405</span><br><span class="line">17 -14.21464831</span><br><span class="line">19 -14.21464821</span><br><span class="line">21 -14.21464741</span><br><span class="line">23 -14.21465053</span><br><span class="line">25 -14.21464752</span><br><span class="line">27 -14.21464720</span><br><span class="line">29 -14.21464820</span><br></pre></td></tr></table></figure>
+
+<p><img src="/image/kpoints.png" alt="kpoints"><br>—kpoints.gnu—</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">set term post eps color enh solid </span><br><span class="line">datafile=&apos;toten_vs_kpoints.dat&apos;</span><br><span class="line">set output &apos;kpoints.eps&apos;</span><br><span class="line">set title &apos;toten\_vs\_kpoints&apos; font &apos;Times_New_Roman,24&apos;</span><br><span class="line">set xlabel &apos;kpoints&apos; font &apos;Times_New_Roman,18&apos;</span><br><span class="line">set ylabel &apos;TOTEN&apos; font &apos;Times_New_Roman,18&apos;</span><br><span class="line">plot datafile  with linespoints lt 7 lw 4 pt 9 pointsize 2</span><br><span class="line">set output</span><br></pre></td></tr></table></figure>
+
+<h3 id="整体分析"><a href="#整体分析" class="headerlink" title="整体分析"></a>整体分析</h3><p>&emsp;&emsp;整体分析发现，对于二维InSe的截断能和k点取值分别为500 eV和13$\times$13$\times$1已经足够精确;与<a href="https://pubs.rsc.org/en/content/articlelanding/2018/NR/C8NR03172J#!divAbstract" target="_blank" rel="noopener">Meng Wu</a>等人报道的计算细节基本一致，说明测试是合理的。</p>
 <h2 id="静态自洽"><a href="#静态自洽" class="headerlink" title="静态自洽"></a>静态自洽</h2><h3 id="前言-1"><a href="#前言-1" class="headerlink" title="前言"></a>前言</h3><p>&emsp;&emsp;VASP做静态自洽的目的主要是为了得到好的电子密度和波函数文件，为了使后续的性质计算可以读取电子密度和波函数，进而增加收敛速度。</p>
 <h3 id="输入文件-3"><a href="#输入文件-3" class="headerlink" title="输入文件"></a>输入文件</h3><p>—INCAR—</p>
-<pre><code>SYSTEM = 2D_InSe
-ISTART = 0
-NWRITE = 2   
-PREC   = Accurate
-ENCUT  = 500
-GGA    = PE 
-NSW    = 0
-ISIF   = 2
-ISYM   = 2
-NBLOCK = 1   
-KBLOCK = 1
-IBRION = -1 
-NELM   = 80   
-EDIFF  = 1E-05
-EDIFFG = -0.01 
-ALGO   = Normal
-LDIAG  = .TRUE.
-LREAL  = .FALSE.
-ISMEAR = 0
-SIGMA  = 0.02
-ICHARG = 2
-LPLANE = .TRUE.
-NPAR   = 4
-LSCALU = .FALSE.
-NSIM   = 4
-LWAVE  = .TRUE.
-LCHARG = .TRUE.
-ICORELEVEL =  1</code></pre><p>—POSCAR—<br>将优化完后的CONTCAR直接拷贝为POSCAR即可<br>—POTCAR—<br>与优化时的POTCAR文件相同<br>—KPOINTS—<br>自洽计算要求有密的k网格点，在计算条件允许的情况下要求自洽的k网格点大致为优化时的2倍左右。</p>
-<pre><code>Monkhorst Pack of Gamma centered
-0
-Gamma
- 25    25    1
- 0.0   0.0   0.0</code></pre><h2 id="态密度"><a href="#态密度" class="headerlink" title="态密度"></a>态密度</h2><h3 id="前言-2"><a href="#前言-2" class="headerlink" title="前言"></a>前言</h3><p>&emsp;&emsp;态密度是固体物理中一个非常重要的概念，在实验上可利用X射线发射光谱方法测定，在理论上可使用第一性原理计算软件计算得出；可以用于分析材料材料能隙特性、体系成键的特性、体系的自旋极化、相邻原子之间的作用强弱、电子比热和顺磁磁化率等性质。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">SYSTEM = 2D_InSe</span><br><span class="line">ISTART = 0</span><br><span class="line">NWRITE = 2   </span><br><span class="line">PREC   = Accurate</span><br><span class="line">ENCUT  = 500</span><br><span class="line">GGA    = PE </span><br><span class="line">NSW    = 0</span><br><span class="line">ISIF   = 2</span><br><span class="line">ISYM   = 2</span><br><span class="line">NBLOCK = 1   </span><br><span class="line">KBLOCK = 1</span><br><span class="line">IBRION = -1 </span><br><span class="line">NELM   = 80   </span><br><span class="line">EDIFF  = 1E-05</span><br><span class="line">EDIFFG = -0.01 </span><br><span class="line">ALGO   = Normal</span><br><span class="line">LDIAG  = .TRUE.</span><br><span class="line">LREAL  = .FALSE.</span><br><span class="line">ISMEAR = 0</span><br><span class="line">SIGMA  = 0.02</span><br><span class="line">ICHARG = 2</span><br><span class="line">LPLANE = .TRUE.</span><br><span class="line">NPAR   = 4</span><br><span class="line">LSCALU = .FALSE.</span><br><span class="line">NSIM   = 4</span><br><span class="line">LWAVE  = .TRUE.</span><br><span class="line">LCHARG = .TRUE.</span><br><span class="line">ICORELEVEL =  1</span><br></pre></td></tr></table></figure>
+
+<p>—POSCAR—<br>将优化完后的CONTCAR直接拷贝为POSCAR即可<br>—POTCAR—<br>与优化时的POTCAR文件相同<br>—KPOINTS—<br>自洽计算要求有密的k网格点，在计算条件允许的情况下要求自洽的k网格点大致为优化时的2倍左右。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Monkhorst Pack of Gamma centered</span><br><span class="line">0</span><br><span class="line">Gamma</span><br><span class="line"> 25    25    1</span><br><span class="line"> 0.0   0.0   0.0</span><br></pre></td></tr></table></figure>
+
+<h2 id="态密度"><a href="#态密度" class="headerlink" title="态密度"></a>态密度</h2><h3 id="前言-2"><a href="#前言-2" class="headerlink" title="前言"></a>前言</h3><p>&emsp;&emsp;态密度是固体物理中一个非常重要的概念，在实验上可利用X射线发射光谱方法测定，在理论上可使用第一性原理计算软件计算得出；可以用于分析材料材料能隙特性、体系成键的特性、体系的自旋极化、相邻原子之间的作用强弱、电子比热和顺磁磁化率等性质。</p>
 <h3 id="输入文件-4"><a href="#输入文件-4" class="headerlink" title="输入文件"></a>输入文件</h3><p>—INCAR—</p>
-<pre><code>SYSTEM = 2D_InSe
-ISTART = 1
-NWRITE = 2
-PREC   = Accurate
-ENCUT  = 500
-GGA    = PE
-NSW    = 0
-ISIF   = 2
-ISYM   = 2
-NBLOCK = 1
-KBLOCK = 1
-IBRION = -1
-NELM   = 80
-EDIFF  = 1E-05
-EDIFFG = -0.01
-ALGO   = Normal
-LDIAG  = .TRUE.
-LREAL  = .FALSE.
-ISMEAR = -5
-SIGMA  = 0.02
-ICHARG = 11
-LPLANE = .TRUE.
-NPAR   = 4
-LSCALU = .FALSE.
-NSIM   = 4
-LWAVE  = .FALSE.
-LCHARG = .FALSE.
-ICORELEVEL =  1
-LORBIT = 11  # output PDOS</code></pre><p>—KPOINTS—<br>DOS计算要求非常密集的k网格点，至少要求与自洽时k网格点相同，或可适当增加。</p>
-<pre><code>Monkhorst Pack of Gamma centered
-0
-Gamma
- 29    29    1
- 0.0   0.0   0.0</code></pre><p>POSCAR、POTCAR文件与自洽时相同；并保证在计算目录下有自洽时产生的CHGCAR和WAVECAR文件，以供读取。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">SYSTEM = 2D_InSe</span><br><span class="line">ISTART = 1</span><br><span class="line">NWRITE = 2</span><br><span class="line">PREC   = Accurate</span><br><span class="line">ENCUT  = 500</span><br><span class="line">GGA    = PE</span><br><span class="line">NSW    = 0</span><br><span class="line">ISIF   = 2</span><br><span class="line">ISYM   = 2</span><br><span class="line">NBLOCK = 1</span><br><span class="line">KBLOCK = 1</span><br><span class="line">IBRION = -1</span><br><span class="line">NELM   = 80</span><br><span class="line">EDIFF  = 1E-05</span><br><span class="line">EDIFFG = -0.01</span><br><span class="line">ALGO   = Normal</span><br><span class="line">LDIAG  = .TRUE.</span><br><span class="line">LREAL  = .FALSE.</span><br><span class="line">ISMEAR = -5</span><br><span class="line">SIGMA  = 0.02</span><br><span class="line">ICHARG = 11</span><br><span class="line">LPLANE = .TRUE.</span><br><span class="line">NPAR   = 4</span><br><span class="line">LSCALU = .FALSE.</span><br><span class="line">NSIM   = 4</span><br><span class="line">LWAVE  = .FALSE.</span><br><span class="line">LCHARG = .FALSE.</span><br><span class="line">ICORELEVEL =  1</span><br><span class="line">LORBIT = 11  # output PDOS</span><br></pre></td></tr></table></figure>
+
+<p>—KPOINTS—<br>DOS计算要求非常密集的k网格点，至少要求与自洽时k网格点相同，或可适当增加。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Monkhorst Pack of Gamma centered</span><br><span class="line">0</span><br><span class="line">Gamma</span><br><span class="line"> 29    29    1</span><br><span class="line"> 0.0   0.0   0.0</span><br></pre></td></tr></table></figure>
+
+<p>POSCAR、POTCAR文件与自洽时相同；并保证在计算目录下有自洽时产生的CHGCAR和WAVECAR文件，以供读取。</p>
 <h3 id="结果分析-1"><a href="#结果分析-1" class="headerlink" title="结果分析"></a>结果分析</h3><h4 id="总的态密度"><a href="#总的态密度" class="headerlink" title="总的态密度"></a>总的态密度</h4><p><img src="/image/TDOS.png" alt="TDOS"></p>
 <h4 id="局域态密度"><a href="#局域态密度" class="headerlink" title="局域态密度"></a>局域态密度</h4><p><img src="/image/LDOS.png" alt="LDOS"></p>
 <h4 id="Se的分波态密度"><a href="#Se的分波态密度" class="headerlink" title="Se的分波态密度"></a>Se的分波态密度</h4><p><img src="/image/Se_PDOS.png" alt="Se_PDOS"></p>
 <h4 id="In的分波态密度"><a href="#In的分波态密度" class="headerlink" title="In的分波态密度"></a>In的分波态密度</h4><p><img src="/image/In_PDOS.png" alt="In_PDOS"></p>
 <h2 id="能带"><a href="#能带" class="headerlink" title="能带"></a>能带</h2><h3 id="前言-3"><a href="#前言-3" class="headerlink" title="前言"></a>前言</h3><p>&emsp;&emsp;能带理论是研究材料性质的重要方法，现利用VASP软件计算二维InSe的能带。</p>
 <h3 id="输入文件-5"><a href="#输入文件-5" class="headerlink" title="输入文件"></a>输入文件</h3><p>—INCAR—</p>
-<pre><code>SYSTEM = 2D_InSe
-ISTART = 1
-NWRITE = 2
-PREC   = Accurate
-ENCUT  = 500
-GGA    = PE
-NSW    = 0
-ISIF   = 2
-ISYM   = 2
-NBLOCK = 1
-KBLOCK = 1
-IBRION = -1
-NELM   = 80
-EDIFF  = 1E-05
-EDIFFG = -0.01
-ALGO   = Normal
-LDIAG  = .TRUE.
-LREAL  = .FALSE.
-ISMEAR = 0
-SIGMA  = 0.02
-ICHARG = 11
-LPLANE = .TRUE.
-NPAR   = 4
-LSCALU = .FALSE.
-NSIM   = 4
-LWAVE  = .FALSE.
-LCHARG = .FALSE.
-ICORELEVEL =  1
-LORBIT = 11</code></pre><p>—KPOINTS—</p>
-<pre class="line-numbers language-bash"><code class="language-bash">k-points along high symmetry lines
-  100
-Line-mode
-Rec
-   0.3333333  0.3333333 0       <span class="token operator">!</span>K
-   0          0         0       <span class="token operator">!</span>GAMMA
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">SYSTEM = 2D_InSe</span><br><span class="line">ISTART = 1</span><br><span class="line">NWRITE = 2</span><br><span class="line">PREC   = Accurate</span><br><span class="line">ENCUT  = 500</span><br><span class="line">GGA    = PE</span><br><span class="line">NSW    = 0</span><br><span class="line">ISIF   = 2</span><br><span class="line">ISYM   = 2</span><br><span class="line">NBLOCK = 1</span><br><span class="line">KBLOCK = 1</span><br><span class="line">IBRION = -1</span><br><span class="line">NELM   = 80</span><br><span class="line">EDIFF  = 1E-05</span><br><span class="line">EDIFFG = -0.01</span><br><span class="line">ALGO   = Normal</span><br><span class="line">LDIAG  = .TRUE.</span><br><span class="line">LREAL  = .FALSE.</span><br><span class="line">ISMEAR = 0</span><br><span class="line">SIGMA  = 0.02</span><br><span class="line">ICHARG = 11</span><br><span class="line">LPLANE = .TRUE.</span><br><span class="line">NPAR   = 4</span><br><span class="line">LSCALU = .FALSE.</span><br><span class="line">NSIM   = 4</span><br><span class="line">LWAVE  = .FALSE.</span><br><span class="line">LCHARG = .FALSE.</span><br><span class="line">ICORELEVEL =  1</span><br><span class="line">LORBIT = 11</span><br></pre></td></tr></table></figure>
 
-   0          0         0       <span class="token operator">!</span>GAMMA
-   0.5        0         0       <span class="token operator">!</span>M
+<p>—KPOINTS—</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">k-points along high symmetry lines</span><br><span class="line">  100</span><br><span class="line">Line-mode</span><br><span class="line">Rec</span><br><span class="line">   0.3333333  0.3333333 0       !K</span><br><span class="line">   0          0         0       !GAMMA</span><br><span class="line"></span><br><span class="line">   0          0         0       !GAMMA</span><br><span class="line">   0.5        0         0       !M</span><br><span class="line"></span><br><span class="line">   0.5        0         0       !M</span><br><span class="line">   0.3333333  0.3333333 0       !K</span><br></pre></td></tr></table></figure>
 
-   0.5        0         0       <span class="token operator">!</span>M
-   0.3333333  0.3333333 0       <span class="token operator">!</span>K<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>POSCAR、POTCAR文件与自洽时相同；并保证在计算目录下有自洽时产生的CHGCAR和WAVECAR文件，以供读取。</p>
 <h3 id="结果分析-2"><a href="#结果分析-2" class="headerlink" title="结果分析"></a>结果分析</h3><p>二维InSe能带<br><img src="/image/band.png" alt="band.png"><br>漂亮的二维InSe能带<br><img src="/image/new_band.png" alt="band.png"><br>二维InSe按原子投影的能带图<br><img src="/image/PBAND.png" alt="PBAND.png"><br>二维InSe按原子的$s$、$p$、$d$轨道投影的能带图<br>In原子<br><img src="/image/PBANDInspd.png" alt="PBANDInspd.png"><br>Se原子<br><img src="/image/PBANDSespd.png" alt="PBANDSespd.png"><br>InSe<br><img src="/image/PBNDSeInspd.png" alt="PBNDSeInspd.png"><br>二维InSe按原子的$s$、$p_x$、$p_y$、$p_z$轨道投影的能带图<br>In原子<br><img src="/image/PBANDInspxpypz.png" alt="PBANDInspxpypz.png"><br><img src="/image/PBANDIn.png" alt="PBANDInspxpypz.png"><br>Se原子<br><img src="/image/PBANDSespxpypz.png" alt="PBANDSespxpypz.png"><br><img src="/image/PBANDSe.png" alt="PBANDSespxpypz.png"></p>
 <p><font color="blue"> Note：通过做投影能带图，与分波态密度做对比发现，对于带边位置的贡献是一致的 </font></p>
 
+                
             </div>
             <hr/>
 
             
 
-            <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">Yong He</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://github.com/yh-phys/2019/10/04/vasp-band-structure-dos/">https://github.com/yh-phys/2019/10/04/vasp-band-structure-dos/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">Yong He</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
 
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/band-structure/">
+                                    <span class="chip bg-color">band structure</span>
+                                </a>
+                            
+                                <a href="/tags/density-of-states/">
+                                    <span class="chip bg-color">density of states</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
 <div id="article-share">
+
     
-    <div class="social-share" data-disabled="qzone" data-wechat-qrcode-helper="<p>微信里点“发现”->“扫一扫”二维码便可查看分享。</p>"></div>
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
     
+
+    
+
 </div>
 
-<script src="/libs/share/js/social-share.min.js"></script>
-
+                </div>
+            </div>
             
-
-
         </div>
     </div>
+
+    
+
+    
 
     
 
@@ -894,7 +632,7 @@ Rec
         
         <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
                 <a href="/2019/10/11/vasp-phonon/">
                     <div class="card-image">
@@ -912,13 +650,13 @@ Rec
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2019-10-11
+                            <i class="far fa-clock fa-fw icon-date"></i>2019-10-11
                         </span>
                         <span class="publish-author">
                             
-                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/vasp/" class="post-category" target="_blank">
+                            <a href="/categories/vasp/" class="post-category">
                                     vasp
                                 </a>
                             
@@ -929,7 +667,7 @@ Rec
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/phonon-spectrum/" target="_blank">
+                    <a href="/tags/phonon-spectrum/">
                         <span class="chip bg-color">phonon spectrum</span>
                     </a>
                     
@@ -941,7 +679,7 @@ Rec
         
         <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fa fa-chevron-right"></i>
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
                 <a href="/2019/09/27/vasp-kpoints/">
@@ -961,13 +699,13 @@ Rec
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-09-27
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-09-27
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/vasp/" class="post-category" target="_blank">
+                            <a href="/categories/vasp/" class="post-category">
                                     vasp
                                 </a>
                             
@@ -978,7 +716,7 @@ Rec
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/kpoints/" target="_blank">
+                    <a href="/tags/kpoints/">
                         <span class="chip bg-color">kpoints</span>
                     </a>
                     
@@ -989,140 +727,27 @@ Rec
         
     </div>
 </article>
+
 </div>
 
 
-<script>
-    $('#articleContent').on('copy', function (e) {
-        // IE8 or earlier browser is 'undefined'
-        if (typeof window.getSelection === 'undefined') return;
 
-        var selection = window.getSelection();
-        // if the selection is short let's not annoy our users.
-        if (('' + selection).length < Number.parseInt('30')) {
-            return;
-        }
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
 
-        // create a div outside of the visible area and fill it with the selected text.
-        var bodyElement = document.getElementsByTagName('body')[0];
-        var newdiv = document.createElement('div');
-        newdiv.style.position = 'absolute';
-        newdiv.style.left = '-99999px';
-        bodyElement.appendChild(newdiv);
-        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+<!-- 代码语言 -->
 
-        // we need a <pre> tag workaround.
-        // otherwise the text inside "pre" loses all the line breaks!
-        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE') {
-            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
-        }
-
-        var url = document.location.href;
-        newdiv.innerHTML += '<br />'
-            + '来源: Physics<br />'
-            + '作者: Yong He<br />'
-            + '链接: <a href="' + url + '">' + url + '</a><br />'
-            + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
-
-        selection.selectAllChildren(newdiv);
-        window.setTimeout(function () {bodyElement.removeChild(newdiv);}, 200);
-    });
-</script>
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
 
 
-    </div>
-    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
-        <div class="toc-widget">
-            <div class="toc-title"><i class="fa fa-list-alt"></i>&nbsp;&nbsp;目录</div>
-            <div id="toc-content"></div>
-        </div>
-    </div>
-</div>
+<!-- 代码块复制 -->
 
-<!-- TOC 悬浮按钮. -->
-
-<div id="floating-toc-btn" class="hide-on-med-and-down">
-    <a class="btn-floating btn-large bg-color">
-        <i class="fa fa-list"></i>
-    </a>
-</div>
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
 
 
-<script src="/libs/tocbot/tocbot.min.js"></script>
-<script>
-    $(function () {
-        tocbot.init({
-            tocSelector: '#toc-content',
-            contentSelector: '#articleContent',
-            headingsOffset: -($(window).height() * 0.4 - 45),
-            // headingsOffset: -205,
-            headingSelector: 'h2, h3, h4, h5, h6'
-        });
+<!-- 代码块收缩 -->
 
-        // modify the toc link href to support Chinese.
-        let i = 0;
-        let tocHeading = 'toc-heading-';
-        $('#toc-content a').each(function () {
-            $(this).attr('href', '#' + tocHeading + (++i));
-        });
 
-        // modify the heading title id to support Chinese.
-        i = 0;
-        $('#articleContent').children('h2, h3, h4, h5, h6').each(function () {
-            $(this).attr('id', tocHeading + (++i));
-        });
-
-        // Set scroll toc fixed.
-        let tocHeight = parseInt($(window).height() * 0.4 - 64);
-        let $tocWidget = $('.toc-widget');
-        $(window).scroll(function () {
-            let scroll = $(window).scrollTop();
-            /* add post toc fixed. */
-            if (scroll > tocHeight) {
-                $tocWidget.addClass('toc-fixed');
-            } else {
-                $tocWidget.removeClass('toc-fixed');
-            }
-        });
-
-        
-        /* 修复文章卡片 div 的宽度. */
-        let fixPostCardWidth = function (srcId, targetId) {
-            let srcDiv = $('#' + srcId);
-            if (srcDiv.length === 0) {
-                return;
-            }
-
-            let w = srcDiv.width();
-            if (w >= 450) {
-                w = w + 21;
-            } else if (w >= 350 && w < 450) {
-                w = w + 18;
-            } else if (w >= 300 && w < 350) {
-                w = w + 16;
-            } else {
-                w = w + 14;
-            }
-            $('#' + targetId).width(w);
-        };
-
-        // 切换TOC目录展开收缩的相关操作.
-        const expandedClass = 'expanded';
-        let $tocAside = $('#toc-aside');
-        let $mainContent = $('#main-content');
-        $('#floating-toc-btn .btn-floating').click(function () {
-            if ($tocAside.hasClass(expandedClass)) {
-                $tocAside.removeClass(expandedClass).slideUp(500);
-                $mainContent.removeClass('l9');
-            } else {
-                $tocAside.addClass(expandedClass).slideDown(500);
-                $mainContent.addClass('l9');
-            }
-            fixPostCardWidth('artDetail', 'prenext-posts');
-        });
-        
-    });
-</script>
     
 
 </main>
@@ -1135,73 +760,109 @@ Rec
     });
 </script>
 
-<footer class="page-footer bg-color">
-    <div class="container row center-align">
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-lrc p {
+        
+        display: none;
+        
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        
+        display: none;
+        
+        font-size: 15px;
+        color: #42b983;
+    }
+
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="netease"
+                   type="song"
+                   id="135768"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="/libs/aplayer/APlayer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+
+    
+    <div class="container row center-align" style="margin-bottom: 0px !important;">
         <div class="col s12 m8 l8 copy-right">
-            本站由&nbsp;&copy;<a href="https://blinkfox.github.io/" target="_blank">Blinkfox</a>&nbsp;基于
-            <a href="https://hexo.io/" target="_blank">Hexo</a>&nbsp;的
-            <a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>&nbsp;主题搭建
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2019-2021</span>
+            
+            <span id="year">2019</span>
+            <a href="/about" target="_blank">Yong He</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
             <br>
             
-            &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">16.3k</span>&nbsp;字
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">15.7k</span>&nbsp;字
+            
             
             
             
             
             
             <span id="busuanzi_container_site_pv">
-                |&nbsp;<i class="fa fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
                     class="white-color"></span>&nbsp;次
             </span>
             
             
             <span id="busuanzi_container_site_uv">
-                |&nbsp;<i class="fa fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
                     class="white-color"></span>&nbsp;人
             </span>
-            <br>
-            <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-            <script>
-                var now = new Date();
-
-                function createtime() {
-                    var grt = new Date("09/25/2019 12:00:00");
-                    now.setTime(now.getTime() + 250);
-                    days = (now - grt) / 1000 / 60 / 60 / 24;
-                    dnum = Math.floor(days);
-                    hours = (now - grt) / 1000 / 60 / 60 - (24 * dnum);
-                    hnum = Math.floor(hours);
-                    if (String(hnum).length == 1) {
-                        hnum = "0" + hnum;
-                    }
-                    minutes = (now - grt) / 1000 / 60 - (24 * 60 * dnum) - (60 * hnum);
-                    mnum = Math.floor(minutes);
-                    if (String(mnum).length == 1) {
-                        mnum = "0" + mnum;
-                    }
-                    seconds = (now - grt) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-                    snum = Math.round(seconds);
-                    if (String(snum).length == 1) {
-                        snum = "0" + snum;
-                    }
-                    document.getElementById("timeDate").innerHTML = "本站已安全运行 " + dnum + " 天 ";
-                    document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
-                }
-                setInterval("createtime()", 250);
-            </script>
             
+            <br>
+            
+            <br>
             
         </div>
         <div class="col s12 m4 l4 social-link social-statis">
     <a href="https://github.com/yh-phys" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
-        <i class="fa fa-github"></i>
+        <i class="fab fa-github"></i>
     </a>
 
 
 
     <a href="mailto:yong_master@mails.imnu.edu.cn" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
-        <i class="fa fa-envelope-open"></i>
+        <i class="fas fa-envelope-open"></i>
     </a>
 
 
@@ -1210,26 +871,26 @@ Rec
 
 
 
-    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=1406871290" class="tooltipped" data-tooltip="QQ联系我: 1406871290" data-position="top" data-delay="50">
-        <i class="fa fa-qq"></i>
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=1406871290" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 1406871290" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
     </a>
 
 
 
-    <a href="http://blog.sciencenet.cn/u/heyong01040426" data-tooltip="关注我的微博: http://blog.sciencenet.cn/u/heyong01040426" data-position="top" data-delay="50">
-        <i class="fa fa-weibo"></i>
+    <a href="http://blog.sciencenet.cn/u/heyong01040426" class="tooltipped" target="_blank" data-tooltip="关注我的微博: http://blog.sciencenet.cn/u/heyong01040426" data-position="top" data-delay="50">
+        <i class="fab fa-weibo"></i>
     </a>
 
 
 
-    <a href="https://www.zhihu.com/people/yong_phys/" data-tooltip="关注我的知乎: https://www.zhihu.com/people/yong_phys/" data-position="top" data-delay="50">
-        <i class="fa fa-inverse">知</i>
+    <a href="https://www.zhihu.com/people/yong_phys/" class="tooltipped" target="_blank" data-tooltip="关注我的知乎: https://www.zhihu.com/people/yong_phys/" data-position="top" data-delay="50">
+        <i class="fab fa-zhihu1">知</i>
     </a>
 
 
 
     <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
-        <i class="fa fa-rss"></i>
+        <i class="fas fa-rss"></i>
     </a>
 
 </div>
@@ -1239,11 +900,11 @@ Rec
 <div class="progress-bar"></div>
 
 
-<!-- 搜索遮罩框 -->
+    <!-- 搜索遮罩框 -->
 <div id="searchModal" class="modal">
     <div class="modal-content">
         <div class="search-header">
-            <span class="title"><i class="fa fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
             <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
                    class="search-input">
         </div>
@@ -1251,36 +912,159 @@ Rec
     </div>
 </div>
 
-<script src="/js/search.js"></script>
 <script type="text/javascript">
 $(function () {
-    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
 });
 </script>
-<!-- 回到顶部按钮 -->
+
+    <!-- 回到顶部按钮 -->
 <div id="backTop" class="top-scroll">
     <a class="btn-floating btn-large waves-effect waves-light" href="#!">
-        <i class="fa fa-angle-up"></i>
+        <i class="fas fa-arrow-up"></i>
     </a>
 </div>
 
 
-<script src="/libs/materialize/materialize.min.js"></script>
-<script src="/libs/masonry/masonry.pkgd.min.js"></script>
-<script src="/libs/aos/aos.js"></script>
-<script src="/libs/scrollprogress/scrollProgress.min.js"></script>
-<script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
-<script src="/js/matery.js"></script>
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
 
-<!-- Global site tag (gtag.js) - Google Analytics -->
+    <!-- Baidu Analytics -->
 
+    <!-- Baidu Push -->
 
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
 
-    <script src="/libs/others/clicklove.js"></script>
-
-
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
     <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
 
+    
+
+    
+
+	
+    
+
+    
+    
+    <script type="text/javascript" size="150" alpha='0.6'
+        zIndex="-1" src="/libs/background/ribbon-refresh.min.js" async="async"></script>
+    
+
+    
+    <script type="text/javascript" src="/libs/background/ribbon-dynamic.js" async="async"></script>
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
 
 </body>
+
 </html>
